@@ -1,13 +1,9 @@
-# Star Wars: Legends of the Old Republic
-Server-side C# code used in the Neverwinter Nights Star Wars: Legends of the Old Republic module.
+# Star Wars: Echoes of War
+Server-side C# code used in the Neverwinter Nights Star Wars: Echoes of War module, forked from Zunath's SWLOR https://github.com/zunath/SWLOR_NWN
 
 Game: Neverwinter Nights: Enhanced Edition
 
-Website: https://starwarsnwn.com/
-
-Discord: https://discord.gg/MyQAM6m
-
-Forums: https://forums.starwarsnwn.com/
+Discord: https://discord.gg/qBgR9hJefs
 
 # Project Description
 
@@ -67,6 +63,6 @@ Delete all docker containers and images, then delete all files in the debugserve
 
 # Getting Help
 
-If you need help with anything related to Star Wars: Legends of the Old Republic please feel free to contact us on our Discord here: https://discord.gg/MyQAM6m
+If you need help with anything related to Star Wars: Echoes of War please feel free to contact us on our Discord here: https://discord.gg/qBgR9hJefs
 
 For NWNX and Docker related issues please look for help in the NWNX Discord channel here: https://discord.gg/m2hJPDE
