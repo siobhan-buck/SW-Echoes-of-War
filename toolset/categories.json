@@ -2113,7 +2113,8 @@
                 "yastin_fettias",
                 "fnote_vendor",
                 "maleczerkaran001",
-                "receptiondroi001"
+                "receptiondroi001",
+                "malebh001"
               ],
               "placeholder": false
             },
@@ -3649,7 +3650,8 @@
                 "nw_wottrokoutfit",
                 "yshrobes001",
                 "yshrobes003",
-                "yshrobes002"
+                "yshrobes002",
+                "vorn_outfit"
               ],
               "placeholder": false
             },
@@ -4743,7 +4745,8 @@
                 "vtdrakebossarmor",
                 "vtdrakegruntarm",
                 "vtdrakegunnerarm",
-                "su_raitharmor"
+                "su_raitharmor",
+                "vornhelm1"
               ],
               "placeholder": false
             }
