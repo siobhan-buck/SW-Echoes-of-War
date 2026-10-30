@@ -19,13 +19,15 @@
                 "tat_anc_southent",
                 "pw_sc_canyonpit",
                 "pw_sc_canyonrng"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Mos Esper",
               "members": [
                 "smesks_palace"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tusken Raider Cave",
@@ -33,7 +35,8 @@
                 "tat_tuskcavebot",
                 "tat_tuskcavemain",
                 "tat_tuskcavetunn"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -70,7 +73,8 @@
             "tat_smeskspalace",
             "tat_tocheemain",
             "tat_wormden"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Small Player Apartment",
@@ -78,7 +82,8 @@
             "apartment_002",
             "playerap_s_fur",
             "playerap_s_unf"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Medium Player Apartment",
@@ -86,7 +91,8 @@
             "apartment_2",
             "playerap_m_fur",
             "playerap_m_unf"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Large Player Apartment",
@@ -94,7 +100,8 @@
             "apartment_3",
             "playerap_l_fur",
             "playerap_l_unf"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Viscara",
@@ -106,7 +113,8 @@
                   "name": "Sewers",
                   "members": [
                     "pw_sc_velsewboss"
-                  ]
+                  ],
+                  "placeholder": false
                 }
               ],
               "members": [
@@ -122,20 +130,23 @@
                 "pw_sc_velescmd",
                 "pw_sc_velesannx",
                 "veles_tradecon"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wildwoods",
               "members": [
                 "viscara_wwnorth",
                 "viscara_wwruined"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Legion Base",
               "members": [
                 "vlegsecond"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Republic Base",
@@ -147,7 +158,8 @@
                 "v_repubbase_hang",
                 "v_repubbase_jnrm",
                 "v_repubbase_off"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -181,7 +193,8 @@
             "v_jeditemple_v2",
             "v_swamp_ruins001",
             "v_swamp_undergro"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Prefabs",
@@ -193,19 +206,22 @@
                 "jedishuttle",
                 "ship_firstlight",
                 "viscara_npcship1"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Esria",
               "members": [
                 "esriauncharted"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Former Fosz Estate",
               "members": [
                 "foszestateext"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Korriban",
@@ -220,14 +236,16 @@
                 "vrotrkorrforgcav",
                 "vrotrkorrmission",
                 "vrotrkorrvalley"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Lava Planet",
               "members": [
                 "mustafar_lava_ka",
                 "mus_ironwoods_ka"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Nar Shaddaa",
@@ -240,7 +258,8 @@
                 "vrotrnsrooftops",
                 "vrotrnsrooftops2",
                 "vrotrnsslums"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Arkania",
@@ -248,14 +267,16 @@
                 "pw_ar_sc_arkcave",
                 "pw_ar_sc_arki001",
                 "pw_ar_sc_arkmine"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Randon",
               "members": [
                 "randoncity_01",
                 "randoncity_02"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Republic Cruiser",
@@ -264,9 +285,11 @@
                   "name": "The Sovereign",
                   "members": [
                     "republicshipevnt"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Roche System",
@@ -275,13 +298,15 @@
                   "name": "Nickel One",
                   "members": [
                     "roch_govbuild"
-                  ]
+                  ],
+                  "placeholder": false
                 }
               ],
               "members": [
                 "rochenickelone",
                 "rochenickeltwo"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Bespin",
@@ -292,13 +317,15 @@
                 "vrotrbesgasmine",
                 "vrotrbeslanding",
                 "vrotrbesporttown"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Corellia",
               "members": [
                 "vrotrcorelclouds"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dantooine",
@@ -309,21 +336,23 @@
                 "vrotrdantkhoonda",
                 "vrotrdantplains",
                 "vrotrnabmission"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tatooine",
-              "members": [
-                "vrotrtatdescamp",
-                "anchor_roche01",
-                "moseis_sand_001",
-                "tat_rancorcave",
-                "tat_rockypasslge",
-                "tat_tomoseisley1"
-              ],
               "children": [
                 {
                   "name": "Anchorhead",
+                  "children": [
+                    {
+                      "name": "Sandy Dune Desert",
+                      "members": [
+                        "anchor_road_est"
+                      ],
+                      "placeholder": false
+                    }
+                  ],
                   "members": [
                     "anc_dsrt_speeder",
                     "anchor_entreenor",
@@ -334,20 +363,14 @@
                     "tochee_cantina",
                     "tosche_cantina_s"
                   ],
-                  "children": [
-                    {
-                      "name": "Sandy Dune Desert",
-                      "members": [
-                        "anchor_road_est"
-                      ]
-                    }
-                  ]
+                  "placeholder": false
                 },
                 {
                   "name": "Mos Eisley",
                   "members": [
                     "moseis_dow_ca001"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Mos Esper",
@@ -355,31 +378,44 @@
                     "moseis_dow_can",
                     "moseis_exit_sud",
                     "moseis_lucky"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "members": [
+                "vrotrtatdescamp",
+                "anchor_roche01",
+                "moseis_sand_001",
+                "tat_rancorcave",
+                "tat_rockypasslge",
+                "tat_tomoseisley1"
+              ],
+              "placeholder": false
             },
             {
               "name": "Viscara",
-              "members": [
-                "vrotrviscvokouts",
-                "v_sithlake_int"
-              ],
               "children": [
                 {
                   "name": "Swamp Base",
                   "members": [
                     "sol_swampsbase",
                     "sol_swampstemple"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Swamplands",
                   "members": [
                     "v_swamp_base"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "members": [
+                "vrotrviscvokouts",
+                "v_sithlake_int"
+              ],
+              "placeholder": false
             },
             {
               "name": "Kashyyyk",
@@ -389,7 +425,8 @@
                 "kashyyykpaths",
                 "kashyyykshadow",
                 "pw_ar_kashyk"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Ossus",
@@ -400,34 +437,39 @@
                 "ossus_tempinisde",
                 "ossus_wastejungl",
                 "ossustemp"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Starship",
-              "members": [
-                "ship_secchan_int",
-                "starship3_int"
-              ],
               "children": [
                 {
                   "name": "Heavy Freighter",
                   "members": [
                     "starship4_int"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "members": [
+                "ship_secchan_int",
+                "starship3_int"
+              ],
+              "placeholder": false
             },
             {
               "name": "Starship Shuttle",
               "members": [
                 "shuttle"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Force Vision",
               "members": [
                 "visc_forcevision"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -506,7 +548,8 @@
             "vrotrsithlordext",
             "vrotrsithlordint",
             "yavin"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Korriban",
@@ -515,14 +558,16 @@
               "name": "Starport",
               "members": [
                 "ar_scor_korrcan"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wastelands",
               "members": [
                 "korr_waste2_zil",
                 "korr_waste_zil"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -541,7 +586,8 @@
             "valkorrdung1b",
             "valkorrdung1c",
             "valkorrdung1d"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Building Template",
@@ -553,7 +599,8 @@
             "medical_center",
             "player_rnd",
             "starport"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "System",
@@ -564,7 +611,8 @@
             "no_access",
             "ooc_area",
             "spending_area"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "CZ-220",
@@ -574,7 +622,8 @@
             "czs220_hangar",
             "czs220_maintlvl",
             "nanostation015"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Space",
@@ -589,7 +638,8 @@
             "space_midrim2",
             "tatooineorbit",
             "viscaraorbit"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Dantooine",
@@ -630,7 +680,8 @@
             "dan_tribefields",
             "dan_warehouse",
             "dan_wildplain"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Dathomir",
@@ -654,7 +705,8 @@
             "pw_sc_dath_sden",
             "pw_sc_tarnalpha",
             "pw_sc_tarnpres"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Small Player Home",
@@ -663,7 +715,8 @@
             "house_int_10",
             "house_int_4",
             "house_int_7"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Medium Player Home",
@@ -672,7 +725,8 @@
             "house_int_2",
             "house_int_5",
             "house_int_8"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Large Player Home",
@@ -681,7 +735,8 @@
             "house_int_3",
             "house_int_6",
             "house_int_9"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Hutlar",
@@ -692,7 +747,8 @@
                 "sol_mandaloriani",
                 "pw_sc_qioncore",
                 "pw_sc_qiontest"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Droid Foundry",
@@ -700,7 +756,8 @@
                 "hut_fdy_intake",
                 "hut_fdy_assembly",
                 "hut_fdy_core"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -719,7 +776,8 @@
             "ziyhutdung1b",
             "ziyhutdung1c",
             "ziyhutdung1d"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Smuggler\u0027s Moon",
@@ -746,7 +804,8 @@
             "pw_ar_undrnasha",
             "pw_sc_emfbackr",
             "pw_sc_smarena"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Mon Cala",
@@ -759,14 +818,16 @@
                 "pw_sc_dantprowar",
                 "moncalacorali001",
                 "moncalacoralisle"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dac City",
               "members": [
                 "moncaladaccityex",
                 "moncaladaccitysu"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Sharptooth Jungle",
@@ -776,12 +837,14 @@
                 "pw_sc_sithritual",
                 "moncalajungelsu",
                 "moncalawildjungl"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
             "moncala_swamp"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Twilight Praxeum",
@@ -791,7 +854,8 @@
             "r_prax_hangar",
             "r_prax_interiors",
             "r_prax_sith"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Starship",
@@ -811,14 +875,16 @@
             "ship_throne_z",
             "starship1_int",
             "starship2_int"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Smuggler\u0027s Moon Station",
           "members": [
             "spacenarshaddung",
             "spacenarshalower"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Abandoned Station",
@@ -826,7 +892,8 @@
             "zomb_abanstatio2",
             "zomb_abanstatio3",
             "zomb_abanstation"
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -876,7 +943,8 @@
             "cq_untinst",
             "cq_vitrupt",
             "cq_worldbrk"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "CZ-220",
@@ -896,7 +964,8 @@
             "maureenliagri",
             "night_galaxybar",
             "selanflembek"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Dantooine",
@@ -918,7 +987,8 @@
             "dantlibjedi",
             "danttrainer",
             "tat_civ1"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Cantinas \u0026 shops",
@@ -943,7 +1013,8 @@
             "dt_visi_medic003",
             "magasindial",
             "vendor_merchant"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Mon Cala",
@@ -956,9 +1027,11 @@
                 "mcdce_onmofo",
                 "mcdce_sergeant",
                 "mon_p3dr0oilpit"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Smuggler\u0027s Moon",
@@ -972,7 +1045,8 @@
             "talia_brenn",
             "veles_colonist1",
             "veles_colonist2"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Base game",
@@ -1010,7 +1084,8 @@
             "nw_convo_viiziin",
             "nw_convo_wottrok",
             "x0_skill_ctrap"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Republic",
@@ -1042,7 +1117,8 @@
             "rep_triguadialog",
             "rep_veles_troop1",
             "rep_veles_troop2"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Revan\u0027s crew",
@@ -1064,7 +1140,8 @@
             "rev_shuttleguard",
             "rev_sorcererpyxi",
             "rev_warr_irrian"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Character creation",
@@ -1075,7 +1152,8 @@
             "start_musician",
             "start_pilot",
             "start_wookiee"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Tatooine",
@@ -1092,7 +1170,8 @@
                 "tatsmugglerquest",
                 "tina_droidshconv",
                 "verpex"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -1101,7 +1180,8 @@
             "q1_nikka_larson",
             "smesk_naia",
             "tat_cantinaconvo"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Viscara",
@@ -1172,7 +1252,8 @@
                 "veles_techvendor",
                 "veles_volnatu",
                 "visc_spicesteph"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -1203,12 +1284,12 @@
             "vendor",
             "wf_droid",
             "wf_engineer"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Force Vision",
-          "members": [
-          ]
+          "placeholder": false
         },
         {
           "name": "Hutlar",
@@ -1221,7 +1302,8 @@
             "rorrska_buvvien",
             "tohnden_dahkson",
             "voryx_ooang"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Korriban",
@@ -1231,7 +1313,8 @@
               "members": [
                 "korrislugs",
                 "sithguide"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
@@ -1244,7 +1327,8 @@
             "trooperquest",
             "tulak_start",
             "vordlg"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Shared",
@@ -1256,7 +1340,8 @@
                 "bh2",
                 "bh3",
                 "bh4"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Cantina patrons",
@@ -1271,13 +1356,15 @@
                 "patron6",
                 "patron7",
                 "patron8"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Czerka",
               "members": [
                 "czerkaranger"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Services",
@@ -1286,14 +1373,16 @@
                 "fishmaster",
                 "train_terminal",
                 "yastin_fettias"
-              ]
+              ],
+              "placeholder": false
             }
           ],
           "members": [
             "nima_poy",
             "refugee",
             "tat_militia"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "System",
@@ -1304,27 +1393,31 @@
             "sithbasement",
             "spawn_banner",
             "starting_items"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Toolkits",
           "members": [
             "dmfi_universal",
             "tk_omnidye"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Twilight Praxeum",
           "members": [
             "dialognova"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Abandoned Station",
           "members": [
             "zomb_dataconvo",
             "zomb_telconv"
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -1373,7 +1466,8 @@
             "dmfi_univ_listen",
             "dmfi_voice1",
             "dmfi_voice_exe"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Base game",
@@ -1399,7 +1493,8 @@
             "x0_i0_walkway",
             "x2_s3_onhitcast",
             "x2_sig_state"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "ZEP toolkit",
@@ -1416,7 +1511,8 @@
             "zep_openclose",
             "zep_restded_resp",
             "zep_use_chair"
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -1431,7 +1527,8 @@
               "name": "Aberrations",
               "members": [
                 "riktasha"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Aliens*",
@@ -1453,13 +1550,15 @@
                 "nw_trirfhoshtiar",
                 "nw_viiziinfates",
                 "nw_wottrok"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Misc.*",
               "members": [
                 "nw_dusk"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "NPC\u0027s - Charismatic*",
@@ -1478,7 +1577,8 @@
                 "nw_tatcivfemale",
                 "nw_tatcivmale",
                 "nw_trigerstigle"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "NPC\u0027s - Dedicated*",
@@ -1486,14 +1586,16 @@
                 "nw_anchoraye",
                 "nw_anchorbee",
                 "nw_coopemmalake"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "NPC\u0027s - Smart*",
               "members": [
                 "nw_karravmaubar",
                 "nw_michaelhilla"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "NPC\u0027s - Strong*",
@@ -1501,7 +1603,8 @@
                 "nw_moaguard",
                 "nw_nickkell",
                 "nw_shadowanchor"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Robots*",
@@ -1509,7 +1612,8 @@
                 "nw_aa181920",
                 "nw_mr03478",
                 "nw_sf91021"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Ships*",
@@ -1566,9 +1670,11 @@
                 "sithcap6",
                 "t3capital",
                 "sithcap1"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Monsters",
@@ -1581,21 +1687,25 @@
                   "members": [
                     "bantha",
                     "nerf"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Snakes*",
                   "members": [
                     "ghostviperking"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Beasts*",
               "members": [
                 "rancor"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Constructs",
@@ -1605,7 +1715,8 @@
                 "sewerdatacollect",
                 "sewermaintenance",
                 "sewerpatroldroid"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Undead",
@@ -1619,11 +1730,14 @@
                     "zomb_wook",
                     "zomb_worker1",
                     "zomb_worker2"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "NPCs",
@@ -1641,7 +1755,8 @@
                 "pip",
                 "sania",
                 "shu"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Children*",
@@ -1671,7 +1786,8 @@
                 "republictechnici",
                 "republictrooper",
                 "republictrooperf"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Drider*",
@@ -1690,7 +1806,8 @@
                 "sith_troop",
                 "g_sithtroop",
                 "sith_warrior"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dwarves",
@@ -1768,7 +1885,8 @@
                 "cp_vitrupt_sp",
                 "vrix7",
                 "cp_worldbrk_sp"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Elves",
@@ -1792,7 +1910,8 @@
                 "vnpcssorc3nh",
                 "vnpcstroop5nh",
                 "vnpcswar3nh"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Halflings",
@@ -1802,7 +1921,8 @@
                 "gerogoon002",
                 "gerogoon003",
                 "gerogoon005"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Humans",
@@ -1991,8 +2111,11 @@
                 "wook_gunner",
                 "wook_warrior",
                 "yastin_fettias",
-                "fnote_vendor"
-              ]
+                "fnote_vendor",
+                "maleczerkaran001",
+                "receptiondroi001"
+              ],
+              "placeholder": false
             },
             {
               "name": "Other",
@@ -2030,16 +2153,19 @@
                 "utilitydroid4",
                 "utilitydroid5",
                 "utilitydroid7"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tiefling*",
               "members": [
                 "bobmorel",
                 "ranzmorgal"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Special",
@@ -2077,7 +2203,8 @@
                 "vreego",
                 "weequay_pirate",
                 "yshren"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 2",
@@ -2115,7 +2242,8 @@
                 "wylan",
                 "zhettathorne",
                 "generalyaan"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 3",
@@ -2128,13 +2256,15 @@
                 "mpiandry",
                 "sirtulieut",
                 "humanmaletrained"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 4",
               "members": [
                 "sithbasementgive"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 5",
@@ -2155,9 +2285,11 @@
                 "yserna_001",
                 "zezkaiell",
                 "jedimasterzhar"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Tutorial",
@@ -2169,7 +2301,8 @@
             "holo_kinrath",
             "dmfi_setting",
             "dmfi_voice"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "World Creatures",
@@ -2182,7 +2315,8 @@
                 "malsecdroid",
                 "malspiderdroid",
                 "mynock"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dantooine",
@@ -2198,7 +2332,8 @@
                 "bolboss",
                 "pthune",
                 "voritorlizard"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dathomir",
@@ -2246,8 +2381,10 @@
                 "cp_untinst_ic",
                 "cp_untinst_ms",
                 "cp_untinst_sp",
-                "cp_untinst_wd"
-              ]
+                "cp_untinst_wd",
+                "cp_apexbite_a001"
+              ],
+              "placeholder": false
             },
             {
               "name": "Hutlar",
@@ -2405,7 +2542,8 @@
                 "cp_worldbrk_ic",
                 "cp_worldbrk_ms",
                 "cp_worldbrk_wd"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Korriban",
@@ -2430,8 +2568,10 @@
                 "vkorrdun4boss",
                 "vkorrduncouncilg",
                 "vkorrdungate",
-                "tukata"
-              ]
+                "tukata",
+                "vkorrdunmarau001"
+              ],
+              "placeholder": false
             },
             {
               "name": "Mon Cal",
@@ -2450,7 +2590,8 @@
                 "sable_quarr",
                 "mc_scorchys",
                 "viper"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Nar Shaddaa",
@@ -2469,7 +2610,8 @@
                 "nar_serp_leader",
                 "nar_slavercaptn",
                 "nar_troublemaker"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tatooine",
@@ -2494,7 +2636,8 @@
                 "ext_tusken_tr003",
                 "tusken_melee",
                 "womprat"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Viscara",
@@ -2546,9 +2689,11 @@
                 "vellenrap_lo",
                 "warocas",
                 "ww_kinrath"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -2563,7 +2708,8 @@
               "name": "Custom 1",
               "members": [
                 "_mdrn_dt_jumpto"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 2",
@@ -2575,14 +2721,16 @@
                 "_mdrn_dt_slid009",
                 "_mdrn_dt_spik001",
                 "_mdrn_dt_slid012"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 3",
               "members": [
                 "_mdrn_dt_slid016",
                 "_mdrn_dt_slid008"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 5",
@@ -2599,9 +2747,11 @@
                 "_mdrn_dt_plan003",
                 "_mdrn_dt_plan005",
                 "_mdrn_dt_plan011"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Universal",
@@ -2646,7 +2796,8 @@
                 "_mdrn_dt_strmetl",
                 "_mdrn_dt_webpat",
                 "_mdrn_dt_white"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other",
@@ -2672,7 +2823,8 @@
                 "_mdrn_dt_slide",
                 "_mdrn_dt_slide2",
                 "_mdrn_dt_hole2"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Stone",
@@ -2685,7 +2837,8 @@
                 "_mdrn_dt_spikegr",
                 "_mdrn_dt_steam",
                 "_mdrn_dt_stneint"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wood",
@@ -2731,9 +2884,11 @@
                 "_mdrn_dt_rough2",
                 "_mdrn_dt_jailwd",
                 "_mdrn_dt_plank"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -2940,7 +3095,8 @@
                 "worker_outfit_2",
                 "engi_ring_2",
                 "engi_armor_2"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Heavy",
@@ -3091,7 +3247,8 @@
                 "viv_tunic",
                 "fld_bul_armor",
                 "thermdet_w1"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Helmets",
@@ -3325,7 +3482,8 @@
                 "sabcycl_w5",
                 "perflurry_w5",
                 "oneshot_l7"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Light",
@@ -3342,7 +3500,8 @@
                 "sithrobe_female",
                 "sith_officer_uni",
                 "sith_war_armor"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "NPC Clothing",
@@ -3491,7 +3650,8 @@
                 "yshrobes001",
                 "yshrobes003",
                 "yshrobes002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Shields",
@@ -3514,11 +3674,14 @@
                     "prm_bul_shield",
                     "tit_shield",
                     "fld_bul_shield"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Creature Items",
@@ -3618,7 +3781,8 @@
                 "zombiesci_wp",
                 "zombieworker2_wp",
                 "zombieworker_wp"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Claw",
@@ -3693,13 +3857,15 @@
                 "warocas_wp",
                 "wwkinrath_wp",
                 "wraid_wp"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Gore",
               "members": [
                 "droidprobe"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Melee Weapons",
@@ -4002,7 +4168,8 @@
                 "vtdrakeflamerfue",
                 "vtdrakegungungun",
                 "vtdrakegruntmele"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Skin-Hide",
@@ -4510,7 +4677,8 @@
                 "zombiesci_sk",
                 "zombieworker2_sk",
                 "zombieworker_sk"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Slam",
@@ -4574,10 +4742,13 @@
                 "vtdrakecaparmor",
                 "vtdrakebossarmor",
                 "vtdrakegruntarm",
-                "vtdrakegunnerarm"
-              ]
+                "vtdrakegunnerarm",
+                "su_raitharmor"
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Furniture",
@@ -5028,7 +5199,8 @@
             "structure_0060",
             "structure_0159",
             "structure_0281"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Miscellaneous",
@@ -5042,7 +5214,8 @@
                 "recond_tome",
                 "refund_tome",
                 "xp_tome_3"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Clothing",
@@ -5214,7 +5387,8 @@
                     "fld_bul_belt",
                     "sabcycl_l4",
                     "sabstorm_l4"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Boots",
@@ -5370,7 +5544,8 @@
                     "viv_boots",
                     "fld_bul_legs",
                     "sabcycl_l8"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Bracers",
@@ -5479,7 +5654,8 @@
                     "emcocktail_w3",
                     "fld_bul_bracer",
                     "unbrbeast_w3"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Cloaks",
@@ -5634,7 +5810,8 @@
                     "fld_bul_cloak",
                     "unbrbeast_l3",
                     "untinst_l3"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Gauntlet",
@@ -5776,9 +5953,11 @@
                     "guardmst_w4",
                     "invinc_w4",
                     "perflurry_l3"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Crafting-Tradeskill Material",
@@ -7796,7 +7975,8 @@
                 "zinsiam",
                 "zitah",
                 "zondeyn"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Gems",
@@ -7819,7 +7999,8 @@
                 "mod_w_verminkill",
                 "mod_w_wookieekil",
                 "mod_w_zabrakkill"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Jewelry",
@@ -7975,7 +8156,8 @@
                     "deccommand_w5",
                     "untinst_w5",
                     "unbrbeast_l7"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Rings",
@@ -8132,9 +8314,11 @@
                     "fld_bul_ring",
                     "guardmst_l6",
                     "scraplock_l6"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Kit",
@@ -8160,7 +8344,8 @@
                 "staff_upg5",
                 "stim_pack",
                 "stim_pack_50"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other",
@@ -8410,7 +8595,8 @@
                 "womp_mball",
                 "yellow_curry",
                 "zoni_broth"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Potions",
@@ -8418,7 +8604,8 @@
                 "czerkasoda",
                 "zomb_avirus",
                 "slug_shake"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Scrolls",
@@ -9068,9 +9255,11 @@
                 "map_047",
                 "map_053",
                 "map_034"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Modern General*",
@@ -9080,7 +9269,8 @@
               "members": [
                 "repbook_10tips",
                 "repbook_regulati"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Misc.*",
@@ -9169,7 +9359,8 @@
                 "violin_m",
                 "violin_bow",
                 "night_walkstick1"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Professional Equipment*",
@@ -9180,9 +9371,11 @@
                 "ssscan1",
                 "sswpn1",
                 "sswpn2"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Plot Item",
@@ -9199,7 +9392,8 @@
             "vx_matrix",
             "tc_beacon",
             "tk_sensor"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Special",
@@ -9387,7 +9581,8 @@
                 "cap_warship",
                 "yshrensaber001",
                 "item025"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 2",
@@ -9424,8 +9619,10 @@
                 "key_sith_2",
                 "key_sith_3",
                 "key_smuggler01",
-                "wpn_sub_token"
-              ]
+                "wpn_sub_token",
+                "key_rmo"
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 3",
@@ -9450,7 +9647,8 @@
                 "night_whitewampa",
                 "xisigin",
                 "night_zunathonth"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 4",
@@ -9462,7 +9660,8 @@
                 "kyberfragment",
                 "pclightsabert001",
                 "revan_saber_003"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 5",
@@ -9482,9 +9681,11 @@
                 "item035",
                 "item030",
                 "item032"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Tutorial",
@@ -9517,7 +9718,8 @@
             "dmfi_xp",
             "exit_preview",
             "dmfi_onering"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Weapons",
@@ -9529,21 +9731,25 @@
                   "name": "Arrows",
                   "members": [
                     "blaster_bullets"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Bolts",
                   "members": [
                     "rifle_bullets"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Bullets",
                   "members": [
                     "blaster_bullets2"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Axes",
@@ -9552,9 +9758,11 @@
                   "name": "Two-Handed",
                   "members": [
                     "ganz_axe"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Bladed",
@@ -9563,7 +9771,8 @@
                   "name": "Bastard Swords",
                   "members": [
                     "elitesithvibro"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Daggers",
@@ -9621,7 +9830,8 @@
                     "vreegoknife",
                     "sysshut_w1",
                     "vitrupt_w1"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Great Swords",
@@ -9666,7 +9876,8 @@
                     "tit_greatsword",
                     "t_greatsword",
                     "vet_greatsword"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Longswords",
@@ -9769,7 +9980,8 @@
                     "vet_electroblade",
                     "vet_longsword",
                     "vet_trnsaber"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Other",
@@ -10029,7 +10241,8 @@
                     "rhydelalphadb",
                     "rhydelalphacm",
                     "bp_rhydelalpha"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Short Swords",
@@ -10039,9 +10252,11 @@
                     "byyskwarriorswor",
                     "sith_blade",
                     "wswss002"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Blunts",
@@ -10050,9 +10265,11 @@
                   "name": "Clubs",
                   "members": [
                     "tariscane"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Double-Sided",
@@ -10179,7 +10396,8 @@
                 "vet_twinelec",
                 "sabcycl_w1",
                 "worldbrk_w1"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Exotic",
@@ -10209,7 +10427,8 @@
                 "valws4",
                 "valsos4",
                 "valws3"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Mage-Specific",
@@ -10229,7 +10448,8 @@
                     "valsol4",
                     "valsol3",
                     "valwl3"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Staves",
@@ -10252,7 +10472,8 @@
                     "tranquility_rod",
                     "willow_rod",
                     "yew_rod"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Wands",
@@ -10269,9 +10490,11 @@
                     "valgl2",
                     "valsl2",
                     "valsl3"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Polearms",
@@ -10325,7 +10548,8 @@
                 "t_spear",
                 "cac_gaderffii002",
                 "vet_spear"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Ranged Weapons",
@@ -10334,7 +10558,8 @@
                   "name": "Cannons",
                   "members": [
                     "ass_rifle"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Dual Pistols",
@@ -10345,7 +10570,8 @@
                     "jawa_wp",
                     "jawaaddit_wp",
                     "blast_jawa_d"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Longarms*",
@@ -10362,7 +10588,8 @@
                     "tusken_wp",
                     "tuskenraider_wp",
                     "wook_bowcaster"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Pistols",
@@ -10433,7 +10660,8 @@
                     "t_pistol",
                     "deadhand_w1",
                     "vet_pistol"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Rifles",
@@ -10489,9 +10717,11 @@
                     "t_rifle",
                     "varo_skeld_wp",
                     "vet_rifle"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Throwing",
@@ -10536,9 +10766,11 @@
                 "t_shuriken",
                 "dan_shuriken",
                 "vet_shuriken"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -10581,7 +10813,8 @@
             "training_gear",
             "veles_gen_merch",
             "visc_smuggler"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Special",
@@ -10614,15 +10847,18 @@
                 "gp_smth_3",
                 "gp_smth_4",
                 "gp_smth_5"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 2",
               "members": [
                 "player_store"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -10688,7 +10924,8 @@
                     "zep_cps_orcs_003",
                     "zep_cps_orcs_001",
                     "zep_cps_orcs_002"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Corpses - NPC Human",
@@ -10729,7 +10966,8 @@
                     "zep_cps_trod_004",
                     "zep_cps_trod_005",
                     "zep_cps_trod_006"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Corpses - NPC Other",
@@ -10755,7 +10993,8 @@
                     "zep_cps_hom_002",
                     "zep_cps_hom_003",
                     "zep_cps_hom_004"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Misc.",
@@ -10763,15 +11002,18 @@
                     "zep_cps_pile_001",
                     "zep_cps_pile_002",
                     "zep_orctrebdy001"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Broken Equipment*",
               "members": [
                 "zep_be_belf_001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Fortifications*",
@@ -10781,7 +11023,8 @@
                 "zep_orcspike002",
                 "zep_orcspike001",
                 "zep_oilcauldron"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -10798,7 +11041,8 @@
                 "zep_vulture001",
                 "zep_weaponrck001",
                 "zep_wingchundmmy"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Siege Equipment*",
@@ -10828,7 +11072,8 @@
                 "zep_tonnelon",
                 "zep_trebuchet",
                 "zep_arbaletatour"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Weapons",
@@ -10940,9 +11185,11 @@
                 "zep_bf_spr_002",
                 "zep_bf_spr_003",
                 "zep_bf_spr_004"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "CEP Specific*",
@@ -10960,7 +11207,8 @@
             "zep_gateblock011",
             "zep_sgateblck001",
             "zep_restded_resp"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Civilization Exterior*",
@@ -10980,7 +11228,8 @@
                     "codiportala",
                     "codiportalb",
                     "zep_torigate"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Awnings \u0026 Windows*",
@@ -11006,7 +11255,8 @@
                     "zep_window003",
                     "zep_window004",
                     "zep_woodawn01"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Doors*",
@@ -11040,7 +11290,8 @@
                     "zep_doors005",
                     "zep_doors010",
                     "zep_doors009"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Fences \u0026 Walls*",
@@ -11215,7 +11466,8 @@
                     "zep_wall002",
                     "zep_wall003",
                     "zep_fence001"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Fountains*",
@@ -11230,7 +11482,8 @@
                     "zep_pool004",
                     "zep_pool002",
                     "zep_pool003"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Houses*",
@@ -11243,7 +11496,8 @@
                     "zep_house001",
                     "zep_lizardflk007",
                     "zep_lizardflk008"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Market*",
@@ -11257,7 +11511,8 @@
                     "nwn2merchant002",
                     "zep_ce_vst_001",
                     "zep_ce_vst_002"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Other Buildings*",
@@ -11280,7 +11535,8 @@
                     "zep_shack002",
                     "zep_shed001",
                     "zep_shelter"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Ruins \u0026 Destroyed Buildings*",
@@ -11302,7 +11558,8 @@
                     "nwn2house038",
                     "nwn2house040",
                     "zep_ruine_bild"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Temples \u0026 Shrines*",
@@ -11313,7 +11570,8 @@
                     "zep_shrine01",
                     "zep_shrine001",
                     "zep_shrine"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Towers \u0026 Castles*",
@@ -11321,9 +11579,11 @@
                     "zep_tower016",
                     "zep_tower017",
                     "zep_tower014"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Lighting*",
@@ -11360,7 +11620,8 @@
                 "zep_oolantern007",
                 "zep_pollntrn001",
                 "zep_opollntrn001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -11374,7 +11635,8 @@
                 "zep_ce_flw_002",
                 "zep_ce_flw_003",
                 "codispirebench"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Rail*",
@@ -11386,7 +11648,8 @@
                 "zep_rail005",
                 "zep_rail006",
                 "zep_rail007"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Roads*",
@@ -11399,7 +11662,8 @@
                 "zep_road006",
                 "zep_road007",
                 "zep_road008"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Transportation*",
@@ -11415,7 +11679,8 @@
                     "zep_boatflipped",
                     "zep_lifeboat001",
                     "zep_tno_rowboat"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Ships*",
@@ -11433,7 +11698,8 @@
                     "zep_ship_tno1",
                     "zep_shipbell001",
                     "zep_shipwheel001"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Shipwrecks*",
@@ -11462,7 +11728,8 @@
                     "zep_shipwreck022",
                     "zep_shipwreck023",
                     "zep_shipwreck024"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Wagons \u0026 Carts*",
@@ -11487,11 +11754,14 @@
                     "zep_ce_car_013",
                     "zep_wagon005",
                     "zep_wagon001"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Civilization Interior*",
@@ -11505,7 +11775,8 @@
                 "zep_toilet001",
                 "zep_stonebsin003",
                 "zep_tub002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Bedroom*",
@@ -11582,7 +11853,8 @@
                 "zep_screen015",
                 "zep_sleeper",
                 "zep_sleeper004"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Books \u0026 Manuscripts*",
@@ -11595,7 +11867,8 @@
                 "zep_bbook004",
                 "zep_bbook001",
                 "zep_bbook003"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Fireplaces*",
@@ -11609,7 +11882,8 @@
                 "zep_fireplace002",
                 "zep_fireplace003",
                 "zep_fireplace005"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Floor Coverings*",
@@ -11660,7 +11934,8 @@
                     "zep_throwrug002",
                     "zep_throwrug006",
                     "zep_throwrug004"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Other*",
@@ -11698,7 +11973,8 @@
                     "zep_tatami002",
                     "zep_tatami001",
                     "zep_skin002"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Rugs*",
@@ -11726,9 +12002,11 @@
                     "zep_throwrug057",
                     "zep_throwrug058",
                     "zep_tigerrug"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Flowers, Plants*",
@@ -11749,7 +12027,8 @@
                 "zep_ci_pfl_006",
                 "zep_ci_pfl_005",
                 "zep_vase04"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Food*",
@@ -11799,7 +12078,8 @@
                 "zep_steak002",
                 "zep_pudding",
                 "zep_sakeset001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Furnishing, Misc*",
@@ -11824,7 +12104,8 @@
                 "zep_vase006",
                 "zep_vase02",
                 "zep_waterpipe"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Furniture*",
@@ -11845,7 +12126,8 @@
                     "zep_barshelf003",
                     "zep_barshelf001",
                     "codishelf01"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Bookcases \u0026 Dressers*",
@@ -11867,7 +12149,8 @@
                     "zep_bdresser003",
                     "zep_bdresser002",
                     "zep_tansu002"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Chairs \u0026 Stools*",
@@ -11906,7 +12189,8 @@
                     "zep_bstool002",
                     "zep_bstool003",
                     "zep_chair001"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Desks \u0026 Cabinets*",
@@ -11924,7 +12208,8 @@
                     "zep_displaycase3",
                     "zep_inkbrshes001",
                     "zep_inkwell"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Sofas \u0026 Benches*",
@@ -11945,7 +12230,8 @@
                     "zep_ci_fch_001",
                     "zep_ci_fch_002",
                     "zep_ci_fch_003"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Table*",
@@ -11993,16 +12279,19 @@
                     "zep_table05",
                     "zep_tables004",
                     "zep_tables005"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Throne*",
                   "members": [
                     "zep_throne001",
                     "zep_throne002"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Kitchen*",
@@ -12023,7 +12312,8 @@
                 "zep_ci_shc_001",
                 "zep_cabinettea",
                 "zep_cask001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Lighting*",
@@ -12050,7 +12340,8 @@
                 "zep_sconce002",
                 "zep_osconce002",
                 "zep_ci_lgt_004"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Table Toppers*",
@@ -12128,7 +12419,8 @@
                 "zep_vase01",
                 "zep_vase002",
                 "zep_vase005"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Hangings*",
@@ -12217,13 +12509,15 @@
                     "zep_ci_wdw_002",
                     "zep_ci_wdw_003",
                     "zep_ci_wdw_004"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Paintings Round*",
                   "members": [
                     "zep_portrait001"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Paintings Square*",
@@ -12261,7 +12555,8 @@
                     "zep_pntingcoast2",
                     "zep_pic02",
                     "zep_portrait"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Tapestries*",
@@ -12289,7 +12584,8 @@
                     "zep_tapstry_003",
                     "zep_tapstry_002",
                     "zep_tapstry_008"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Taxidermy*",
@@ -12311,11 +12607,14 @@
                     "zep_wallhead010",
                     "zep_wallhead008",
                     "zep_wallhead009"
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Containers \u0026 Switches",
@@ -12379,7 +12678,8 @@
             "zep_cs_ppy_001",
             "zep_cs_ppz_001",
             "saddlebag"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Dungeon*",
@@ -12399,7 +12699,8 @@
                 "zep_blood_007",
                 "zep_pentagram001",
                 "zep_pentagram002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Debris*",
@@ -12411,7 +12712,8 @@
                 "zep_soot",
                 "zep_soot001",
                 "zep_soot002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Doorway, Grate, Portal*",
@@ -12424,7 +12726,8 @@
                 "zep_doorway_d003",
                 "zep_doorway_d002",
                 "zep_cs_sgt_001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dungeon Dressing*",
@@ -12458,7 +12761,8 @@
                 "zep_cobweb007",
                 "zep_cobweb008",
                 "zep_cobweb009"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Graffiti \u0026 Splats*",
@@ -12510,7 +12814,8 @@
                 "zep_splat001",
                 "zep_splat011",
                 "zep_splat012"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Lighting*",
@@ -12530,7 +12835,8 @@
                 "zep_torch001",
                 "zep_torch002",
                 "zep_otorch002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -12546,7 +12852,8 @@
                 "zep_sewerroof",
                 "zep_stonebloc001",
                 "zep_stonebloc002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tombs, Grave Markers*",
@@ -12572,7 +12879,8 @@
                 "zep_sarco",
                 "zep_sarco2",
                 "zep_coffin001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Torture, Execution*",
@@ -12611,7 +12919,8 @@
                 "zep_shcklstak001",
                 "zep_orctrture002",
                 "zep_te_prs_001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Traps*",
@@ -12640,9 +12949,11 @@
                 "zep_traps008",
                 "wallbladepcbl",
                 "whirlbladepcbl"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Futuristic Exterior*",
@@ -12697,7 +13008,8 @@
                 "_mdrn_pl_kyru15",
                 "_mdrn_pl_kyru16",
                 "_mdrn_pl_kyru17"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Ground*",
@@ -12756,7 +13068,8 @@
                 "statue_twilek",
                 "_mdrn_pl_trshcn2",
                 "_mdrn_pl_trshcn3"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Misc.*",
@@ -12800,7 +13113,8 @@
                 "_mdrn_pl_fdcart2",
                 "_mdrn_pl_df_robs",
                 "_mdrn_pl_droidsd"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Nature, Parks \u0026 Gardens",
@@ -12822,7 +13136,8 @@
                 "_mdrn_pl_plant11",
                 "_mdrn_pl_plant02",
                 "_mdrn_pl_flowr04"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Signs*",
@@ -12872,7 +13187,8 @@
                 "_mdrn_pl_signw14",
                 "_mdrn_pl_signw03",
                 "_mdrn_pl_signw16"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Streets*",
@@ -12881,7 +13197,8 @@
                 "_mdrn_pl_strtlm2",
                 "_mdrn_pl_strtlm4",
                 "_mdrn_pl_strtlm5"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Structures*",
@@ -12918,7 +13235,8 @@
                 "_mdrn_pl_lumpsta",
                 "_mdrn_pl_kyru08",
                 "_mdrn_pl_windmil"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Vehicles*",
@@ -12993,7 +13311,8 @@
                 "_mdrn_pl_tnkcamo",
                 "_mdrn_pl_walkera",
                 "_mdrn_pl_walkerl"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Fixtures \u0026 Features*",
@@ -13008,7 +13327,8 @@
                 "_mdrn_pl_flagsit",
                 "_mdrn_pl_wall007",
                 "_mdrn_pl_ventswa"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Walls \u0026 Fences*",
@@ -13019,7 +13339,8 @@
                 "_mdrn_pl_wallfen",
                 "_mdrn_pl_wallrst",
                 "_mdrn_pl_frcfw"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Weapons \u0026 Ammunition*",
@@ -13032,9 +13353,11 @@
                 "_mdrn_pl_df_gas",
                 "_mdrn_pl_gunturr",
                 "_mdrn_pl_lsrcann"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Futuristic Interior*",
@@ -13050,7 +13373,8 @@
                 "_mdrn_pl_strspc4",
                 "_mdrn_pl_strspc5",
                 "_mdrn_pl_discoba"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Containers*",
@@ -13112,7 +13436,8 @@
                 "_mdrn_pl_conta51",
                 "_mdrn_pl_cabi002",
                 "_mdrn_pl_tanker"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Controls*",
@@ -13197,7 +13522,8 @@
                 "_mdrn_pl_transf3",
                 "_mdrn_pl_transf2",
                 "_mdrn_pl_transf4"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Equipment*",
@@ -13294,7 +13620,8 @@
                 "_mdrn_pl_df_wseo",
                 "_mdrn_pl_workbcr",
                 "_mdrn_pl_workbc3"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Floors*",
@@ -13388,7 +13715,8 @@
                 "_mdrn_pl_safecos",
                 "_mdrn_pl_floo003",
                 "_mdrn_pl_telepd"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Furniture*",
@@ -13501,7 +13829,8 @@
                 "_mdrn_pl_table32",
                 "_mdrn_pl_armoir3",
                 "_mdrn_pl_armoir5"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Kitchen \u0026 Food*",
@@ -13521,7 +13850,8 @@
                 "_mdrn_pl_food057",
                 "_mdrn_pl_cuphand",
                 "_mdrn_pl_saucier"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Lighting*",
@@ -13544,7 +13874,8 @@
                 "_mdrn_pl_lights6",
                 "_mdrn_pl_lights1",
                 "_mdrn_pl_lights2"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Misc.*",
@@ -13599,7 +13930,8 @@
                 "_mdrn_pl_toilet3",
                 "_mdrn_pl_vendblu",
                 "_mdrn_pl_washbdl"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Personal Items*",
@@ -13607,7 +13939,8 @@
                 "_mdrn_pl_malette",
                 "_mdrn_pl_maletts",
                 "_mdrn_pl_maletty"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Table Items*",
@@ -13637,7 +13970,8 @@
                 "_mdrn_pl_artft01",
                 "_mdrn_pl_flowr03",
                 "_mdrn_pl_stuffed"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Fixtures \u0026 Features*",
@@ -13763,7 +14097,8 @@
                 "_mdrn_pl_alnbrca",
                 "_mdrn_pl_alnbrcb",
                 "_mdrn_pl_alnbrcc"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Hangings*",
@@ -13775,7 +14110,8 @@
                 "_mdrn_pl_paint05",
                 "_mdrn_pl_panel12",
                 "_mdrn_pl_post062"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Weapons \u0026 Ammunition*",
@@ -13791,9 +14127,11 @@
                 "_mdrn_pl_sprep01",
                 "_mdrn_pl_landmin",
                 "_mdrn_pl_weaprck"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Military",
@@ -13819,7 +14157,8 @@
             "zep_mi_wpr_008",
             "zep_mi_wpr_006",
             "zep_mi_wpr_001"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Miscellaneous",
@@ -13876,8 +14215,12 @@
             "d_stone_49",
             "zep_strange001",
             "_mdrn_tracer",
-            "zep_crystal004"
-          ]
+            "zep_crystal004",
+            "setting_info",
+            "ooc_impinfo",
+            "importantinfo"
+          ],
+          "placeholder": false
         },
         {
           "name": "Miscellaneous Interior",
@@ -13902,7 +14245,8 @@
             "throne_good",
             "thronewood001",
             "zep_womanrock"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Modern Exterior*",
@@ -13964,7 +14308,8 @@
                 "_mdrn_pl_buildg4",
                 "_mdrn_pl_buildg5",
                 "_mdrn_pl_struct2"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Ground*",
@@ -14141,7 +14486,8 @@
                 "_mdrn_pl_dmpstr",
                 "_mdrn_pl_dmpstrd",
                 "_mdrn_pl_dmpstr2"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Misc.*",
@@ -14209,7 +14555,8 @@
                 "_mdrn_pl_umbllar",
                 "_mdrn_pl_wheelb1",
                 "_mdrn_pl_wheelba"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Nature, Parks \u0026 Gardens",
@@ -14325,7 +14672,8 @@
                 "_mdrn_pl_pinegrp",
                 "_mdrn_pl_plant07",
                 "_mdrn_pl_vinefen"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Signs*",
@@ -14410,7 +14758,8 @@
                 "_mdrn_pl_wsign04",
                 "_mdrn_pl_wsign03",
                 "_mdrn_pl_wsign06"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Streets*",
@@ -14476,7 +14825,8 @@
                 "_mdrn_pl_dotftr1",
                 "_mdrn_pl_dotftr4",
                 "_mdrn_pl_dotftr3"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Structures*",
@@ -14535,7 +14885,8 @@
                 "_mdrn_pl_dftank1",
                 "_mdrn_pl_rusttnk",
                 "_mdrn_pl_dftank2"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Vehicles*",
@@ -14666,7 +15017,8 @@
                 "_mdrn_pl_truck02",
                 "_mdrn_pl_truck04",
                 "_mdrn_pl_truck03"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Fixtures \u0026 Features*",
@@ -14771,7 +15123,8 @@
                 "_mdrn_pl_wind006",
                 "_mdrn_pl_windwwn",
                 "_mdrn_pl_windwww"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Walls \u0026 Fences*",
@@ -14841,7 +15194,8 @@
                 "_mdrn_pl_fencer6",
                 "_mdrn_pl_fencer5",
                 "_mdrn_pl_plant01"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Weapons \u0026 Ammunition*",
@@ -14855,9 +15209,11 @@
                 "_mdrn_pl_missil2",
                 "_mdrn_pl_missil3",
                 "_mdrn_pl_df_sam"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Modern Interior*",
@@ -14870,7 +15226,8 @@
                 "_mdrn_pl_fanceil",
                 "_mdrn_pl_fanmksh",
                 "_mdrn_pl_lightne"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Containers*",
@@ -15025,7 +15382,8 @@
                 "_mdrn_pl_wpnrck2",
                 "_mdrn_pl_wpnrck3",
                 "_mdrn_pl_wpnrck4"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Controls*",
@@ -15106,7 +15464,8 @@
                 "_mdrn_pl_mainfr4",
                 "_mdrn_pl_pwrbx",
                 "_mdrn_pl_securty"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Equipment*",
@@ -15277,7 +15636,8 @@
                 "_mdrn_pl_workbc2",
                 "_mdrn_pl_workbcw",
                 "_mdrn_pl_workbco"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Floors*",
@@ -15345,7 +15705,8 @@
                 "_mdrn_pl_carpt02",
                 "_mdrn_pl_carpt04",
                 "_mdrn_pl_skinsbl"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Furniture*",
@@ -15611,7 +15972,8 @@
                 "_mdrn_pl_armoir8",
                 "_mdrn_pl_wardrbp",
                 "_mdrn_pl_wardrbw"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Kitchen \u0026 Food*",
@@ -15759,7 +16121,8 @@
                 "_mdrn_pl_teapot",
                 "_mdrn_pl_thermos",
                 "_mdrn_pl_caftray"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Lighting*",
@@ -15798,7 +16161,8 @@
                 "_mdrn_pl_wlghtrn",
                 "_mdrn_pl_lights5",
                 "_mdrn_pl_wlllght"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Misc.*",
@@ -15960,7 +16324,8 @@
                 "_mdrn_pl_watercl",
                 "_mdrn_pl_waterf2",
                 "_mdrn_pl_waterf1"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Personal Items*",
@@ -15978,7 +16343,8 @@
                 "_mdrn_pl_snowsh1",
                 "_mdrn_pl_snowsh2",
                 "_mdrn_pl_snowsh3"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Table Items*",
@@ -16097,7 +16463,8 @@
                 "_mdrn_pl_videot3",
                 "_mdrn_pl_videot1",
                 "_mdrn_pl_walleto"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Fixtures \u0026 Features*",
@@ -16221,7 +16588,8 @@
                 "_mdrn_pl_wwall6t",
                 "_mdrn_pl_wwall7d",
                 "_mdrn_pl_wwall7t"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Wall Hangings*",
@@ -16419,7 +16787,8 @@
                 "_mdrn_pl_wall005",
                 "_mdrn_pl_wall006",
                 "_mdrn_pl_post030"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Weapons \u0026 Ammunition*",
@@ -16444,9 +16813,11 @@
                 "_mdrn_pl_bmbhome",
                 "_mdrn_pl_bmbied",
                 "_mdrn_pl_grenade"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Modern Space*",
@@ -16474,7 +16845,8 @@
                 "_mdrn_pl_spc_rw",
                 "_mdrn_pl_spc_stl",
                 "_mdrn_pl_spc_str"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Ships*",
@@ -16574,7 +16946,8 @@
                 "_mdrn_pl_shipgns",
                 "_mdrn_pl_warshp1",
                 "_mdrn_pl_shktor4"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Structures*",
@@ -16597,9 +16970,11 @@
                 "_mdrn_pl_spcstn1",
                 "_mdrn_pl_spcstn2",
                 "_mdrn_pl_spcstn"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Parks \u0026 Nature",
@@ -16611,13 +16986,15 @@
                 "zep_ocampfr001",
                 "zep_logsit001",
                 "zep_skinpole001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Dens, Caves \u0026 Lairs*",
               "members": [
                 "zep_wolfcave001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -16701,7 +17078,8 @@
                 "zep_wrm001",
                 "zep_wrm005",
                 "zep_wrm024"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Paths*",
@@ -16715,13 +17093,15 @@
                 "zep_path007",
                 "zep_path008",
                 "zep_path009"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Skulls \u0026 Bones \u0026 Debris*",
               "members": [
                 "zep_skull001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Smoke \u0026 Fog*",
@@ -16734,7 +17114,8 @@
                 "zep_smokea",
                 "zep_smokeb",
                 "zep_smoke001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tents*",
@@ -16761,7 +17142,8 @@
                 "zep_tent019",
                 "zep_tent018",
                 "zep_tent020"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Tracks*",
@@ -16786,7 +17168,8 @@
                 "zep_tracks018",
                 "zep_tracks019",
                 "zep_tracks020"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Vegetation*",
@@ -16796,7 +17179,8 @@
                   "members": [
                     "zep_shrub001",
                     "zep_shrub002"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Flowers*",
@@ -16821,7 +17205,8 @@
                     "zep_flowers003",
                     "zep_flowers002",
                     "zep_flowers"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Ground Cover*",
@@ -16839,7 +17224,8 @@
                     "zep_redfern",
                     "zep_shrub041",
                     "zep_shrub042"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Ivy*",
@@ -16876,7 +17262,8 @@
                     "zep_shrub020",
                     "zep_shrub021",
                     "zep_shrub022"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Other Plants*",
@@ -16905,7 +17292,8 @@
                     "codismallspore",
                     "zep_vinesh",
                     "zep_vinesv"
-                  ]
+                  ],
+                  "placeholder": false
                 },
                 {
                   "name": "Trees*",
@@ -16936,7 +17324,8 @@
                         "zep_tree002",
                         "zep_pinetr17",
                         "zep_pinetr27"
-                      ]
+                      ],
+                      "placeholder": false
                     },
                     {
                       "name": "Trees: Fall*",
@@ -16975,7 +17364,8 @@
                         "zep_tree064",
                         "zep_tree046",
                         "zep_tree047"
-                      ]
+                      ],
+                      "placeholder": false
                     },
                     {
                       "name": "Trees: Spring*",
@@ -16983,7 +17373,8 @@
                         "zep_blssmtree001",
                         "zep_blssmtree002",
                         "zep_blssmtree003"
-                      ]
+                      ],
+                      "placeholder": false
                     },
                     {
                       "name": "Trees: Summer*",
@@ -17028,7 +17419,8 @@
                         "zep_tree052",
                         "zep_tree050",
                         "zep_tree053"
-                      ]
+                      ],
+                      "placeholder": false
                     },
                     {
                       "name": "Trees: Winter \u0026 Dead*",
@@ -17069,11 +17461,14 @@
                         "zep_pinetr18",
                         "zep_pinetr26",
                         "zep_pinetr19"
-                      ]
+                      ],
+                      "placeholder": false
                     }
-                  ]
+                  ],
+                  "placeholder": false
                 }
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Water, Snow \u0026 Lava*",
@@ -17095,9 +17490,11 @@
                 "zep_water005",
                 "zep_water006",
                 "zep_waterfall001"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Penants \u0026 Signs",
@@ -17147,7 +17544,8 @@
                 "zep_sign031",
                 "zep_wallflag",
                 "zep_sign003"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other Signs*",
@@ -17223,7 +17621,8 @@
                 "zep_os_scm_001",
                 "zep_os_sds_001",
                 "zep_os_spd_001"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Standards \u0026 Banners*",
@@ -17303,7 +17702,8 @@
                 "zep_flgwaukeen01",
                 "zep_flag011",
                 "zep_flag012"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Standing Signs*",
@@ -17362,16 +17762,22 @@
                 "zep_banner016",
                 "zep_banner031",
                 "zep_banner013"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "members": [
+            "plc_signpost3001"
+          ],
+          "placeholder": false
         },
         {
           "name": "Secret Object",
           "members": [
             "_mdrn_pl_pit01",
             "plx_socialstool"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Special",
@@ -17527,7 +17933,8 @@
                 "veldite_vein",
                 "mkt_visc_term",
                 "_mdrn_pl_wasteds"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 2",
@@ -18922,7 +19329,8 @@
                 "swlor_0638",
                 "swlor_0639",
                 "swlor_1440"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 3",
@@ -19521,7 +19929,8 @@
                 "swd2_work003",
                 "swd2_work004",
                 "playingcards"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 4",
@@ -19541,7 +19950,8 @@
                 "forge_flame",
                 "smithery_bench",
                 "train_terminal"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 5",
@@ -19556,9 +19966,11 @@
                 "dmfi_rest003",
                 "station_key_card",
                 "tele_obj"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Statues \u0026 Stones*",
@@ -19602,7 +20014,8 @@
                 "coditiltedspire",
                 "codisupportarcha",
                 "codisupportarchb"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Megaliths*",
@@ -19629,7 +20042,8 @@
                 "zep_stones010",
                 "zep_stones007",
                 "zep_stones008"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -19639,7 +20053,8 @@
                 "zep_iceblder002",
                 "zep_giantsword",
                 "zep_guardian"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Statues Partial*",
@@ -19664,7 +20079,8 @@
                 "zep_head002",
                 "zep_head004",
                 "zep_head003"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Statues*",
@@ -19708,7 +20124,8 @@
                 "zep_statues022",
                 "zep_statues008",
                 "zep_statues019"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Stones, Misc*",
@@ -19722,9 +20139,11 @@
                 "zep_gardenstn002",
                 "zep_gardenstn003",
                 "zep_rock001"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Trades \u0026 Academic \u0026 Farm",
@@ -19747,7 +20166,8 @@
                 "zep_ta_sfd_001",
                 "zep_ta_sob_001",
                 "zep_telescope"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Blacksmithing \u0026 Metalworking*",
@@ -19758,7 +20178,8 @@
                 "zep_hammer03",
                 "zep_forge",
                 "zep_pliers"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Construction*",
@@ -19769,7 +20190,8 @@
                 "zep_ladder001",
                 "zep_scaffold",
                 "zep_ladder"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Farms \u0026 Gardens*",
@@ -19808,7 +20230,8 @@
                 "zep_troughrnd",
                 "zep_well001",
                 "zep_wheelbarrel"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Logging \u0026 Woodworking*",
@@ -19824,7 +20247,8 @@
                 "zep_orcaxe",
                 "zep_wdchppingblc",
                 "zep_woodpile01"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Music*",
@@ -19843,7 +20267,8 @@
                 "zep_musicstnd001",
                 "zep_piano003",
                 "zep_harp002"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -19852,9 +20277,11 @@
                 "zep_bucket001",
                 "zep_bucket",
                 "zep_ropebndle001"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Treasure",
@@ -19871,9 +20298,11 @@
                 "zep_tr_pil_008",
                 "zep_tr_pil_006",
                 "zep_tr_pil_005"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Visual Effects",
@@ -19890,7 +20319,8 @@
                 "zep_magicmth008",
                 "zep_magicmth003",
                 "zep_magicmth009"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Other*",
@@ -19907,9 +20337,11 @@
                 "zep_lightshft006",
                 "zep_lightshft007",
                 "zep_lightshft008"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -19922,7 +20354,8 @@
           "members": [
             "night_bazzarnois",
             "night_metalsound"
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -19935,7 +20368,8 @@
           "members": [
             "anti_spawn_trigg",
             "rest_trigger"
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Special",
@@ -19947,9 +20381,11 @@
                 "badge_trigger001",
                 "quest_trigger",
                 "space_encounter"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Traps",
@@ -19958,9 +20394,11 @@
               "name": "3. Deadly",
               "members": [
                 "pitfalltrap"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true
@@ -20139,7 +20577,8 @@
                 "bf_butch_spawn",
                 "bf_sd_general",
                 "bf_kess_spawn"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 2",
@@ -20183,7 +20622,8 @@
                 "fp_008",
                 "fp_009",
                 "v_cox_scavenge"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 3",
@@ -20198,7 +20638,8 @@
                 "korrdunmaster",
                 "korrduntrooper",
                 "korrdunwarform"
-              ]
+              ],
+              "placeholder": false
             },
             {
               "name": "Custom 5",
@@ -20206,16 +20647,19 @@
                 "pc_home_entrance",
                 "starship_dockpoi",
                 "wp_stuck"
-              ]
+              ],
+              "placeholder": false
             }
-          ]
+          ],
+          "placeholder": false
         },
         {
           "name": "Waypoints",
           "members": [
             "creature_spawn",
             "placeable_spawn"
-          ]
+          ],
+          "placeholder": false
         }
       ],
       "seeded": true

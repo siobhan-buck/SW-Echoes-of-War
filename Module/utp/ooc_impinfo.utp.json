@@ -1,0 +1,207 @@
+{
+  "__data_type": "UTP ",
+  "AnimationState": {
+    "type": "byte",
+    "value": 0
+  },
+  "Appearance": {
+    "type": "dword",
+    "value": 157
+  },
+  "AutoRemoveKey": {
+    "type": "byte",
+    "value": 0
+  },
+  "CloseLockDC": {
+    "type": "byte",
+    "value": 0
+  },
+  "Comment": {
+    "type": "cexostring",
+    "value": "Invisible Object"
+  },
+  "Conversation": {
+    "type": "resref",
+    "value": ""
+  },
+  "CurrentHP": {
+    "type": "short",
+    "value": 15
+  },
+  "Description": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "Welcome to Star Wars: Echoes of War\r\n\r\nFirst and foremost, a huge thank you to Zunath for making the original Star Wars: Legends of the Old Republic an Open Source project. Community collaboration is what keeps NWN alive.\r\n\r\nIf you're new to how the Star Wars systems differ from regular nwn, please visit the website at https://wiki.starwarsnwn.com/\r\n\r\nPlease note that we take no credit for this website, it is maintained by the original SWLOR team. It does however give an understanding of the unique gameplay mechanics, which we maintain here. The differences between the servers comes down to rules and narrative focus, and where those differences are important, we'll note in our Discord.\r\n\r\nHere are a few quick things you should know:\r\n\r\n1.) Press 'C' or open your character sheet to access important options.\r\n\r\n2.) You can purchase some starting items from the vendor in the northern part of this area.\r\n\r\n3.) You can customize your character appearance from the 'Appearance' button in your character sheet.\r\n\r\n4.) /help will give a printout of many useful commands in your combat log\r\n\r\n5.) We log ALL chat messages, including tells, to our database for auditing purposes. By continuing to play here you agree to allow your conversations to be stored.\r\n\r\n6.) Until you name another player, you see their gray public description.\r\n\r\nType /name <label>, then click another player, to save a private name or nickname that only you see. Example: /name Mira.\r\n\r\nTo set your own gray public description, type /name <description>, then click yourself. Example: /name A Weathered Human.\r\n\r\nType /introduce <name> to offer a name or alias to visible players within 20m. Example: /introduce Mira. This command has a 5-minute cooldown.\r\n\r\nUse /introductions to review offered names and choose Remember or Dismiss. An introduction saves no name until the recipient chooses Remember.\r\n\r\n\r\nIf you need further help please visit our Discord channel: \r\n\r\nMay the Force be with you!"
+    }
+  },
+  "DisarmDC": {
+    "type": "byte",
+    "value": 15
+  },
+  "Faction": {
+    "type": "dword",
+    "value": 1
+  },
+  "Fort": {
+    "type": "byte",
+    "value": 16
+  },
+  "Hardness": {
+    "type": "byte",
+    "value": 5
+  },
+  "HasInventory": {
+    "type": "byte",
+    "value": 0
+  },
+  "HP": {
+    "type": "short",
+    "value": 15
+  },
+  "Interruptable": {
+    "type": "byte",
+    "value": 1
+  },
+  "KeyName": {
+    "type": "cexostring",
+    "value": ""
+  },
+  "KeyRequired": {
+    "type": "byte",
+    "value": 0
+  },
+  "Lockable": {
+    "type": "byte",
+    "value": 0
+  },
+  "Locked": {
+    "type": "byte",
+    "value": 0
+  },
+  "LocName": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "Important Info"
+    }
+  },
+  "OnClosed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDamaged": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDeath": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnDisarm": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnHeartbeat": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnInvDisturbed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnLock": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnMeleeAttacked": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnOpen": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnSpellCastAt": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnTrapTriggered": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUnlock": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUsed": {
+    "type": "resref",
+    "value": ""
+  },
+  "OnUserDefined": {
+    "type": "resref",
+    "value": ""
+  },
+  "OpenLockDC": {
+    "type": "byte",
+    "value": 18
+  },
+  "PaletteID": {
+    "type": "byte",
+    "value": 9
+  },
+  "Plot": {
+    "type": "byte",
+    "value": 0
+  },
+  "Portrait": {
+    "type": "resref",
+    "value": "po_plc_u02_"
+  },
+  "Ref": {
+    "type": "byte",
+    "value": 0
+  },
+  "Tag": {
+    "type": "cexostring",
+    "value": "ooc_impinfo"
+  },
+  "TemplateResRef": {
+    "type": "resref",
+    "value": "ooc_impinfo"
+  },
+  "TrapDetectable": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapDetectDC": {
+    "type": "byte",
+    "value": 0
+  },
+  "TrapDisarmable": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapFlag": {
+    "type": "byte",
+    "value": 0
+  },
+  "TrapOneShot": {
+    "type": "byte",
+    "value": 1
+  },
+  "TrapType": {
+    "type": "byte",
+    "value": 0
+  },
+  "Type": {
+    "type": "byte",
+    "value": 0
+  },
+  "Useable": {
+    "type": "byte",
+    "value": 0
+  },
+  "Will": {
+    "type": "byte",
+    "value": 0
+  }
+}

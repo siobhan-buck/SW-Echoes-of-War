@@ -1,0 +1,468 @@
+{
+  "__data_type": "UTI ",
+  "AddCost": {
+    "type": "dword",
+    "value": 0
+  },
+  "ArmorPart_Belt": {
+    "type": "byte",
+    "value": 6
+  },
+  "ArmorPart_LBicep": {
+    "type": "byte",
+    "value": 105
+  },
+  "ArmorPart_LFArm": {
+    "type": "byte",
+    "value": 105
+  },
+  "ArmorPart_LFoot": {
+    "type": "byte",
+    "value": 186
+  },
+  "ArmorPart_LHand": {
+    "type": "byte",
+    "value": 155
+  },
+  "ArmorPart_LShin": {
+    "type": "byte",
+    "value": 158
+  },
+  "ArmorPart_LShoul": {
+    "type": "byte",
+    "value": 0
+  },
+  "ArmorPart_LThigh": {
+    "type": "byte",
+    "value": 110
+  },
+  "ArmorPart_Neck": {
+    "type": "byte",
+    "value": 17
+  },
+  "ArmorPart_Pelvis": {
+    "type": "byte",
+    "value": 244
+  },
+  "ArmorPart_RBicep": {
+    "type": "byte",
+    "value": 105
+  },
+  "ArmorPart_RFArm": {
+    "type": "byte",
+    "value": 105
+  },
+  "ArmorPart_RFoot": {
+    "type": "byte",
+    "value": 186
+  },
+  "ArmorPart_RHand": {
+    "type": "byte",
+    "value": 155
+  },
+  "ArmorPart_Robe": {
+    "type": "byte",
+    "value": 0
+  },
+  "ArmorPart_RShin": {
+    "type": "byte",
+    "value": 158
+  },
+  "ArmorPart_RShoul": {
+    "type": "byte",
+    "value": 123
+  },
+  "ArmorPart_RThigh": {
+    "type": "byte",
+    "value": 110
+  },
+  "ArmorPart_Torso": {
+    "type": "byte",
+    "value": 154
+  },
+  "BaseItem": {
+    "type": "int",
+    "value": 16
+  },
+  "Charges": {
+    "type": "byte",
+    "value": 0
+  },
+  "Cloth1Color": {
+    "type": "byte",
+    "value": 23
+  },
+  "Cloth2Color": {
+    "type": "byte",
+    "value": 91
+  },
+  "Comment": {
+    "type": "cexostring",
+    "value": ""
+  },
+  "Cost": {
+    "type": "dword",
+    "value": 1
+  },
+  "Cursed": {
+    "type": "byte",
+    "value": 0
+  },
+  "DescIdentified": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "This Sith warmonger's armor is imposing even where it has been scarred and repaired. Its broad, uncompromising shapes turn the ordinary business of putting on equipment into something that looks uncomfortably like a declaration."
+    }
+  },
+  "Description": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "This Sith warmonger's armor is imposing even where it has been scarred and repaired. Its broad, uncompromising shapes turn the ordinary business of putting on equipment into something that looks uncomfortably like a declaration."
+    }
+  },
+  "Identified": {
+    "type": "byte",
+    "value": 1
+  },
+  "Leather1Color": {
+    "type": "byte",
+    "value": 60
+  },
+  "Leather2Color": {
+    "type": "byte",
+    "value": 60
+  },
+  "LocalizedName": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "Raith Armor"
+    }
+  },
+  "Metal1Color": {
+    "type": "byte",
+    "value": 3
+  },
+  "Metal2Color": {
+    "type": "byte",
+    "value": 7
+  },
+  "PaletteID": {
+    "type": "byte",
+    "value": 0
+  },
+  "Plot": {
+    "type": "byte",
+    "value": 0
+  },
+  "PropertiesList": {
+    "type": "list",
+    "value": []
+  },
+  "StackSize": {
+    "type": "word",
+    "value": 1
+  },
+  "Stolen": {
+    "type": "byte",
+    "value": 0
+  },
+  "Tag": {
+    "type": "cexostring",
+    "value": "su_raitharmor"
+  },
+  "TemplateResRef": {
+    "type": "resref",
+    "value": "su_raitharmor"
+  },
+  "VarTable": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "NO_ECONOMY"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_chest154_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 18948385
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_chest154_7"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17040388
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_chest154_2"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 21776968
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_bicepl105_4"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17040388
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_bicepr105_4"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 16777216
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_legr110_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 25330306
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_pelvis244_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17040388
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_legr110_6"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 24935548
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_legl110_6"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 24540790
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_legl110_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 25988236
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_legl110_4"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_legr110_4"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_belt006_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 18619420
+        }
+      }
+    ]
+  },
+  "xArmorPart_Belt": {
+    "type": "word",
+    "value": 6
+  },
+  "xArmorPart_LBice": {
+    "type": "word",
+    "value": 105
+  },
+  "xArmorPart_LFArm": {
+    "type": "word",
+    "value": 105
+  },
+  "xArmorPart_LFoot": {
+    "type": "word",
+    "value": 186
+  },
+  "xArmorPart_LHand": {
+    "type": "word",
+    "value": 155
+  },
+  "xArmorPart_LShin": {
+    "type": "word",
+    "value": 158
+  },
+  "xArmorPart_LShou": {
+    "type": "word",
+    "value": 0
+  },
+  "xArmorPart_LThig": {
+    "type": "word",
+    "value": 110
+  },
+  "xArmorPart_Neck": {
+    "type": "word",
+    "value": 17
+  },
+  "xArmorPart_Pelvi": {
+    "type": "word",
+    "value": 244
+  },
+  "xArmorPart_RBice": {
+    "type": "word",
+    "value": 105
+  },
+  "xArmorPart_RFArm": {
+    "type": "word",
+    "value": 105
+  },
+  "xArmorPart_RFoot": {
+    "type": "word",
+    "value": 186
+  },
+  "xArmorPart_RHand": {
+    "type": "word",
+    "value": 155
+  },
+  "xArmorPart_Robe": {
+    "type": "word",
+    "value": 0
+  },
+  "xArmorPart_RShin": {
+    "type": "word",
+    "value": 158
+  },
+  "xArmorPart_RShou": {
+    "type": "word",
+    "value": 123
+  },
+  "xArmorPart_RThig": {
+    "type": "word",
+    "value": 110
+  },
+  "xArmorPart_Torso": {
+    "type": "word",
+    "value": 154
+  }
+}
