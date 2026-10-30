@@ -22,12 +22,12 @@ namespace SWLOR.Game.Server.Feature.QuestDefinition
 
         private readonly Dictionary<int, RewardDetails> _rewardDetails = new()
         {
-            { 0, new RewardDetails(1000, 21)},
-            { 1, new RewardDetails(2500, 81)},
-            { 2, new RewardDetails(4000, 117)},
-            { 3, new RewardDetails(5500, 156)},
-            { 4, new RewardDetails(7200, 195)},
-            { 5, new RewardDetails(8200, 246)},
+            { 0, new RewardDetails(250, 21)},
+            { 1, new RewardDetails(500, 81)},
+            { 2, new RewardDetails(750, 117)},
+            { 3, new RewardDetails(1000, 156)},
+            { 4, new RewardDetails(1250, 195)},
+            { 5, new RewardDetails(1500, 246)},
         };
 
         private readonly QuestBuilder _builder = new();

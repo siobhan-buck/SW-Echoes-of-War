@@ -190,8 +190,8 @@ namespace SWLOR.Game.Server.Feature
             var player = GetEnteringObject();
             DelayCommand(2f, () =>
             {
-                SendMessageToPC(player, ColorToken.Green("Welcome to Star Wars: Legends of the Old Republic!\n") +
-                                        ColorToken.White("Join our Discord at: https://discord.gg/MyQAM6m"));
+                SendMessageToPC(player, ColorToken.Green("Welcome to Star Wars - Echoes of War, a mirror of SWLOR\n") +
+                                        ColorToken.White("Our discord is at https://discord.gg/qBgR9hJefs"));
             });
         }
     }
