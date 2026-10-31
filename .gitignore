@@ -263,6 +263,7 @@ __pycache__/
 /SWLOR.Game.Server/Data/Migrations/2020-06-24.1.sql
 
 # VS Code
+.vscode
 .vscode/settings.json
 
 # SWLOR
