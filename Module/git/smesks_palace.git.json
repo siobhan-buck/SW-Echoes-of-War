@@ -56431,7 +56431,7 @@
         },
         "Con": {
           "type": "byte",
-          "value": 16
+          "value": 18
         },
         "Conversation": {
           "type": "resref",
@@ -56459,7 +56459,7 @@
         },
         "Dex": {
           "type": "byte",
-          "value": 13
+          "value": 20
         },
         "Disarmable": {
           "type": "byte",
@@ -56487,6 +56487,13 @@
               "EquippedRes": {
                 "type": "resref",
                 "value": "vornhelm1"
+              }
+            },
+            {
+              "__struct_id": 131072,
+              "EquippedRes": {
+                "type": "resref",
+                "value": "malebh001_sk"
               }
             }
           ]
@@ -56629,7 +56636,7 @@
         },
         "Int": {
           "type": "byte",
-          "value": 10
+          "value": 20
         },
         "Interruptable": {
           "type": "byte",
@@ -56960,7 +56967,7 @@
         },
         "Str": {
           "type": "byte",
-          "value": 16
+          "value": 20
         },
         "Subrace": {
           "type": "cexostring",
@@ -57396,23 +57403,23 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": -0.5889534950256348
+          "value": -0.5722132921218872
         },
         "XPosition": {
           "type": "float",
-          "value": 68.36028289794922
+          "value": 68.03952789306641
         },
         "YOrientation": {
           "type": "float",
-          "value": -0.8081669211387634
+          "value": -0.8201048970222473
         },
         "YPosition": {
           "type": "float",
-          "value": 84.77508544921875
+          "value": 84.50897216796875
         },
         "ZPosition": {
           "type": "float",
-          "value": 0.0
+          "value": 9.5367431640625e-007
         }
       }
     ]

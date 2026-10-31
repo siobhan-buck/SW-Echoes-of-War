@@ -130,7 +130,7 @@
   },
   "Con": {
     "type": "byte",
-    "value": 16
+    "value": 18
   },
   "Conversation": {
     "type": "resref",
@@ -158,7 +158,7 @@
   },
   "Dex": {
     "type": "byte",
-    "value": 13
+    "value": 20
   },
   "Disarmable": {
     "type": "byte",
@@ -186,6 +186,13 @@
         "EquippedRes": {
           "type": "resref",
           "value": "vornhelm1"
+        }
+      },
+      {
+        "__struct_id": 131072,
+        "EquippedRes": {
+          "type": "resref",
+          "value": "malebh001_sk"
         }
       }
     ]
@@ -328,7 +335,7 @@
   },
   "Int": {
     "type": "byte",
-    "value": 10
+    "value": 20
   },
   "Interruptable": {
     "type": "byte",
@@ -663,7 +670,7 @@
   },
   "Str": {
     "type": "byte",
-    "value": 16
+    "value": 20
   },
   "Subrace": {
     "type": "cexostring",
