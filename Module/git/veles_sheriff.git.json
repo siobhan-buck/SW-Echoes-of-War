@@ -54574,7 +54574,7 @@
         },
         "Conversation": {
           "type": "resref",
-          "value": ""
+          "value": "marshal_receptio"
         },
         "CRAdjust": {
           "type": "int",
@@ -54803,7 +54803,7 @@
         },
         "ScriptDialogue": {
           "type": "resref",
-          "value": ""
+          "value": "dialog_start"
         },
         "ScriptDisturbed": {
           "type": "resref",
@@ -55116,23 +55116,23 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": 0.1699681133031845
+          "value": -0.06809722632169724
         },
         "XPosition": {
           "type": "float",
-          "value": 14.96779251098633
+          "value": 14.75504493713379
         },
         "YOrientation": {
           "type": "float",
-          "value": -0.9854495525360107
+          "value": -0.9976786971092224
         },
         "YPosition": {
           "type": "float",
-          "value": 11.12728977203369
+          "value": 10.91438865661621
         },
         "ZPosition": {
           "type": "float",
-          "value": -9.5367431640625e-007
+          "value": 4.76837158203125e-007
         }
       }
     ]
