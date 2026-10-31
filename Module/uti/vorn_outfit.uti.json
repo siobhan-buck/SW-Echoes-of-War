@@ -18,7 +18,7 @@
   },
   "ArmorPart_LFoot": {
     "type": "byte",
-    "value": 255
+    "value": 200
   },
   "ArmorPart_LHand": {
     "type": "byte",
@@ -26,7 +26,7 @@
   },
   "ArmorPart_LShin": {
     "type": "byte",
-    "value": 255
+    "value": 241
   },
   "ArmorPart_LShoul": {
     "type": "byte",
@@ -54,7 +54,7 @@
   },
   "ArmorPart_RFoot": {
     "type": "byte",
-    "value": 255
+    "value": 200
   },
   "ArmorPart_RHand": {
     "type": "byte",
@@ -66,7 +66,7 @@
   },
   "ArmorPart_RShin": {
     "type": "byte",
-    "value": 255
+    "value": 241
   },
   "ArmorPart_RShoul": {
     "type": "byte",
@@ -374,6 +374,156 @@
           "type": "int",
           "value": 18948385
         }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_shinl241_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 19934245
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_shinl241_7"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_shinr241_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 19934245
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_footl200_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_footl200_6"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_footl200_7"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_footr200_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_footr200_6"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_footr200_7"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "TM_pmh0_shinr241_7"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 17237767
+        }
       }
     ]
   },
@@ -391,7 +541,7 @@
   },
   "xArmorPart_LFoot": {
     "type": "word",
-    "value": 272
+    "value": 200
   },
   "xArmorPart_LHand": {
     "type": "word",
@@ -399,7 +549,7 @@
   },
   "xArmorPart_LShin": {
     "type": "word",
-    "value": 272
+    "value": 241
   },
   "xArmorPart_LShou": {
     "type": "word",
@@ -427,7 +577,7 @@
   },
   "xArmorPart_RFoot": {
     "type": "word",
-    "value": 272
+    "value": 200
   },
   "xArmorPart_RHand": {
     "type": "word",
@@ -439,7 +589,7 @@
   },
   "xArmorPart_RShin": {
     "type": "word",
-    "value": 272
+    "value": 241
   },
   "xArmorPart_RShou": {
     "type": "word",
