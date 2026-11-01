@@ -2153,7 +2153,8 @@
                 "utilitydroid3",
                 "utilitydroid4",
                 "utilitydroid5",
-                "utilitydroid7"
+                "utilitydroid7",
+                "exchangeenfor002"
               ],
               "placeholder": false
             },
@@ -2796,7 +2797,8 @@
                 "_mdrn_dt_ship7",
                 "_mdrn_dt_strmetl",
                 "_mdrn_dt_webpat",
-                "_mdrn_dt_white"
+                "_mdrn_dt_white",
+                "marshal_off_door"
               ],
               "placeholder": false
             },
@@ -19931,7 +19933,8 @@
                 "swd2_work002",
                 "swd2_work003",
                 "swd2_work004",
-                "playingcards"
+                "playingcards",
+                "sit_test_1"
               ],
               "placeholder": false
             },
