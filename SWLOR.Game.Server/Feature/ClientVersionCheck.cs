@@ -34,7 +34,7 @@ namespace SWLOR.Game.Server.Feature
 
             Log.Write(LogGroup.Connection, $"{playerName} failed to connect due to old client version. {cdKey} - {ipAddress} - {platformId} - {majorVersion}.{minorVersion}");
 
-            EventsPlugin.SetEventResult($"Your connection has been denied because you are on an unsupported version of Neverwinter Nights. Please upgrade your game client to {RequiredMajorVersion}.{RequiredMinorVersion} or higher and retry. If you have problems please reach out to us on Discord: https://discord.gg/MyQAM6m");
+            EventsPlugin.SetEventResult($"Your connection has been denied because you are on an unsupported version of Neverwinter Nights. Please upgrade your game client to {RequiredMajorVersion}.{RequiredMinorVersion} or higher and retry. If you have problems please reach out to us on Discord: https://discord.gg/qBgR9hJefs");
             EventsPlugin.SkipEvent();
         }
     }
