@@ -4,6 +4,7 @@ using SWLOR.Game.Server.Service.DMToolService;
 using SWLOR.NWN.API.NWScript.Enum;
 using SWLOR.NWN.API.NWScript.Enum.Area;
 using SWLOR.NWN.API.Engine;
+using System.Linq;
 
 namespace SWLOR.Game.Server.Service
 {
@@ -37,12 +38,14 @@ namespace SWLOR.Game.Server.Service
             string search)
         {
             if (category == DMObjectCategory.Areas)
-                return new DMObjectScan(category, ObjectType.All, GetAllAreas(), search);
+                return new DMObjectScan(category, ObjectType.All, GetAllAreas(), search, Comparer<DMObjectSearchResult>.Create(
+            (o1, o2) => DMObjectDetails.CountPlayersInArea(o1.Object).CompareTo(DMObjectDetails.CountPlayersInArea(o2.Object))));
 
             var areas = scope == DMObjectSearchScope.AllAreas
                 ? GetAllAreas()
                 : new List<uint> { GetArea(DMPresence.GetControlledCreature(dm)) };
-            return new DMObjectScan(category, GetObjectType(category), areas, search);
+            return new DMObjectScan(category, GetObjectType(category), areas, search, Comparer<DMObjectSearchResult>.Create(
+            (o1, o2) => String.Compare(o1.Name + o1.AreaName, o2.Name + o2.AreaName, StringComparison.OrdinalIgnoreCase)));
         }
 
         /// <summary>
@@ -91,5 +94,15 @@ namespace SWLOR.Game.Server.Service
                 _ => throw new ArgumentOutOfRangeException(nameof(category), category, null)
             };
         }
+
+        // private class AreaPlayerFirstComparar : Comparer<DMObjectSearchResult>
+        // {
+        //     public override int Compare(DMObjectSearchResult x, DMObjectSearchResult y)
+        //     {
+        //         return String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase)
+        //             ;
+        //     }
+
+        // }
     }
 }

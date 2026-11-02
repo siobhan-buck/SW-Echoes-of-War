@@ -14,6 +14,7 @@ namespace SWLOR.Game.Server.Service.DMToolService
         private readonly ObjectType _objectType;
         private readonly IReadOnlyList<string> _terms;
         private readonly Queue<uint> _areas;
+        private readonly Comparer<DMObjectSearchResult> _sorting;
         private readonly List<DMObjectSearchResult> _results = new();
 
         /// <summary>
@@ -38,12 +39,14 @@ namespace SWLOR.Game.Server.Service.DMToolService
         /// <param name="objectType">The object type read from each area. Ignored for areas.</param>
         /// <param name="areas">The areas to read, in order.</param>
         /// <param name="search">The search text. Empty matches everything.</param>
-        public DMObjectScan(DMObjectCategory category, ObjectType objectType, IEnumerable<uint> areas, string search)
+        /// <param name="sorting">The comparer that defines results sorting.</param>
+        public DMObjectScan(DMObjectCategory category, ObjectType objectType, IEnumerable<uint> areas, string search, Comparer<DMObjectSearchResult> sorting)
         {
             _category = category;
             _objectType = objectType;
             _terms = DMSearchText.GetTerms(search);
             _areas = new Queue<uint>(areas);
+            _sorting = sorting;
         }
 
         /// <summary>
@@ -129,12 +132,7 @@ namespace SWLOR.Game.Server.Service.DMToolService
         private void Complete()
         {
             IsComplete = true;
-            var ordered = _results
-                .OrderBy(result => result.Name, StringComparer.OrdinalIgnoreCase)
-                .ThenBy(result => result.AreaName, StringComparer.OrdinalIgnoreCase)
-                .ToList();
-            _results.Clear();
-            _results.AddRange(ordered);
+            _results.Sort(_sorting);
         }
     }
 }
