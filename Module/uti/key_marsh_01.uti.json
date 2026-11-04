@@ -30,9 +30,7 @@
   },
   "Description": {
     "type": "cexolocstring",
-    "value": {
-      "0": ""
-    }
+    "value": {}
   },
   "Identified": {
     "type": "byte",
@@ -41,12 +39,20 @@
   "LocalizedName": {
     "type": "cexolocstring",
     "value": {
-      "0": "Marshal Office Key"
+      "0": "Marshal Office Codes"
     }
   },
   "ModelPart1": {
     "type": "byte",
     "value": 197
+  },
+  "ModelPart2": {
+    "type": "byte",
+    "value": 1
+  },
+  "ModelPart3": {
+    "type": "byte",
+    "value": 1
   },
   "PaletteID": {
     "type": "byte",
@@ -54,7 +60,7 @@
   },
   "Plot": {
     "type": "byte",
-    "value": 1
+    "value": 0
   },
   "PropertiesList": {
     "type": "list",
@@ -70,11 +76,11 @@
   },
   "Tag": {
     "type": "cexostring",
-    "value": "Key_RMO"
+    "value": "Key_Marsh_01"
   },
   "TemplateResRef": {
     "type": "resref",
-    "value": "key_rmo"
+    "value": "key_marsh_01"
   },
   "VarTable": {
     "type": "list",
@@ -95,9 +101,5 @@
         }
       }
     ]
-  },
-  "xModelPart1": {
-    "type": "word",
-    "value": 197
   }
 }
