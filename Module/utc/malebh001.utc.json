@@ -86,7 +86,7 @@
   },
   "Cha": {
     "type": "byte",
-    "value": 9
+    "value": 10
   },
   "ChallengeRating": {
     "type": "float",
@@ -130,7 +130,7 @@
   },
   "Con": {
     "type": "byte",
-    "value": 18
+    "value": 20
   },
   "Conversation": {
     "type": "resref",
@@ -158,7 +158,7 @@
   },
   "Dex": {
     "type": "byte",
-    "value": 20
+    "value": 26
   },
   "Disarmable": {
     "type": "byte",
@@ -335,7 +335,7 @@
   },
   "Int": {
     "type": "byte",
-    "value": 20
+    "value": 26
   },
   "Interruptable": {
     "type": "byte",

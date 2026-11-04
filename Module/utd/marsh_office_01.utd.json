@@ -62,7 +62,7 @@
   },
   "KeyName": {
     "type": "cexostring",
-    "value": "key_rmo"
+    "value": "Key_Marsh_01"
   },
   "KeyRequired": {
     "type": "byte",
@@ -91,7 +91,7 @@
   "LocName": {
     "type": "cexolocstring",
     "value": {
-      "0": "Durand Door"
+      "0": "marsh_office_01"
     }
   },
   "OnClick": {
@@ -156,7 +156,7 @@
   },
   "PaletteID": {
     "type": "byte",
-    "value": 6
+    "value": 0
   },
   "Plot": {
     "type": "byte",
@@ -172,11 +172,11 @@
   },
   "Tag": {
     "type": "cexostring",
-    "value": "marshal_off_door"
+    "value": "marsh_office_01"
   },
   "TemplateResRef": {
     "type": "resref",
-    "value": "marshal_off_door"
+    "value": "marsh_office_01"
   },
   "TrapDetectable": {
     "type": "byte",
