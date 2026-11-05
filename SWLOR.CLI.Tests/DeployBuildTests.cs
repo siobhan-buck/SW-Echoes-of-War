@@ -22,7 +22,7 @@ public sealed class DeployBuildTests
             Directory.CreateDirectory(Path.Combine(_root, path));
         File.WriteAllText(Path.Combine(_root, "SWLOR.Game.Server/Docker/swlor.env"), "TEST=true\n");
         File.WriteAllText(Path.Combine(_root, "SWLOR.Game.Server/Docker/docker-compose.yml"), "compose fixture");
-        File.WriteAllText(Path.Combine(_root, "Module/Star Wars LOR v2.mod"), "module fixture");
+        File.WriteAllText(Path.Combine(_root, "Module/Star Wars EOW.mod"), "module fixture");
         File.WriteAllText(Path.Combine(_root, "test.tlk"), "tlk fixture");
         File.WriteAllText(Path.Combine(_root, "assets/test.mdl"), "first model");
         foreach (var name in new[] { "SWLOR.Game.Server.dll", "SWLOR.Game.Server.deps.json", "SWLOR.Game.Server.runtimeconfig.json" })
@@ -49,7 +49,7 @@ public sealed class DeployBuildTests
         File.ReadAllBytes(deployed).Should().Equal(File.ReadAllBytes(Path.Combine(_output, "SWLOR.Game.Server.dll")));
         var hak = Path.Combine(_root, "debugserver/hak/test.hak");
         var firstHash = SHA256.HashData(File.ReadAllBytes(hak));
-        File.ReadAllText(Path.Combine(_root, "debugserver/modules/Star Wars LOR v2.mod")).Should().Be("module fixture");
+        File.ReadAllText(Path.Combine(_root, "debugserver/modules/Star Wars EOW.mod")).Should().Be("module fixture");
         File.ReadAllText(Path.Combine(_root, "debugserver/tlk/test.tlk")).Should().Be("tlk fixture");
         File.WriteAllText(Path.Combine(_root, "assets/test.mdl"), "corrected model orientation");
         File.WriteAllText(Path.Combine(_output, "SWLOR.Game.Server.dll"), "newer Debug build");
@@ -62,9 +62,9 @@ public sealed class DeployBuildTests
     [Test]
     public async Task MissingModuleStillDeploysBinariesDockerAndHaks()
     {
-        File.Delete(Path.Combine(_root, "Module/Star Wars LOR v2.mod"));
+        File.Delete(Path.Combine(_root, "Module/Star Wars EOW.mod"));
         Directory.CreateDirectory(Path.Combine(_root, "debugserver/modules"));
-        File.WriteAllText(Path.Combine(_root, "debugserver/modules/Star Wars LOR v2.mod"), "existing module");
+        File.WriteAllText(Path.Combine(_root, "debugserver/modules/Star Wars EOW.mod"), "existing module");
 
         var result = await Deploy();
 
@@ -74,7 +74,7 @@ public sealed class DeployBuildTests
             .Should().Be("current Debug build SWLOR.Game.Server.dll");
         File.ReadAllText(Path.Combine(_root, "debugserver/docker-compose.yml")).Should().Be("compose fixture");
         File.Exists(Path.Combine(_root, "debugserver/hak/test.hak")).Should().BeTrue();
-        File.ReadAllText(Path.Combine(_root, "debugserver/modules/Star Wars LOR v2.mod")).Should().Be("existing module");
+        File.ReadAllText(Path.Combine(_root, "debugserver/modules/Star Wars EOW.mod")).Should().Be("existing module");
     }
 
     [TestCase(true)]
@@ -96,7 +96,7 @@ public sealed class DeployBuildTests
         result.Output.Should().Contain("Skipping HAK/TLK deployment");
         File.ReadAllText(Path.Combine(_root, "debugserver/dotnet/SWLOR.Game.Server.dll"))
             .Should().Be("current Debug build SWLOR.Game.Server.dll");
-        File.ReadAllText(Path.Combine(_root, "debugserver/modules/Star Wars LOR v2.mod")).Should().Be("module fixture");
+        File.ReadAllText(Path.Combine(_root, "debugserver/modules/Star Wars EOW.mod")).Should().Be("module fixture");
         File.ReadAllText(Path.Combine(_root, "debugserver/hak/test.hak")).Should().Be("existing hak");
         File.ReadAllText(Path.Combine(_root, "debugserver/tlk/test.tlk")).Should().Be("existing tlk");
     }

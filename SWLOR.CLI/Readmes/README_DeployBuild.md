@@ -35,7 +35,7 @@ Creates the debug server directory structure:
 - Outputs hak files to the debug server's hak directory
 
 ### 4. Module Deployment
-- Copies the main game module `../Module/Star Wars LOR v2.mod` to the debug server's modules directory
+- Copies the main game module `../Module/Star Wars EOW.mod` to the debug server's modules directory
 - Ensures the module is available for the server to load
 
 ## Dependencies
@@ -52,7 +52,7 @@ SWLOR_NWN/
 │   ├── bin/Release/net10.0/
 │   └── Docker/
 └── Module/
-    └── Star Wars LOR v2.mod
+    └── Star Wars EOW.mod
 ```
 
 ## Output

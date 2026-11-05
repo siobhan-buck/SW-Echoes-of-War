@@ -5,7 +5,7 @@ namespace SWLOR.Toolset.Domain.Workspace
     /// <summary>Resolves the module archive name without requiring the configured output to exist yet.</summary>
     public static class ModuleFileNameResolver
     {
-        public const string DefaultFileName = "Star Wars LOR v2.mod";
+        public const string DefaultFileName = "Star Wars EOW.mod";
 
         public static string Read(string moduleRoot)
         {

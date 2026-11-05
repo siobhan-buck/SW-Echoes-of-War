@@ -10,17 +10,17 @@ The ModulePacker provides functionality to pack and unpack NWN module files (.mo
 ### Pack Module
 ```bash
 cd Module
-..\tools\SWLOR.CLI\RunCLI.cmd -p ".\Star Wars LOR v2.mod"
+..\tools\SWLOR.CLI\RunCLI.cmd -p ".\Star Wars EOW.mod"
 # or
-..\tools\SWLOR.CLI\RunCLI.cmd --pack ".\Star Wars LOR v2.mod"
+..\tools\SWLOR.CLI\RunCLI.cmd --pack ".\Star Wars EOW.mod"
 ```
 
 ### Unpack Module
 ```bash
 cd Module
-..\tools\SWLOR.CLI\RunCLI.cmd -u ".\Star Wars LOR v2.mod"
+..\tools\SWLOR.CLI\RunCLI.cmd -u ".\Star Wars EOW.mod"
 # or
-..\tools\SWLOR.CLI\RunCLI.cmd --unpack ".\Star Wars LOR v2.mod"
+..\tools\SWLOR.CLI\RunCLI.cmd --unpack ".\Star Wars EOW.mod"
 ```
 
 ## Functionality

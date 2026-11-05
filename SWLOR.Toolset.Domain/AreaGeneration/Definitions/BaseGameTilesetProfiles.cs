@@ -659,7 +659,7 @@ namespace SWLOR.Toolset.Domain.AreaGeneration.Definitions
         // are Cobble2-cornered (FutCityPlaza below) -- EXCEPT Tower04/Tower06 (Cobble2, wired on the
         // Plaza variant despite the unprefixed name) and d_house02 (Cobble, wired here despite the "d_"
         // name) -- verified directly per-group, name prefix is a loose convention, not a rule.
-        // Hand-built evidence: 9 real fcx01 areas ship in Star Wars LOR v2.mod (Smuggler's Moon/Nar
+        // Hand-built evidence: 9 real fcx01 areas ship in Star Wars EOW.mod (Smuggler's Moon/Nar
         // Shaddaa content -- pw_ar_narpromena/narscorpd/narcatwalk, ns_industrialsec/ns_comrcial_ka,
         // pw_ar_nsshipyard/velundr, randoncity_01/02), 3468 placed tiles total. TileLighting(0,0,0,0) is
         // the REAL sampled value -- 2629/3468 (76%) of all placed tiles across all 9 areas use exactly

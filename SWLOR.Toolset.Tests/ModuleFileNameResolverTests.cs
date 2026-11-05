@@ -30,9 +30,9 @@ namespace SWLOR.Toolset.Tests
             File.WriteAllText(Path.Combine(_directory, "Star Wars LOR.mod"), "legacy");
             File.WriteAllText(
                 Path.Combine(_directory, "config.json"),
-                "{\"ModuleFileName\":\"Star Wars LOR v2.mod\"}");
+                "{\"ModuleFileName\":\"Star Wars EOW.mod\"}");
 
-            ModuleFileNameResolver.Read(_directory).Should().Be("Star Wars LOR v2.mod");
+            ModuleFileNameResolver.Read(_directory).Should().Be("Star Wars EOW.mod");
         }
 
         [Test]
