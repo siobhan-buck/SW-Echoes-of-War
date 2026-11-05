@@ -4,7 +4,6 @@ using SWLOR.Game.Server.Service.DMToolService;
 using SWLOR.NWN.API.NWScript.Enum;
 using SWLOR.NWN.API.NWScript.Enum.Area;
 using SWLOR.NWN.API.Engine;
-using System.Linq;
 
 namespace SWLOR.Game.Server.Service
 {
@@ -39,7 +38,7 @@ namespace SWLOR.Game.Server.Service
         {
             if (category == DMObjectCategory.Areas)
                 return new DMObjectScan(category, ObjectType.All, GetAllAreas(), search, Comparer<DMObjectSearchResult>.Create(
-            (o1, o2) => DMObjectDetails.CountPlayersInArea(o1.Object).CompareTo(DMObjectDetails.CountPlayersInArea(o2.Object))));
+            (o1, o2) => DMObjectDetails.CountPlayersInArea(o2.Object).CompareTo(DMObjectDetails.CountPlayersInArea(o1.Object))));
 
             var areas = scope == DMObjectSearchScope.AllAreas
                 ? GetAllAreas()
