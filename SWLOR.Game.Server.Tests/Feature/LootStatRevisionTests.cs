@@ -1,8 +1,11 @@
+using System.IO.Compression;
 using System.Text.Json;
+using System.Xml.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using SWLOR.Game.Server.Feature.MigrationDefinition;
 using SWLOR.Game.Server.Feature.RecipeDefinition.SmitheryRecipeDefinition;
+using SWLOR.Game.Server.Service.CombatService;
 using SWLOR.Game.Server.Service.LootService;
 using SWLOR.Game.Server.Service.SlicingService;
 using SWLOR.NWN.API.NWScript.Enum.Item;
@@ -11,6 +14,120 @@ namespace SWLOR.Game.Server.Tests.Feature;
 
 public class LootStatRevisionTests
 {
+    // Blueprint values without the retired elemental Defense, which never counted. The Bible rows had folded it into
+    // Physical Defense; the Carapace values match the crafted Armor-40 pieces (Eclipse Bracer, Transcendent Gloves,
+    // Supreme Tunic).
+    //        resref               rank  phys force  hp  fp stm fpRegen stmRegen
+    [TestCase("cara_bracer",        40, 18, 10, 80, 0, 0, 0, 0)]
+    [TestCase("cara_wraps",         40,  9, 20, 20, 8, 0, 2, 0)]
+    [TestCase("cara_tunic",         40, 14, 14, 45, 0, 10, 0, 4)]
+    [TestCase("cara_armor",         40, 24, 19, 90, 0, 0, 0, 0)]
+    [TestCase("cara_robes",         40, 13, 24, 45, 0, 0, 4, 0)]
+    [TestCase("cara_boots",         40, 10, 10, 25, 0, 8, 0, 2)]
+    [TestCase("cara_leggings",      40, 18, 10, 80, 0, 0, 0, 0)]
+    [TestCase("cara_shoes",         40,  9, 20, 25, 8, 0, 2, 0)]
+    [TestCase("cara_gloves",        40, 10, 10, 20, 0, 8, 0, 2)]
+    [TestCase("cara_cap",           40, 10, 10, 40, 0, 8, 0, 2)]
+    [TestCase("cara_headdress",     40,  9, 20, 40, 8, 0, 2, 0)]
+    [TestCase("cara_helmet",        40, 18, 10, 80, 0, 0, 0, 0)]
+    [TestCase("apprentice_dark_",   20,  0, 10, 25, 0, 0, 8, 0)]
+    // Raised to the Kwi Heavy Armor, Kwi Light Cloak and Kwi Hyper Gloves loot standard.
+    [TestCase("dan_heavy_armor",    40, 25, 20, 95, 0, 0, 0, 0)]
+    [TestCase("dan_h_cloak",        40, 11,  8,  5, 0, 2, 0, 0)]
+    [TestCase("dan_hyper_gloves",   40, 10, 21, 21, 9, 0, 2, 0)]
+    public void RetiredDefenseItem_UsesBibleDefenseWithoutRetiredElementalDefense(string resref, int rank, int physical, int force,
+        int hp, int fp, int stamina, int fpRegen, int staminaRegen)
+    {
+        using var blueprint = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            FindRepositoryRoot().FullName, "Module", "uti", resref + ".uti.json")));
+        var properties = ReadProperties(blueprint.RootElement);
+        var expected = new Dictionary<(int Type, int Subtype), int> { [((int)ItemPropertyType.RequiresSkill, 0)] = rank };
+        void Expect(ItemPropertyType type, int subtype, int value)
+        {
+            if (value > 0) expected[((int)type, subtype)] = value;
+        }
+        Expect(ItemPropertyType.Defense, 1, physical);
+        Expect(ItemPropertyType.Defense, 2, force);
+        Expect(ItemPropertyType.HPBonus, 0, hp);
+        Expect(ItemPropertyType.FP, 0, fp);
+        Expect(ItemPropertyType.Stamina, 0, stamina);
+        Expect(ItemPropertyType.FPRegen, 0, fpRegen);
+        Expect(ItemPropertyType.STMRegen, 0, staminaRegen);
+        properties.Should().BeEquivalentTo(expected);
+        ReadLocalInt(blueprint.RootElement, RetiredDefenseStatRevisionCatalog.RevisionVariable)
+            .Should().Be(RetiredDefenseStatRevisionCatalog.CurrentRevision);
+        RetiredDefenseStatRevisionCatalog.Changes.Should().ContainKey(resref);
+        foreach (var change in RetiredDefenseStatRevisionCatalog.Changes[resref])
+            properties.GetValueOrDefault(((int)change.Type, change.Type == ItemPropertyType.Defense ? change.Subtype : 0))
+                .Should().Be(change.Current);
+
+        using var archive = ZipFile.OpenRead(Path.Combine(FindRepositoryRoot().FullName, "design", "bible", "SWLOR Design Bible.xlsx"));
+        XNamespace ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+        XNamespace rel = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+        XDocument Load(string name) { using var stream = archive.GetEntry(name)!.Open(); return XDocument.Load(stream); }
+        var shared = Load("xl/sharedStrings.xml").Descendants(ns + "si")
+            .Select(x => string.Concat(x.Descendants(ns + "t").Select(t => t.Value))).ToArray();
+        var sheet = Load("xl/workbook.xml").Descendants(ns + "sheet").Single(x => (string?)x.Attribute("name") == "Equipment - Armor");
+        var id = (string)sheet.Attribute(rel + "id")!;
+        var target = (string)Load("xl/_rels/workbook.xml.rels").Root!.Elements()
+            .Single(x => (string?)x.Attribute("Id") == id).Attribute("Target")!;
+        string Text(XElement cell) => cell.Attribute("t")?.Value switch
+        {
+            "inlineStr" => string.Concat(cell.Descendants(ns + "t").Select(x => x.Value)),
+            "s" => shared[int.Parse(cell.Element(ns + "v")!.Value)],
+            _ => cell.Element(ns + "v")?.Value ?? "",
+        };
+        var row = Load(target.StartsWith('/') ? target.TrimStart('/') : "xl/" + target)
+            .Descendants(ns + "row").Single(x => x.Elements(ns + "c")
+                .Any(cell => cell.Attribute("r")!.Value.StartsWith('B') && Text(cell) == resref));
+        var cells = row.Elements(ns + "c").ToDictionary(cell =>
+            new string(cell.Attribute("r")!.Value.TakeWhile(char.IsLetter).ToArray()), Text);
+        cells["E"].Should().Be(rank.ToString());
+        cells["F"].Should().Be(physical.ToString());
+        cells["G"].Should().Be(force.ToString());
+        cells["H"].Should().Be(hp.ToString());
+        cells["I"].Should().Be(fp.ToString());
+        cells["J"].Should().Be(stamina.ToString());
+        cells["K"].Should().Be(fpRegen.ToString());
+        cells["L"].Should().Be(staminaRegen.ToString());
+        cells["T"].Should().Be("-");
+    }
+
+    [Test]
+    public void RetiredDefenseCatalogBlueprints_CarryTheRevisionMarker()
+    {
+        // New drops are already correct, so the revision must never run on them.
+        foreach (var resref in RetiredDefenseStatRevisionCatalog.Changes.Keys)
+        {
+            using var blueprint = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+                FindRepositoryRoot().FullName, "Module", "uti", resref + ".uti.json"), System.Text.Encoding.Latin1));
+            ReadLocalInt(blueprint.RootElement, RetiredDefenseStatRevisionCatalog.RevisionVariable)
+                .Should().Be(RetiredDefenseStatRevisionCatalog.CurrentRevision, resref);
+        }
+    }
+
+    [Test]
+    public void ItemBlueprints_CarryOnlyPhysicalAndForceDefense()
+    {
+        // Only Physical and Force Defense count in combat; any other subtype shows on the item and does nothing.
+        var offenders = new List<string>();
+        foreach (var path in Directory.EnumerateFiles(Path.Combine(FindRepositoryRoot().FullName, "Module", "uti"), "*.uti.json"))
+        {
+            using var blueprint = JsonDocument.Parse(File.ReadAllText(path, System.Text.Encoding.Latin1));
+            if (!blueprint.RootElement.TryGetProperty("PropertiesList", out var list))
+                continue;
+            foreach (var property in list.GetProperty("value").EnumerateArray())
+            {
+                var subtype = property.GetProperty("Subtype").GetProperty("value").GetInt32();
+                if (property.GetProperty("PropertyName").GetProperty("value").GetInt32() == Defense &&
+                    subtype is not ((int)CombatDamageType.Physical or (int)CombatDamageType.Force))
+                    offenders.Add($"{Path.GetFileName(path)}: Defense subtype {subtype}");
+            }
+        }
+
+        offenders.Should().BeEmpty();
+    }
+
     private const int RequiresSkill = (int)ItemPropertyType.RequiresSkill;
     private const int Defense = (int)ItemPropertyType.Defense;
 
@@ -48,6 +165,8 @@ public class LootStatRevisionTests
         // Pistol blueprints use base item 61.
         [(int)BaseItem.Sling] = Curve(6, 7, 11, 11, 15, 15, 17, 22, 22, 23),
         [(int)BaseItem.Katar] = Curve(8, 8, 10, 10, 13, 13, 14, 15, 18, 19),
+        // Power Gloves keep each Katar tier's weapon budget.
+        [(int)BaseItem.PowerGlove] = Curve(8, 8, 10, 10, 13, 13, 14, 15, 18, 19),
     };
 
     [Test]
@@ -73,6 +192,9 @@ public class LootStatRevisionTests
                 var expected = RareLootStatRevisionCatalog.Changes.TryGetValue(resref, out var corrections)
                     ? corrections.FirstOrDefault(x => x.Type == change.Type && x.Subtype == change.Subtype, change).Current
                     : change.Current;
+                if (FoundryLootStatRevisionCatalog.Changes.TryGetValue(resref, out var foundryCorrections))
+                    expected = foundryCorrections.Where(x => x.Type == change.Type && x.Subtype == change.Subtype)
+                        .Select(x => x.Current).DefaultIfEmpty(expected).Single();
                 if (value != expected)
                     failures.Add($"{resref}: {change.Type} is {value}, catalog expects {expected}");
                 if (change.Previous == change.Current)
@@ -84,6 +206,63 @@ public class LootStatRevisionTests
         }
 
         failures.Should().BeEmpty(string.Join(Environment.NewLine, failures));
+    }
+
+    [Test]
+    public void FoundryCorrections_MatchBlueprintsAndFollowTheExistingLootRevisions()
+    {
+        var root = FindRepositoryRoot();
+        foreach (var (resref, changes) in FoundryLootStatRevisionCatalog.Changes)
+        {
+            using var blueprint = JsonDocument.Parse(File.ReadAllText(Path.Combine(root.FullName, "Module", "uti", $"{resref}.uti.json")));
+            var properties = ReadProperties(blueprint.RootElement);
+            foreach (var change in changes)
+            {
+                var preceding = LootStatRevisionCatalog.Changes[resref].Single(x => x.Type == change.Type && x.Subtype == change.Subtype);
+                if (RareLootStatRevisionCatalog.Changes.TryGetValue(resref, out var rareChanges))
+                    preceding = rareChanges.FirstOrDefault(x => x.Type == change.Type && x.Subtype == change.Subtype, preceding);
+                change.Previous.Should().Be(preceding.Current, resref);
+                properties[((int)change.Type, change.Subtype)].Should().Be(change.Current, resref);
+            }
+            ReadLocalInt(blueprint.RootElement, FoundryLootStatRevisionCatalog.RevisionVariable)
+                .Should().Be(FoundryLootStatRevisionCatalog.CurrentRevision, resref);
+        }
+    }
+
+    [Test]
+    public void ArkanianArmorRevision_EndsOnTheBlueprintAndMarksOnlyIt()
+    {
+        var root = FindRepositoryRoot();
+        foreach (var (resref, changes) in ArkanianArmorStatRevisionCatalog.Changes)
+        {
+            using var blueprint = JsonDocument.Parse(File.ReadAllText(Path.Combine(root.FullName, "Module", "uti", $"{resref}.uti.json")));
+            var properties = new Dictionary<(int Type, int Subtype), int>();
+            foreach (var property in blueprint.RootElement.GetProperty("PropertiesList").GetProperty("value").EnumerateArray())
+            {
+                var key = (property.GetProperty("PropertyName").GetProperty("value").GetInt32(),
+                    property.GetProperty("Subtype").GetProperty("value").GetInt32());
+                properties[key] = properties.GetValueOrDefault(key) + property.GetProperty("CostValue").GetProperty("value").GetInt32();
+            }
+
+            // Ice Resistance replaces the shipped blueprint's retired Ice Defense and is revised from each copy's own Ice values.
+            var iceResistance = ((int)ItemPropertyType.Resistance, (int)ResistanceType.Ice);
+            properties.GetValueOrDefault(iceResistance).Should().Be(ArkanianArmorStatRevisionCatalog.IceResistance, resref);
+            properties.Keys.Should().BeSubsetOf(changes.Select(change => ((int)change.Type, change.Subtype)).Append(iceResistance),
+                $"every {resref} property moves with the revision");
+            foreach (var change in changes)
+            {
+                change.Previous.Should().NotBe(change.Current, $"{resref} {change.Type} changes");
+                properties.GetValueOrDefault(((int)change.Type, change.Subtype)).Should().Be(change.Current, $"{resref} {change.Type} {change.Subtype}");
+            }
+            ReadLocalInt(blueprint.RootElement, ArkanianArmorStatRevisionCatalog.RevisionVariable)
+                .Should().Be(ArkanianArmorStatRevisionCatalog.CurrentRevision, resref);
+        }
+
+        Directory.EnumerateFiles(Path.Combine(root.FullName, "Module", "uti"), "*.uti.json")
+            .Where(path => File.ReadAllText(path).Contains(ArkanianArmorStatRevisionCatalog.RevisionVariable))
+            .Select(path => Path.GetFileName(path)[..^".uti.json".Length])
+            .Should().BeEquivalentTo(ArkanianArmorStatRevisionCatalog.Changes.Keys,
+                "an item built from a stamped blueprint is never revised, so only cataloged blueprints carry the marker");
     }
 
     [Test]

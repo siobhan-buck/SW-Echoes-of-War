@@ -4,6 +4,7 @@ using SWLOR.Game.Server.Service.CombatService;
 using SWLOR.Game.Server.Service.PerkService;
 using SWLOR.Game.Server.Service.SkillService;
 using SWLOR.Game.Server.Service.StatService;
+using SWLOR.Game.Server.Service.StatusEffectService;
 using SWLOR.NWN.API.NWScript.Enum;
 using SWLOR.NWN.API.NWScript.Enum.VisualEffect;
 
@@ -81,12 +82,21 @@ namespace SWLOR.Game.Server.Service.AbilityService
         /// </summary>
         /// <param name="channelInterruptAction">Action run against the activator when the channel is interrupted.</param>
         /// <returns>An ability builder with the configured options.</returns>
-        public AbilityBuilder IsChanneledAbility(Action<uint> channelInterruptAction)
+        public AbilityBuilder IsChanneledAbility(Action<uint> channelInterruptAction, bool suppressAutoAttacks = false)
         {
             _activeAbility.IsChanneled = true;
             _activeAbility.ChannelInterruptAction = channelInterruptAction;
+            _activeAbility.SuppressesAutoAttacks = suppressAutoAttacks;
 
             return this;
+        }
+
+        public AbilityBuilder HasFixedActivationDelay(float seconds)
+        {
+            if (!float.IsFinite(seconds) || seconds <= 0f)
+                throw new ArgumentOutOfRangeException(nameof(seconds));
+            _activeAbility.HasFixedActivationDelay = true;
+            return HasActivationDelay(seconds);
         }
 
         /// <summary>
@@ -124,9 +134,10 @@ namespace SWLOR.Game.Server.Service.AbilityService
         }
 
         /// <summary>Plays the catalog gesture once at activation without occupying the action queue.</summary>
-        public AbilityBuilder UsesImmediateAuthoredAnimation()
+        public AbilityBuilder UsesImmediateAuthoredAnimation(bool fitToCastWindow = false)
         {
             _activeAbility.UsesImmediateAuthoredAnimation = true;
+            _activeAbility.FitsAuthoredAnimationToCastWindow = fitToCastWindow;
             return this;
         }
 
@@ -134,6 +145,28 @@ namespace SWLOR.Game.Server.Service.AbilityService
         public AbilityBuilder UsesAuthoredAnimationAtImpact()
         {
             _activeAbility.UsesAuthoredImpactAnimation = true;
+            return this;
+        }
+
+        public AbilityBuilder HasWeaponAbilityCadenceDamagePerCharge(int damage)
+        {
+            if (damage < 0) throw new ArgumentOutOfRangeException(nameof(damage));
+            _activeAbility.WeaponAbilityCadenceDamagePerCharge = damage;
+            return this;
+        }
+
+        /// <summary>The ability neither spends nor benefits from Cadence, so it can build charges for a finisher.</summary>
+        public AbilityBuilder KeepsWeaponAbilityCadence()
+        {
+            _activeAbility.KeepsWeaponAbilityCadence = true;
+            return this;
+        }
+
+        /// <summary>A landed hit grants this much Cadence once per activation, without needing a chain.</summary>
+        public AbilityBuilder GrantsWeaponAbilityCadence(int charges)
+        {
+            if (charges <= 0) throw new ArgumentOutOfRangeException(nameof(charges));
+            _activeAbility.WeaponAbilityCadenceOnHit = charges;
             return this;
         }
 
@@ -416,6 +449,12 @@ namespace SWLOR.Game.Server.Service.AbilityService
         {
             _activeAbility.ImpactAction = action;
 
+            return this;
+        }
+
+        public AbilityBuilder MeleeTechnique(MeleeTechniqueDetail detail)
+        {
+            _activeAbility.MeleeTechnique = detail ?? throw new ArgumentNullException(nameof(detail));
             return this;
         }
 
@@ -720,6 +759,17 @@ namespace SWLOR.Game.Server.Service.AbilityService
         public AbilityBuilder SkillType(SkillType skillType)
         {
             _activeAbility.SkillType = skillType;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Declares which status categories the ability's impact applies for an activator, so next-ability
+        /// bonuses that require a category (such as Control) know whether this ability qualifies.
+        /// </summary>
+        public AbilityBuilder ResolvesImpactStatusCategories(Func<uint, StatusEffectCategory> resolve)
+        {
+            _activeAbility.ResolveImpactStatusCategories = resolve;
 
             return this;
         }

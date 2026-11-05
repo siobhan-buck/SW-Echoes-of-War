@@ -251,6 +251,21 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition
             return baseRadius + radiusBonusTenths / 10f;
         }
 
+        /// <summary>
+        /// Blast Radius damage bonus for grenade, Remote Charge, and Overload Barrage blasts,
+        /// added to the blast's own percent adjustment when it has one.
+        /// </summary>
+        public static Func<uint, int> GetBlastDamageAdjustment(uint activator, Func<uint, int> abilityAdjustment = null)
+        {
+            var bonus = Stat.GetStatAdjustment(activator, StatType.BlastDamagePercentAdjustment);
+            if (bonus == 0)
+                return abilityAdjustment;
+
+            return abilityAdjustment == null
+                ? _ => bonus
+                : target => abilityAdjustment(target) + bonus;
+        }
+
         public static int ApplyGrenadeControlPotencyBonus(uint activator, int baseAdjustment)
         {
             var bonus = Stat.GetStatAdjustment(activator, StatType.GrenadeControlPotencyBonus);
@@ -290,7 +305,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition
         }
 
         /// <summary>
-        /// Gadget DMG: the weapon-DMG equivalent every Assault Gadget adds to its base damage, scaled by Devices rank.
+        /// Gadget DMG: the weapon-DMG equivalent Assault Gadgets add to their base damage, scaled by Devices rank.
         /// </summary>
         public static int GetAssaultGadgetWeaponDamageEquivalent(uint creature)
         {

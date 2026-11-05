@@ -39,7 +39,7 @@
       },
       "MusicNight": {
         "type": "int",
-        "value": 0
+        "value": 515
       },
       "VarTable": {
         "type": "list",
@@ -715,7 +715,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — anchor_roche01"
+            "0": "Stuck - anchor_roche01"
           }
         },
         "MapNote": {

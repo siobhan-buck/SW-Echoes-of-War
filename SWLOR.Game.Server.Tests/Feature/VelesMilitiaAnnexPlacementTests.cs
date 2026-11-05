@@ -136,7 +136,7 @@ public class VelesMilitiaAnnexPlacementTests
         Local(git, "MINI_MAP_DISABLED").GetInt32().Should().Be(1);
         Local(git, "PLANET_TYPE_ID").GetInt32().Should().Be(1);
         Local(git, "MAP_KEY_ITEM_ID").GetInt32().Should().Be(40);
-        var spawns = List(git, "WaypointList").Where(w => Text(w, "Tag") == "CAPSTONE_VELES_MILITIA_ANNEX").ToArray();
+        var spawns = List(git, "WaypointList").Where(w => Text(w, "Tag") is "CAPSTONE_VELES_MILITIA_ANNEX" or "CAPSTONE_VELES_MILITIA_ANNEX_DEEP").ToArray();
         spawns.Should().HaveCount(20);
         var entry = Tagged(git, "WaypointList", "VELES_ANNEX_ENTRY");
         foreach (var spawn in spawns)
@@ -147,5 +147,40 @@ public class VelesMilitiaAnnexPlacementTests
         var comments = Load("gic", Annex);
         foreach (var property in comments.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.Object && p.Value.GetProperty("type").GetString() == "list"))
             List(comments, property.Name).Length.Should().Be(List(git, property.Name).Length);
+    }
+
+    [TestCase("cp_invinc_ad")]
+    [TestCase("cp_invinc_sp")]
+    [TestCase("cp_invinc_ic")]
+    [TestCase("cp_vitrupt_ad")]
+    [TestCase("cp_vitrupt_sp")]
+    [TestCase("cp_vitrupt_ic")]
+    [TestCase("cp_sysshut_ad")]
+    [TestCase("cp_sysshut_sp")]
+    [TestCase("cp_sysshut_ic")]
+    public void AnnexHumanoids_DoNotUseDroidSoundsets(string blueprint)
+    {
+        // soundset.2da rows: 903 AssassinDroid, 910 Droid, 924 MedicalDroid, 935 TankDroid, 944 HK47.
+        var droidSoundsets = new[] { 903, 910, 924, 935, 944 };
+        droidSoundsets.Should().NotContain(Value(Load("utc", blueprint), "SoundSetFile").GetInt32());
+    }
+
+    [Test]
+    public void CapstoneHumanoids_DoNotUseDroidSoundsets()
+    {
+        // Races 150 (Robot) and 167 (Droid) are real droids and keep the droid voice.
+        var droidRaces = new[] { 150, 167 };
+        var droidSoundsets = new[] { 903, 910, 924, 935, 944 };
+        var offenders = Directory.GetFiles(Path.Combine(Root, "Module", "utc"), "cp_*.utc.json")
+            .Select(f => Path.GetFileName(f).Replace(".utc.json", string.Empty))
+            .Where(name =>
+            {
+                var utc = Load("utc", name);
+                return !droidRaces.Contains(Value(utc, "Race").GetInt32())
+                    && droidSoundsets.Contains(Value(utc, "SoundSetFile").GetInt32());
+            })
+            .ToList();
+
+        offenders.Should().BeEmpty();
     }
 }

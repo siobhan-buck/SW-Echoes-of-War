@@ -4,6 +4,7 @@ using SWLOR.Game.Server.Service.CombatService;
 using SWLOR.Game.Server.Service.PerkService;
 using SWLOR.Game.Server.Service.SkillService;
 using SWLOR.Game.Server.Service.StatService;
+using SWLOR.Game.Server.Service.StatusEffectService;
 using SWLOR.NWN.API.Engine;
 using SWLOR.NWN.API.NWScript.Enum;
 using SWLOR.NWN.API.NWScript.Enum.VisualEffect;
@@ -21,6 +22,7 @@ namespace SWLOR.Game.Server.Service.AbilityService
         public string Name { get; set; }
         public AbilityActivationAction ActivationAction { get; set; }
         public AbilityImpactAction ImpactAction { get; set; }
+        public MeleeTechniqueDetail MeleeTechnique { get; set; }
         public float ImpactDelay { get; set; }
         public AbilityActivationDelayAction ActivationDelay { get; set; }
         public AbilityRecastDelayAction RecastDelay { get; set; }
@@ -45,6 +47,7 @@ namespace SWLOR.Game.Server.Service.AbilityService
         public float NativeAnimationPreviewDuration { get; set; }
         public AnimationService.AnimationClip AuthoredImpactAnimation { get; set; }
         public bool UsesImmediateAuthoredAnimation { get; set; }
+        public bool FitsAuthoredAnimationToCastWindow { get; set; }
         public bool UsesAuthoredImpactAnimation { get; set; }
         public float ImmediateNativeImpactAnimationDuration { get; set; }
         public bool HasGeneratedAnimationBinding { get; set; }
@@ -63,6 +66,11 @@ namespace SWLOR.Game.Server.Service.AbilityService
         public bool CanBeUsedInSpace { get; set; }
         public float MaxRange { get; set; }
         public bool IsHostileAbility { get; set; }
+        public int? WeaponAbilityCadenceDamagePerCharge { get; set; }
+        /// <summary>A Twin Pistol builder ability keeps Cadence; only its finishers and other skills' weapon abilities spend it.</summary>
+        public bool KeepsWeaponAbilityCadence { get; set; }
+        /// <summary>Cadence a landed hit grants once per activation without a chain; 0 for the chain rule alone.</summary>
+        public int WeaponAbilityCadenceOnHit { get; set; }
         /// <summary>
         /// The impact schedules damage through a status or callback even when its immediate
         /// base damage is zero. Hostile hit damage bonuses remain eligible on that impact.
@@ -82,6 +90,11 @@ namespace SWLOR.Game.Server.Service.AbilityService
         public bool AllowsSelfQuickCast { get; set; }
         public int AbilityLevel { get; set; }
         public SkillType SkillType { get; set; }
+        /// <summary>
+        /// Status categories the ability's impact applies when the given activator uses it now. Null when the
+        /// ability does not declare them; perks keyed to "your next control ability" read this.
+        /// </summary>
+        public Func<uint, StatusEffectCategory> ResolveImpactStatusCategories { get; set; }
         public AbilityType CombatImpactDamageAbility { get; set; }
         public bool IsAreaAbility { get; set; }
         public bool IsSingleTargetAbility { get; set; }
@@ -121,6 +134,9 @@ namespace SWLOR.Game.Server.Service.AbilityService
         /// refunding the recast delay.
         /// </summary>
         public bool IsChanneled { get; set; }
+
+        public bool HasFixedActivationDelay { get; set; }
+        public bool SuppressesAutoAttacks { get; set; }
 
         /// <summary>
         /// Invoked against the activator when a channeled ability is interrupted so the effects granted

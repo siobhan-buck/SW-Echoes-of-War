@@ -224,7 +224,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00001": {
       "Id": "entry-00001",
@@ -245,7 +250,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00002": {
       "Id": "entry-00002",
@@ -260,7 +270,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Work order. Signed, dated, unfilled. She slaps the flimsi flat against your chest. \"A wreck crew set up shop in the CZ-220 Breaker Yard, off this station's Maintenance Level, and they're drilling katar guard-work on my tonnage and my clock. Six adepts hold the outer floor. Put them down, pull the Adamantine Guard Breaker Yard Work Order they're cutting under, and get it on my desk. Take the job and I cut you a key for the bay they walled off my grid.\"",
+          "Text": "Work order. Signed, dated, unfilled. She slaps the flimsi flat against your chest. \"A wreck crew set up shop in the CZ-220 Breaker Yard, off this station's Maintenance Level, and they're drilling katar guard-work on my tonnage and my clock. Six Wreck Crew Scrappers hold the floor nearest the entrance. Any Scrapper counts, because the whole crew answers to one foreman, but a kill only counts if you stood guard while you made it: Steel Shoulder on an ally, or Whirling Guard or Iron Wall held. A guard that never held under pressure proves nothing. Put six down that way, pull the Adamantine Guard Breaker Yard Work Order they're cutting under, and get it on my desk. Take the job and I cut you a key for the bay they walled off my grid.\" Steel Shoulder needs someone else to guard. Going alone? Use Whirling Guard, or activate Iron Wall Stance.",
           "Style": 0,
           "Color": null
         }
@@ -286,6 +296,10 @@
         {
           "ChoiceId": "reply-00005",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -302,13 +316,18 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Key's cut. Take the way down south of the command desks on this floor to the Maintenance Level, then cross to the far north-east corner. The Breaker Bay sits behind the force-field wall there - it reads the key, not your face, so don't bother smiling at it. Six adepts. One work order. My desk. The shift clock started when you nodded.",
+          "Text": "Key's cut. Take the way down south of the command desks on this floor to the Maintenance Level, then cross to the far north-east corner. The Breaker Bay sits behind the force-field wall there - it reads the key, not your face, so don't bother smiling at it. Six Scrappers, guard up for every kill. One work order. My desk. The shift clock started when you nodded.",
           "Style": 0,
           "Color": null
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00004": {
       "Id": "entry-00004",
@@ -332,6 +351,10 @@
       "Choices": [
         {
           "ChoiceId": "reply-00000",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
           "Conditions": []
         }
       ]
@@ -359,6 +382,10 @@
         {
           "ChoiceId": "reply-00000",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -385,6 +412,10 @@
         {
           "ChoiceId": "reply-00000",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -401,13 +432,18 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Order's still open. Six adepts in the Breaker Yard, one work order, my desk. The shift clock doesn't care how your day is going and neither do I.",
+          "Text": "Order's still open. Six Scrappers by the entrance, each one dropped under your guard, one work order, my desk. The shift clock doesn't care how your day is going and neither do I.",
           "Style": 0,
           "Color": null
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00008": {
       "Id": "entry-00008",
@@ -432,6 +468,10 @@
         {
           "ChoiceId": "reply-00006",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -454,7 +494,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00010": {
       "Id": "entry-00010",
@@ -469,7 +514,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "You again. Good, saves me posting it. The crew rerouted my junkline - every conveyor down there feeds their drill pit now instead of my smelters, and my throughput is down forty tons a shift. Five specialists run the line. Break their guard, take back the Adamantine Guard Junkline Control Relay, and my belts start obeying people who actually work here.",
+          "Text": "You again. Good, saves me posting it. The crew rerouted my junkline - every conveyor down there feeds their drill pit now instead of my smelters, and my throughput is down forty tons a shift. Five Wreck Crew Riggers run the line, deeper in than the Scrappers. Any Rigger counts, and the same rule holds: a Rigger only counts if you guarded while you broke him, Steel Shoulder on an ally or Whirling Guard or Iron Wall held. Break their guard, take back the Adamantine Guard Junkline Control Relay, and my belts start obeying people who actually work here. Steel Shoulder needs someone else to guard. Going alone? Use Whirling Guard, or activate Iron Wall Stance.",
           "Style": 0,
           "Color": null
         }
@@ -495,6 +540,10 @@
         {
           "ChoiceId": "reply-00012",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -511,13 +560,18 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Same force field, same key. Follow the junkline until the belts run the wrong direction - that's their handiwork, and the specialists post where the reroute starts. The relay comes back in one piece. It bills as salvage, not scrap.",
+          "Text": "Same force field, same key. Follow the junkline until the belts run the wrong direction - that's their handiwork, and the Riggers post where the reroute starts. The relay comes back in one piece. It bills as salvage, not scrap.",
           "Style": 0,
           "Color": null
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00012": {
       "Id": "entry-00012",
@@ -532,7 +586,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "A guard that doesn't break, drilled until it's true. You'd know what that's worth to a katar hand better than I would - I just know what it looks like from a crane cab. My cutters held a plasma lance on one of those adepts for a full minute and he didn't step back. Whatever they're perfecting down there, they didn't invent it. They're drilling it to sell it, and my yard is the free training floor.",
+          "Text": "A guard that doesn't break, drilled until it's true. You'd know what that's worth to a katar hand better than I would - I just know what it looks like from a crane cab. My cutters held a plasma lance on one of those Scrappers for a full minute and he didn't step back. Whatever they're perfecting down there, they didn't invent it. They're drilling it to sell it, and my yard is the free training floor.",
           "Style": 0,
           "Color": null
         }
@@ -541,6 +595,10 @@
       "Choices": [
         {
           "ChoiceId": "reply-00007",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
           "Conditions": []
         }
       ]
@@ -568,6 +626,10 @@
         {
           "ChoiceId": "reply-00007",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -594,6 +656,10 @@
         {
           "ChoiceId": "reply-00007",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -610,13 +676,18 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "My belts still feed their pit. Five specialists on the junkline, one control relay. Everything else in that yard is somebody else's problem.",
+          "Text": "My belts still feed their pit. Five Riggers on the junkline, each dropped under your guard, one control relay. Everything else in that yard is somebody else's problem.",
           "Style": 0,
           "Color": null
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00016": {
       "Id": "entry-00016",
@@ -641,6 +712,10 @@
         {
           "ChoiceId": "reply-00013",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -663,7 +738,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00018": {
       "Id": "entry-00018",
@@ -678,7 +758,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Stop. Read the terms before you take this one. Their warden holds the sheared bay - the bay where a crane cable snapped years back and cut a barge hull like bread. He is the reason my recovery crews come back on stretchers. Put him down and pull the Adamantine Guard Sheared Bay Sigil off him. And you go in on my regs: two spotters, minimum. Nobody works a live bay alone, and that bay has been eating people since before this crew ever docked.",
+          "Text": "Stop. Read the terms before you take this one. Their warden, Crew Chief Rakkesh, holds the sheared bay - the bay where a crane cable snapped years back and cut a barge hull like bread. He is the reason my recovery crews come back on stretchers. Put him down and pull the Adamantine Guard Sheared Bay Sigil off him. And you go in on my regs: two spotters, minimum. Nobody works a live bay alone, and that bay has been eating people since before this crew ever docked.",
           "Style": 0,
           "Color": null
         }
@@ -704,6 +784,10 @@
         {
           "ChoiceId": "reply-00019",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -726,7 +810,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00020": {
       "Id": "entry-00020",
@@ -750,6 +839,10 @@
       "Choices": [
         {
           "ChoiceId": "reply-00014",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
           "Conditions": []
         }
       ]
@@ -777,6 +870,10 @@
         {
           "ChoiceId": "reply-00014",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -803,6 +900,10 @@
         {
           "ChoiceId": "reply-00014",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -825,7 +926,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00024": {
       "Id": "entry-00024",
@@ -850,6 +956,10 @@
         {
           "ChoiceId": "reply-00020",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -872,7 +982,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00026": {
       "Id": "entry-00026",
@@ -887,7 +1002,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Now it's personal. Their inner circle - four of them, the foreman's own hands - pulled my override chip out of the yardmaster's board. That chip outranks every lock, belt, and crane in this yard, including the ones keeping stacked hulls from becoming weather. Put all four down and bring back the Adamantine Guard Foreman's Override Chip. And keep your spotters close. Every bay past the sheared line is live.",
+          "Text": "Now it's personal. Their inner circle - four Foreman's Hands, the foreman's own - pulled my override chip out of the yardmaster's board. That chip outranks every lock, belt, and crane in this yard, including the ones keeping stacked hulls from becoming weather. Put all four down and bring back the Adamantine Guard Foreman's Override Chip. Any Foreman's Hand counts, same rule as the rest: guard while you break them. And keep your spotters close. Every bay past the sheared line is live.",
           "Style": 0,
           "Color": null
         }
@@ -913,6 +1028,10 @@
         {
           "ChoiceId": "reply-00026",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -929,13 +1048,18 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "They hold the crane deck above the drill pit. High ground, narrow catwalks, and every gate between here and there answers to the chip they're carrying, so there is no clever way in. There's just through. Which, I'm told, is the entire philosophy you people climb down there to learn.",
+          "Text": "They hold the far south-east end of the Breaker Bay, and every gate between here and there answers to the chip they're carrying, so there is no clever way in. There's just through. Which, I'm told, is the entire philosophy you people climb down there to learn.",
           "Style": 0,
           "Color": null
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00028": {
       "Id": "entry-00028",
@@ -950,7 +1074,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "The foreman's original crew. The four who walked in with him the first day, back when I still thought they were a salvage bid. Each one has been drilled to hold a bay alone against a full cutting team. They rotate my crane deck in pairs, they sleep in shifts, and they have never once broken my safety regs. Model workers. I want their names off my roster by the weekend.",
+          "Text": "The foreman's original crew. The four who walked in with him the first day, back when I still thought they were a salvage bid. Each one has been drilled to hold a bay alone against a full cutting team. They hold the far end of my bay in pairs, they sleep in shifts, and they have never once broken my safety regs. Model workers. I want their names off my roster by the weekend.",
           "Style": 0,
           "Color": null
         }
@@ -959,6 +1083,10 @@
       "Choices": [
         {
           "ChoiceId": "reply-00021",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
           "Conditions": []
         }
       ]
@@ -986,6 +1114,10 @@
         {
           "ChoiceId": "reply-00021",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1012,6 +1144,10 @@
         {
           "ChoiceId": "reply-00021",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1028,13 +1164,18 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Four hands, one chip, crane deck over the drill pit. Until that chip is back in my board, every gate in this yard is a suggestion.",
+          "Text": "Four Foreman's Hands, each dropped under your guard, one chip, far south-east end of the bay, the deepest part of the yard. Until that chip is back in my board, every gate in this yard is a suggestion.",
           "Style": 0,
           "Color": null
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00032": {
       "Id": "entry-00032",
@@ -1059,6 +1200,10 @@
         {
           "ChoiceId": "reply-00027",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1081,7 +1226,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00034": {
       "Id": "entry-00034",
@@ -1096,7 +1246,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Last order on the book. Bay One. Their foreman is alone in there now - no crew, no chip, no line out. Just him and the guard he taught the rest of them, the same one your katars have been learning the hard way. I've watched him on the bay feed: cutters, riggers, one of my cranes at full swing, and his feet haven't moved in a week. Put him down and there's nothing to carry back - the yard will know, and so will I. But you don't go in alone. That bay has ended better spotters than you, and I don't stock stretchers in threes for nothing.",
+          "Text": "Last order on the book. Bay One. Their foreman, Wreck Foreman Ssurgan, is alone in there now - no crew, no chip, no line out. Just him and the guard he taught the rest of them, the same one your katars have been learning the hard way. I've watched him on the bay feed: cutters, riggers, one of my cranes at full swing, and his feet haven't moved in a week. Put him down and there's nothing to carry back - the yard will know, and so will I. But you don't go in alone. That bay has ended better spotters than you, and I don't stock stretchers in threes for nothing.",
           "Style": 0,
           "Color": null
         }
@@ -1122,6 +1272,10 @@
         {
           "ChoiceId": "reply-00033",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1144,7 +1298,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00036": {
       "Id": "entry-00036",
@@ -1159,7 +1318,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "The finished article. Everything his adepts drilled at, he already is. My crane operator swears the load alarm tripped when she swung at him - he caught the wreck ball on crossed blades and the system logged him as a structure. Maybe by now he is one. He came down here to stand in front of the one thing that never breaks, and he stayed until there were two of them. Your job is to put the count back at one.",
+          "Text": "The finished article. Everything his Scrappers drilled at, he already is. My crane operator swears the load alarm tripped when she swung at him - he caught the wreck ball on crossed blades and the system logged him as a structure. Maybe by now he is one. He came down here to stand in front of the one thing that never breaks, and he stayed until there were two of them. Your job is to put the count back at one.",
           "Style": 0,
           "Color": null
         }
@@ -1168,6 +1327,10 @@
       "Choices": [
         {
           "ChoiceId": "reply-00028",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
           "Conditions": []
         }
       ]
@@ -1195,6 +1358,10 @@
         {
           "ChoiceId": "reply-00028",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1221,6 +1388,10 @@
         {
           "ChoiceId": "reply-00028",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1243,7 +1414,12 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
     },
     "entry-00040": {
       "Id": "entry-00040",
@@ -1268,6 +1444,10 @@
         {
           "ChoiceId": "reply-00034",
           "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
         }
       ]
     },
@@ -1290,7 +1470,252 @@
         }
       ],
       "OnEnterActions": [],
-      "Choices": []
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-training",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-ineligible": {
+      "Id": "unarmed-ineligible",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Power Gloves do not excuse poor footing. Master your Unarmed skill first, rank fifty, then we will see whether your combinations hold together when somebody tries to break them.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-back",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-offer": {
+      "Id": "unarmed-offer",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Anyone can hit a bulkhead hard. I need hands that place the next blow before the first one has finished its job. Land thirty Palm Strikes from a Jab opening, and thirty finishers after a successful Palm Strike. Prove both against seasoned hostiles, then bring that discipline back to my desk. I will teach you Perfect Form.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-purpose",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-rules",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-accept",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-back",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-purpose": {
+      "Id": "unarmed-purpose",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "On a busy floor you take the opening you have. A short combination is useful. A full one asks more: the same opponent, the right sequence, enough control to finish without borrowing somebody else's work. I want to know you can choose either deliberately.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-return-offer",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-rules": {
+      "Id": "unarmed-rules",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Hostile opponents of combat level forty-five or higher. No summoned creatures, training dummies or other spacers. The Palm Strike must spend your Opening; the finisher must spend your Finish. A miss proves nothing. Ordinary attacks between techniques are your choice. I am measuring combinations, not noise on a training floor.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-return-offer",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-accepted": {
+      "Id": "unarmed-accepted",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Thirty bridges, thirty full finishes. Work them into fights you already have reason to take. You do not need a key to my yard for this trial. When both measures are complete, find me here in Offices & Labs on CZ-220.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-back",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-progress": {
+      "Id": "unarmed-progress",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Keep the opening attached to the opponent who gave it to you. Jab, Palm Strike, finish. Thirty landed bridges and thirty full finishes against seasoned hostiles. Then my desk.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-back",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-ready": {
+      "Id": "unarmed-ready",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "The sequence holds under pressure. Good. There is one more adjustment: stop thinking of the finish as a separate blow. It is where the whole combination was going.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-turnin",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-back",
+          "Conditions": []
+        }
+      ]
+    },
+    "unarmed-complete": {
+      "Id": "unarmed-complete",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Perfect Form. Set the base, carry the opening through the palm, then commit the finish. You have earned the training. Keep practicing until the finish belongs to you. Now put it to work somewhere away from my desk.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "unarmed-back",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "unarmed-leave",
+          "Conditions": []
+        }
+      ]
     }
   },
   "Choices": {
@@ -2138,6 +2563,445 @@
       "Next": [
         {
           "TargetNodeId": "entry-00041",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-training": {
+      "Id": "unarmed-training",
+      "Text": {
+        "Text": "I want to discuss Unarmed techniques.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "unarmed-complete",
+          "Conditions": [
+            {
+              "Key": "condition-completed-quest",
+              "Arguments": [
+                "perfect_form_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "unarmed-ready",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "perfect_form_mastery",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "unarmed-progress",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "perfect_form_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "unarmed-offer",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "perfect_form_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "unarmed-ineligible",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-back": {
+      "Id": "unarmed-back",
+      "Text": {
+        "Text": "Back to station business.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "entry-00000",
+          "Conditions": [
+            {
+              "Key": "condition-completed-quest",
+              "Arguments": [
+                "adamantine_guard_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00040",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "adamantine_guard_mastery",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00039",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "adamantine_guard_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00034",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "adamantine_guard_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00032",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "adamantine_guard_circle",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00031",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "adamantine_guard_circle"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00026",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "adamantine_guard_circle"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00024",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "adamantine_guard_breach",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00023",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "adamantine_guard_breach"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00018",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "adamantine_guard_breach"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00016",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "adamantine_guard_measure",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00015",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "adamantine_guard_measure"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00010",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "adamantine_guard_measure"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00008",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "adamantine_guard_foundation",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00007",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "adamantine_guard_foundation"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00002",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "adamantine_guard_foundation"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00001",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-leave": {
+      "Id": "unarmed-leave",
+      "Text": {
+        "Text": "I have what I need.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [],
+      "EndsConversation": true,
+      "IsAutomatic": false
+    },
+    "unarmed-accept": {
+      "Id": "unarmed-accept",
+      "Text": {
+        "Text": "Set the trial. I will put the technique to work.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [
+        {
+          "Key": "action-accept-quest",
+          "Arguments": [
+            "perfect_form_mastery"
+          ]
+        }
+      ],
+      "Next": [
+        {
+          "TargetNodeId": "unarmed-accepted",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-purpose": {
+      "Id": "unarmed-purpose",
+      "Text": {
+        "Text": "Why test combinations instead of raw damage?",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "unarmed-purpose",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-rules": {
+      "Id": "unarmed-rules",
+      "Text": {
+        "Text": "Which fights count?",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "unarmed-rules",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-return-offer": {
+      "Id": "unarmed-return-offer",
+      "Text": {
+        "Text": "Let us discuss the trial.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "unarmed-offer",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "unarmed-turnin": {
+      "Id": "unarmed-turnin",
+      "Text": {
+        "Text": "The trial is complete. Show me the final technique.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [
+        {
+          "Key": "action-advance-quest",
+          "Arguments": [
+            "perfect_form_mastery"
+          ]
+        }
+      ],
+      "Next": [
+        {
+          "TargetNodeId": "unarmed-complete",
           "Conditions": []
         }
       ],

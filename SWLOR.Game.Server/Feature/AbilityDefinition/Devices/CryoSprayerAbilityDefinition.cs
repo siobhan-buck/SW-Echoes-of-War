@@ -35,7 +35,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .UsesAuthoredAnimationAtImpact()
                 .Name("Cryo Sprayer")
                 .Level(1)
-                .HasActivationDelay(1f)
+                .HasActivationDelay(0.5f)
                 .HasRecastDelay(RecastGroup.CryoSprayer, 15f)
                 .SkillType(SkillType.Devices)
                 .CombatImpactDamageAbility(AbilityType.Perception)
@@ -51,7 +51,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(5);
+                .RequirementStamina(3);
         }
 
         private static void CryoSprayer1ImpactAction(uint activator, uint target, int level, Location targetLocation)

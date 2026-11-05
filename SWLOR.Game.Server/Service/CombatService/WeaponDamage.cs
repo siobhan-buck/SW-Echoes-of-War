@@ -1,4 +1,5 @@
 using SWLOR.Game.Server.Service.PerkService;
+using SWLOR.Game.Server.Service.SkillService;
 using SWLOR.Game.Server.Service.StatService;
 using SWLOR.NWN.API.NWScript.Enum;
 using SWLOR.NWN.API.NWScript.Enum.Item;
@@ -10,8 +11,12 @@ namespace SWLOR.Game.Server.Service.CombatService
     {
         public const int NaturalSingleWeaponPercent = 20;
 
+        // Spears are two-handed despite their legacy equipment classification.
+        // Power Gloves always strike as a pair, like two katars.
         public static bool IsSingleWeaponType(BaseItem type) =>
-            Item.OneHandedMeleeItemTypes.Contains(type) || Item.PistolBaseItemTypes.Contains(type) ||
+            Item.OneHandedMeleeItemTypes.Contains(type) && !Item.SpearBaseItemTypes.Contains(type) &&
+            !Item.PowerGloveBaseItemTypes.Contains(type) ||
+            Item.PistolBaseItemTypes.Contains(type) ||
             Item.ThrowingWeaponBaseItemTypes.Contains(type);
 
         public static bool ReceivesNaturalSingleWeaponBonus(uint creature) =>
@@ -34,6 +39,32 @@ namespace SWLOR.Game.Server.Service.CombatService
             var qualifies = EquipmentPredicates.HasSingleWeapon(creature) &&
                             GetItemInSlot(InventorySlot.RightHand, creature) == weapon;
             return CalculateEffectiveDMG(damage, qualifies ? GetSingleWeaponPercent(creature) : 0);
+        }
+
+        /// <summary>
+        /// Weapon DMG an ability adds. Unarmed abilities strike with both fists, so a Power Glove pair counts its
+        /// owned glove twice and two Katars count both Katars. Any other weapons add the main hand's DMG once.
+        /// Auto-attacks still roll one weapon per hand.
+        /// </summary>
+        public static int GetAbilityDMG(uint creature, uint weapon, SkillType abilitySkill)
+        {
+            var damage = GetEffectiveDMG(creature, weapon);
+            return abilitySkill == SkillType.Unarmed && GetItemInSlot(InventorySlot.RightHand, creature) == weapon &&
+                   TryGetOtherStrikingHand(creature, weapon, out var otherHand)
+                ? damage + GetEffectiveDMG(creature, otherHand)
+                : damage;
+        }
+
+        /// <summary>
+        /// The other fist: the owned glove again for a Power Glove pair, or the left Katar of two Katars. Pairs of
+        /// other weapons, whose DMG is not tuned as half of a pair, never count, so no loadout beats the fists.
+        /// </summary>
+        private static bool TryGetOtherStrikingHand(uint creature, uint mainHand, out uint weapon)
+        {
+            weapon = PowerGloveEquipment.IsActivePair(creature) ? mainHand
+                : EquipmentPredicates.HasDualWieldKatar(creature) ? GetItemInSlot(InventorySlot.LeftHand, creature)
+                : OBJECT_INVALID;
+            return GetIsObjectValid(weapon);
         }
 
         /// <summary>Damage type a weapon deals, matching native auto-attack resolution.</summary>
@@ -73,6 +104,10 @@ namespace SWLOR.Game.Server.Service.CombatService
             var bonus = ((long)itemDamage * percent + 99) / 100;
             return (int)Math.Min(int.MaxValue, itemDamage + bonus);
         }
+
+        /// <summary>Power Gloves strike with both fists, so they use dual-wield rules rather than Single Weapon.</summary>
+        public const string PowerGloveGripDescription =
+            "Grip: Dual wield. Strikes with both fists, so the Dual Wield perk applies. Single Weapon and Doublehand bonuses do not apply.";
 
         public static string BuildSingleWeaponDescription(int itemDamage, int naturalPercent, int perkPercent, bool hasItemDamage = true)
         {

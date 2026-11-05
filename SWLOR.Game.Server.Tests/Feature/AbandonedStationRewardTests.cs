@@ -23,7 +23,7 @@ public class AbandonedStationRewardTests
     {
         ("ABANDONED_STATION_MAIN", "abs_zchief", "CHIEF", new[] { "riotvisor_helm", "lockdown_bracer" },
             "bp_breachbelt", RecipeType.SalvagedBreachSealBelt, "breachseal_belt", "override_spike"),
-        ("ABANDONED_STATION_RESTRICTED", "abs_subzero", "SUBZERO", new[] { "quarantine_mask", "isolation_shroud" },
+        ("ABANDONED_STATION_RESTRICTED", "abs_colzero", "SUBZERO", new[] { "quarantine_mask", "isolation_shroud" },
             "bp_serumneck", RecipeType.SalvagedSerumCellNecklace, "serumcell_neck", "plague_culture"),
     };
 
@@ -164,7 +164,7 @@ public class AbandonedStationRewardTests
         loot["STATION_RESEARCH_GEAR"].Select(i => i.Resref).Should().BeEquivalentTo(BiolabArmor);
         loot["STATION_GEAR"].Select(i => i.Resref).Should().BeEquivalentTo(
             loot["STATION_SECURITY_GEAR"].Concat(loot["STATION_CREW_GEAR"]).Concat(loot["STATION_RESEARCH_GEAR"]).Select(i => i.Resref),
-            "rakghouls, test subjects and the rancor carry whatever their victims wore");
+            "colicoids, test subjects and the rancor carry whatever their victims wore");
         foreach (var table in new[] { "STATION_SECURITY_GEAR", "STATION_CREW_GEAR", "STATION_RESEARCH_GEAR", "STATION_GEAR" })
             loot[table].Should().OnlyContain(i => i.Weight == 1 && i.MaxQuantity == 1, table);
 
@@ -304,8 +304,8 @@ public class AbandonedStationRewardTests
         ["cnt_helmet"] = BaseItem.Helmet, ["cnt_armor"] = BaseItem.Armor, ["cnt_bracer"] = BaseItem.Bracer,
         ["cnt_leggings"] = BaseItem.Boots, ["cnt_shield"] = BaseItem.LargeShield,
         ["cnt_longsword"] = BaseItem.Longsword, ["cnt_knife"] = BaseItem.Dagger, ["cnt_gswd"] = BaseItem.GreatSword,
-        ["cnt_spear"] = BaseItem.ShortSpear, ["cnt_twinblade"] = BaseItem.TwoBladedSword, ["cnt_katar"] = BaseItem.Katar,
-        ["cnt_staff"] = BaseItem.QuarterStaff, ["cnt_pistol"] = BaseItem.Sling, ["cnt_rifle"] = BaseItem.Rifle,
+        ["cnt_spear"] = BaseItem.ShortSpear, ["cnt_twinblade"] = BaseItem.TwoBladedSword, ["cnt_katar"] = BaseItem.Katar, ["cnt_pglove"] = BaseItem.PowerGlove,
+        ["cnt_staff"] = BaseItem.QuarterStaff, ["cnt_pistol"] = BaseItem.Sling, ["cnt_twinpistol"] = BaseItem.Sling, ["cnt_rifle"] = BaseItem.Rifle,
         ["cnt_shuriken"] = BaseItem.Shuriken,
         ["gantry_cap"] = BaseItem.Helmet, ["gantry_tunic"] = BaseItem.Armor, ["gantry_gloves"] = BaseItem.Gloves,
         ["gantry_boots"] = BaseItem.Boots,
@@ -359,8 +359,10 @@ public class AbandonedStationRewardTests
         ("cnt_spear", "prm_spear", "raider_spear", 25, 1),
         ("cnt_twinblade", "prm_twinblade", "raider_twinblade", 25, 1),
         ("cnt_katar", "prm_katar", "raider_katar", 25, 1),
+        ("cnt_pglove", "prm_pglove", "raider_pglove", 25, 1),
         ("cnt_staff", "prm_staff", "raider_staff", 25, 1),
         ("cnt_pistol", "prm_pistol", "raider_pistol", 25, 1),
+        ("cnt_twinpistol", "prm_twinpistol", "raider_twinpstl", 25, 1),
         ("cnt_rifle", "prm_rifle", "raider_rifle", 25, 1),
         ("cnt_shuriken", "prm_shuriken", "raider_shuriken", 25, 1),
     };
@@ -375,12 +377,12 @@ public class AbandonedStationRewardTests
         ("abs_ztech", "STATION_CREW_GEAR", 5),
         ("abs_zresearch", "STATION_RESEARCH_GEAR", 5),
         ("abs_zguard", "STATION_SECURITY_GEAR", 10),
-        ("abs_rakghoul", "STATION_GEAR", 5),
+        ("abs_colicoid", "STATION_GEAR", 5),
         ("abs_zgenetic", "STATION_RESEARCH_GEAR", 10),
         ("abs_zsubject", "STATION_GEAR", 10),
-        ("abs_rakstalk", "STATION_GEAR", 10),
-        ("abs_rakbrute", "STATION_GEAR", 20),
-        ("abs_rakalpha", "STATION_GEAR", 50),
+        ("abs_colstalk", "STATION_GEAR", 10),
+        ("abs_colbrute", "STATION_GEAR", 20),
+        ("abs_colalpha", "STATION_GEAR", 50),
         ("abs_zdirector", "STATION_RESEARCH_GEAR", 100),
         ("abs_zrancor", "STATION_GEAR", 100),
     };

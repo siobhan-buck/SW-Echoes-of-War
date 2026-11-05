@@ -36,10 +36,19 @@ public class SingleWeaponDamageTests
     [TestCase(BaseItem.Longsword, true)]
     [TestCase(BaseItem.Dagger, true)]
     [TestCase(BaseItem.Lightsaber, true)]
-    [TestCase(BaseItem.ShortSpear, true)]
+    [TestCase(BaseItem.ShortSpear, false)]
+    [TestCase(BaseItem.Halberd, false)]
+    [TestCase(BaseItem.Scythe, false)]
+    [TestCase(BaseItem.Trident, false)]
+    [TestCase(BaseItem.QuarterStaff, false)]
+    [TestCase(BaseItem.GreatAxe, false)]
     [TestCase(BaseItem.Katar, true)]
+    [TestCase(BaseItem.PowerGlove, false)]
     [TestCase(BaseItem.Shuriken, true)]
     [TestCase(BaseItem.GreatSword, false)]
+    [TestCase(BaseItem.DoubleAxe, false)]
+    [TestCase(BaseItem.DireMace, false)]
+    [TestCase(BaseItem.TwoBladedSword, false)]
     [TestCase(BaseItem.Saberstaff, false)]
     [TestCase(BaseItem.TwinElectroBlade, false)]
     [TestCase(BaseItem.Pistol, true)]
@@ -59,6 +68,15 @@ public class SingleWeaponDamageTests
         trained.Should().Contain("Weapon DMG: 24").And.Contain("Additional +40%").And.Contain("DMG when wielded alone: 39 (rounded up once)");
         WeaponDamage.BuildSingleWeaponDescription(24, 20, 0).Should().Be(untrained,
             "a different viewer must not modify an item's persistent rating or another preview");
+    }
+
+    [Test]
+    public void PowerGloveDescription_PointsToDualWield()
+    {
+        WeaponDamage.PowerGloveGripDescription.Should().Contain("Dual Wield perk applies")
+            .And.Contain("Single Weapon and Doublehand bonuses do not apply");
+        WeaponDamage.IsSingleWeaponType(BaseItem.PowerGlove).Should().BeFalse(
+            "the examine text must match the Single Weapon eligibility rule");
     }
 
     [Test]

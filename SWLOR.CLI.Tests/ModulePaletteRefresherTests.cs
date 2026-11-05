@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SWLOR.CLI;
+using SWLOR.NWN.Formats.Common;
 using System.Diagnostics;
 using System.Text;
 
@@ -62,6 +63,21 @@ public sealed class ModulePaletteRefresherTests
         serverProject.Should().NotContain("tools\\SWLOR.CLI\\SWLOR.CLI.exe");
         File.Exists(Path.Combine(repositoryRoot, "tools", "SWLOR.CLI", "SWLOR.CLI.exe"))
             .Should().BeFalse("the committed executable can silently fall behind the CLI source");
+    }
+
+    [Test]
+    public void Refresh_KeepsRetiredTierOneSaberKitsOutOfTheDmPalette()
+    {
+        // Retired kits are kept only for migration, so packing must not list them for DMs.
+        var moduleRoot = Path.Combine(FindRepositoryRoot().FullName, "Module");
+
+        var refresh = ModulePaletteRefresher.Refresh(moduleRoot, _outputRoot);
+        var itemPalette = refresh.Replacements[Path.GetFullPath(Path.Combine(moduleRoot, "itp", "itempalcus.itp.json"))];
+        var refreshed = File.ReadAllText(itemPalette, Encoding.Latin1);
+
+        refreshed.Should().NotContain("\"saber_upg1\"");
+        refreshed.Should().NotContain("\"saberstaff_upg1\"");
+        refreshed.Should().Contain("\"saber_upg2\"", "the current kit line stays in the palette");
     }
 
     [Test]
@@ -161,6 +177,27 @@ public sealed class ModulePaletteRefresherTests
         var descriptor = Descriptors(TerminalCategories(LoadOutput("placeablepalcus"))[7])
             .Should().ContainSingle().Subject;
         descriptor["NAME"]!["value"]!.Value<string>().Should().Be("Café’s Crate");
+        File.ReadAllBytes(Path.Combine(_outputRoot, "placeablepalcus.itp.json"))
+            .AsSpan().IndexOf(new byte[] { (byte)'C', (byte)'a', (byte)'f', 0xE9, 0x92, (byte)'s' }).Should().BePositive(
+                "nwn_gff copies palette bytes verbatim, so the name must stay Windows-1252");
+    }
+
+    [Test]
+    public void Refresh_PreservesColorTokenBytesThatLookLikeUtf8()
+    {
+        // Channel bytes C3 A9 20 also form a valid UTF-8 "é" followed by a space.
+        WritePalette("placeablepalcus", Terminal(7, "Custom"));
+        WriteNwnJson(
+            Path.Combine(_moduleRoot, "utp", "colored.utp.json"),
+            Blueprint("PaletteID", 7, "LocName", LocString("<cÃ© >Lamp</c>")));
+        var source = File.ReadAllBytes(Path.Combine(_moduleRoot, "utp", "colored.utp.json"));
+        var token = new byte[] { (byte)'<', (byte)'c', 0xC3, 0xA9, (byte)' ', (byte)'>', (byte)'L' };
+        source.AsSpan().IndexOf(token).Should().BePositive();
+
+        ModulePaletteRefresher.Refresh(_moduleRoot, _outputRoot);
+
+        File.ReadAllBytes(Path.Combine(_outputRoot, "placeablepalcus.itp.json"))
+            .AsSpan().IndexOf(token).Should().BePositive("the refreshed palette must keep all three channel bytes");
     }
 
     [TestCase("doorpalcus", "utd", "PaletteID", "LocName")]
@@ -244,30 +281,34 @@ public sealed class ModulePaletteRefresherTests
         foreach (var (source, originalContent) in sources)
             File.ReadAllBytes(source).Should().Equal(originalContent);
 
-        var converter = Path.Combine(TestContext.CurrentContext.TestDirectory, "nwn_gff.exe");
-        File.Exists(converter).Should().BeTrue();
+        // The bundled nwn_gff.exe on Windows, the native converter elsewhere - as the packer resolves it.
+        var converter = NativeToolPath.Find("nwn_gff", TestContext.CurrentContext.TestDirectory);
+        converter.Should().NotBeNull();
         foreach (var replacement in refresh.Replacements.Values)
         {
             var binaryOutput = Path.Combine(
                 _outputRoot,
                 Path.GetFileNameWithoutExtension(replacement));
-            var startInfo = new ProcessStartInfo(converter)
+            var arguments = new[]
+            {
+                "-l", "json",
+                "-i", replacement,
+                "-o", binaryOutput,
+                "-k", "gff"
+            };
+            using var nativeInput = NativeGffInput.PrepareForTool(converter!, Environment.CurrentDirectory, arguments);
+            var startInfo = new ProcessStartInfo(converter!)
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 CreateNoWindow = true
             };
-            foreach (var argument in new[]
-                     {
-                         "-l", "json",
-                         "-i", replacement,
-                         "-o", binaryOutput,
-                         "-k", "gff"
-                     })
+            foreach (var argument in arguments)
             {
                 startInfo.ArgumentList.Add(argument);
             }
+            NativeToolPath.ConfigureLibraryPath(startInfo);
 
             using var process = Process.Start(startInfo)!;
             var standardOutput = process.StandardOutput.ReadToEnd();
@@ -566,8 +607,10 @@ public sealed class ModulePaletteRefresherTests
 
     private JObject LoadOutput(string paletteName)
     {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         return JObject.Parse(File.ReadAllText(
-            Path.Combine(_outputRoot, paletteName + ".itp.json")));
+            Path.Combine(_outputRoot, paletteName + ".itp.json"),
+            Encoding.GetEncoding(1252)));
     }
 
     private static Dictionary<int, JObject> TerminalCategories(JObject palette)
@@ -601,7 +644,8 @@ public sealed class ModulePaletteRefresherTests
 
     private static void RunTool(string toolName, string workingDirectory, params string[] arguments)
     {
-        var toolPath = Path.Combine(TestContext.CurrentContext.TestDirectory, toolName);
+        var toolPath = NativeToolPath.Find(toolName, TestContext.CurrentContext.TestDirectory)
+            ?? Path.Combine(TestContext.CurrentContext.TestDirectory, toolName);
         var startInfo = new ProcessStartInfo(toolPath)
         {
             WorkingDirectory = workingDirectory,
@@ -612,6 +656,7 @@ public sealed class ModulePaletteRefresherTests
         };
         foreach (var argument in arguments)
             startInfo.ArgumentList.Add(argument);
+        NativeToolPath.ConfigureLibraryPath(startInfo);
 
         using var process = Process.Start(startInfo)!;
         var standardOutput = process.StandardOutput.ReadToEnd();

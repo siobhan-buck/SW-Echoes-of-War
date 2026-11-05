@@ -170,8 +170,10 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("raider_gswd", 5)
                 .AddItem("raider_spear", 5)
                 .AddItem("raider_katar", 5)
+                .AddItem("raider_pglove", 5)
                 .AddItem("raider_staff", 5)
                 .AddItem("raider_pistol", 5)
+                .AddItem("raider_twinpstl", 5)
                 .AddItem("raider_shuriken", 5)
                 .AddItem("raider_twinblade", 5)
                 .AddItem("raider_rifle", 5)
@@ -200,8 +202,10 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("raider_gswd", 3)
                 .AddItem("raider_spear", 3)
                 .AddItem("raider_katar", 3)
+                .AddItem("raider_pglove", 3)
                 .AddItem("raider_staff", 3)
                 .AddItem("raider_pistol", 3)
+                .AddItem("raider_twinpstl", 3)
                 .AddItem("raider_shuriken", 3)
                 .AddItem("raider_twinblade", 3)
                 .AddItem("raider_rifle", 3)
@@ -230,6 +234,9 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
 
             _builder.Create("TATOOINE_TUSKEN_CHAMPION_COMP")
                 .AddItem("sun_bantha_hide", 1);
+
+            _builder.Create("TATOOINE_TUSKEN_CHAMPION_WARDROBE")
+                .AddItem("wd_krayt_pearl", 1);
         }
 
         private void TuskenLongEye()
@@ -304,9 +311,6 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("wild_innards", 10)
                 .AddItem("sandwormtooth", 5)
                 .AddItem("chiro_shard", 1);
-
-            _builder.Create("TATOOINE_ANCIENT_WORM_STOLEN_GOODS")
-                .AddItem("stolen_goods", 100);
 
             _builder.Create("TATOOINE_ANCIENT_WORM_GEMS")
                 .AddItem("emerald", 100, 1, true)

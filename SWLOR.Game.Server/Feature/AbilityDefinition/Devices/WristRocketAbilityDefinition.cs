@@ -37,13 +37,13 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .Create(FeatType.WristRocket1, PerkType.WristRocket)
                 .Name("Wrist Rocket I")
                 .Level(1)
-                .HasActivationDelay(1f)
+                .HasActivationDelay(0.5f)
                 .HasRecastDelay(RecastGroup.WristRocket, 12f)
                 .SkillType(SkillType.Devices)
                 .CombatImpactDamageAbility(AbilityType.Perception)
                 .UsesAnimation(Animation.CastOutAnimation)
                 .PreservesNativeAnimationChoreography()
-                .UsesNativeAnimationPreview(Animation.CastOutAnimation, 1f)
+                .UsesNativeAnimationPreview(Animation.CastOutAnimation, 0.5f)
                 .HasMaxRange(DeviceAbilityRange.Standard)
                 .IsSingleTargetAbility()
                 .RequiresTarget()
@@ -51,7 +51,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(2);
+                .RequirementStamina(1);
         }
 
         private static void WristRocket2(AbilityBuilder builder)
@@ -60,13 +60,13 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .Create(FeatType.WristRocket2, PerkType.WristRocket)
                 .Name("Wrist Rocket II")
                 .Level(2)
-                .HasActivationDelay(1f)
+                .HasActivationDelay(0.5f)
                 .HasRecastDelay(RecastGroup.WristRocket, 12f)
                 .SkillType(SkillType.Devices)
                 .CombatImpactDamageAbility(AbilityType.Perception)
                 .UsesAnimation(Animation.CastOutAnimation)
                 .PreservesNativeAnimationChoreography()
-                .UsesNativeAnimationPreview(Animation.CastOutAnimation, 1f)
+                .UsesNativeAnimationPreview(Animation.CastOutAnimation, 0.5f)
                 .HasMaxRange(DeviceAbilityRange.Standard)
                 .IsSingleTargetAbility()
                 .RequiresTarget()
@@ -74,7 +74,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(4);
+                .RequirementStamina(2);
         }
 
         private static void WristRocket3(AbilityBuilder builder)
@@ -83,13 +83,13 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .Create(FeatType.WristRocket3, PerkType.WristRocket)
                 .Name("Wrist Rocket III")
                 .Level(3)
-                .HasActivationDelay(1f)
+                .HasActivationDelay(0.5f)
                 .HasRecastDelay(RecastGroup.WristRocket, 12f)
                 .SkillType(SkillType.Devices)
                 .CombatImpactDamageAbility(AbilityType.Perception)
                 .UsesAnimation(Animation.CastOutAnimation)
                 .PreservesNativeAnimationChoreography()
-                .UsesNativeAnimationPreview(Animation.CastOutAnimation, 1f)
+                .UsesNativeAnimationPreview(Animation.CastOutAnimation, 0.5f)
                 .HasMaxRange(DeviceAbilityRange.Standard)
                 .IsSingleTargetAbility()
                 .RequiresTarget()
@@ -97,7 +97,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(5);
+                .RequirementStamina(3);
         }
 
         private static void PlayRocketLaunch(uint activator, uint target)

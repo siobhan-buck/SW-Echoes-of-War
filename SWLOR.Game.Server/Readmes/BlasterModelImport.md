@@ -1,15 +1,25 @@
 # Importing and creating pistol blaster models
 
-Use the repository [blaster skill](../../.codex/skills/swlor-blaster-models/SKILL.md)
+Use the repository [blaster skill](../../skills/swlor-blaster-models/SKILL.md)
 for agent-assisted work. Commit only the finished model, compressed texture maps, material
 definition and inventory icon for each weapon. Keep GR2/DDS inputs, Blender
 scenes, per-model builders, manifests and review artifacts in ignored local
 staging such as `.tmp/blaster/`. The normal game/HAK build uses the committed game
-resources directly; it must not require those authoring files.
+resources directly; it must not require those authoring files. Delete each
+intermediate once used and empty the staging folder after the finished resources
+are committed (see [AgentEnvironment.md](AgentEnvironment.md), "Disk hygiene").
 
 ## Slots and existing replacements
 
-Pistol base item **11** uses item class **WBwSh**. Native middle slots encode
+Modern pistol appearances use item class **WBwSh**. Logical pistol base item **11** and
+the production native-sling base item **61** share these resources. Modern
+production pistols use **61**, as enforced by `PistolBaseItemCompatibility`; native item 11
+hardcodes the bow attachment and suppresses the off-hand weapon. Use the current
+production blueprint and item types when building client fixtures. Recognized
+legacy resrefs instead use `BaseItem.LegacyPistol` (**514**), as returned by
+`PistolBaseItemCompatibility.GetCanonicalBaseItem`; preserve that canonical type
+in legacy fixtures so their attachment and animation behavior is retained.
+Native middle slots encode
 `model * 10 + color`; the toolset shows `model-color`; the in-game appearance
 catalog encodes `color * 100 + model`.
 
@@ -21,8 +31,10 @@ catalog encodes `color * 100 + model`.
 These are examples, not a complete free-slot inventory. Inspect the current HAK
 resources, catalog and open asset PRs before selecting a slot. Choose another modern pistol for a new
 design unless asked to revise one of them. Replacing a shared slot also changes
-persisted items using it. Basic Pistol already uses middle 201. Do not substitute
-the native-sling compatibility base item 61 or change item stats to select a model.
+persisted items using it. Basic Pistol already uses middle 201. Preserve the
+blueprint's base item and stats when selecting a different model. In temporary
+fixtures, update both `ModelPart*` and `xModelPart*`: the extended fields take
+precedence over the byte fields.
 
 A middle slot uses `wbwsh_m_NNN.mdl` and `iwbwsh_m_NNN.dds` in
 `SWLOR_Haks/sw_weapon/`. Register its catalog ID in
@@ -30,6 +42,387 @@ A middle slot uses `wbwsh_m_NNN.mdl` and `iwbwsh_m_NNN.dds` in
 The example weapons use empty top/bottom parts 11. Texture resrefs must be unique,
 meaningful and fit NWN's 16-character limit, including map suffixes.
 
+## Generate local weapon sources with TRELLIS.2
+
+`tools/GenerateWeaponModels.py` runs the retained
+`tools/workflows/trellis2_weapon.json` image-to-GLB workflow against an already
+running local ComfyUI instance. It uses Python's standard library, requires no
+Xenomech checkout, and does not call Meshy or paid APIs. It does not install,
+restart, or stop ComfyUI. The default endpoint is `http://127.0.0.1:8000`;
+`--url` accepts another loopback HTTP endpoint. External API nodes are rejected.
+
+Use a compatible ComfyUI build with the TRELLIS.2 and mesh processing nodes;
+preflight checks their current input names, links and model choices. The tested
+runtime reports ComfyUI 0.38.0 and includes these nodes in its core installation.
+Its configured model search paths must contain:
+
+- `diffusion_models/trellis_2_int8_convrot.safetensors`
+- `vae/trellis_2_shape_vae_bf16.safetensors`
+- `vae/trellis_2_texture_vae_bf16.safetensors`
+- `clip_vision/dino_v3_L_naf_fp32.safetensors`
+- `background_removal/birefnet.safetensors`
+
+Create concept images and a schema-1 manifest outside Git, for example in a
+new temporary directory. Paths in `image` are relative to the manifest, or
+absolute. Explicitly Git-ignored staging is also accepted. Do not commit input
+images, per-weapon manifests, prompt journals, GLBs or generated reports.
+
+```json
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "id": "spear_field",
+      "image": "concepts/spear_field.png",
+      "seed": 123,
+      "shape_resolution": 512,
+      "texture_size": 1024,
+      "target_faces": 6000
+    }
+  ]
+}
+```
+
+Shape resolution accepts 512 or 1024; 512 bypasses the shape upsampling stage.
+Texture size independently accepts 512 or 1024. Seed is required; default shape,
+texture and target-face budgets are 512, 1024 and 6000. Face count is a decimator
+target, not a guarantee about the final mesh. Choose budgets from the weapon's
+silhouette and source quality, then inspect the result before fitting.
+
+```powershell
+python -B tools/GenerateWeaponModels.py "$env:TEMP/weapon-sources/manifest.json" `
+  --output "$env:TEMP/weapon-sources/generated" --preflight
+# After the read-only preflight succeeds:
+python -B tools/GenerateWeaponModels.py "$env:TEMP/weapon-sources/manifest.json" `
+  --output "$env:TEMP/weapon-sources/generated" --timeout 1800
+```
+
+The runner holds one local GPU-owner lock, waits for an empty ComfyUI queue,
+and finishes one owned prompt before submitting the next. It never clears the
+queue or interrupts someone else's job. Each asset has a persisted deadline,
+including queue wait. A rerun renews an expired deadline only while the job is
+still `prepared` (never submitted); once submission has started, restarting
+cannot extend it. The prompt and unique recovery token are journaled before
+submission. Repeat the identical command to collect a
+known job or reconcile a lost response against queue/history. If that cannot
+identify exactly one job, the runner stops; inspect its journals and ComfyUI
+history before deciding what happened. Do not delete the journal or blindly
+resubmit. An expired running job remains owned by its recorded prompt ID and
+can be collected once complete. A failed job stops the batch.
+
+Each asset folder contains `source.glb`, unchanged embedded PBR image bytes,
+`generation.json` with hashes/material bindings/channel metadata, and local
+prompt/submission/history records. Base color uses sRGB; packed metallic/roughness
+uses linear B/G channels. The workflow bakes an actual OpenGL tangent normal map
+from the high-poly remesh into the decimated mesh's UVs and includes it in GLB
+`normalTexture`; it does not invent normal detail from color. Preserve those UVs,
+material subsets and authored normals during subsequent export. The workflow
+version and required live node schemas are checked before any submission.
+
+Generated sources still require geometry/material inspection, uniform fitting to
+the native hand and slot, DDS conversion, compilation, matching inventory artwork,
+and actual NWN screenshots. Generation or preflight success does not establish
+usable topology, correct grip, orientation or native rendering. Use the GLB
+adapter below, then complete native verification. Focused runner tests use no GPU:
+
+```powershell
+python -B -m unittest discover -s tools/tests -p test_generate_weapon_models.py
+```
+
+### Import Meshy weapon and shield sources
+
+Local TRELLIS.2 remains the default generation path. Meshy is opt-in. Before
+submitting paid Meshy generation, remeshing, retexturing or other credit-consuming
+jobs, obtain the project owner's approval for the work and its credit budget.
+Stay within that approved scope and budget. An available balance or API key does
+not authorize spending, and approval for one batch does not authorize unrelated
+future work.
+
+The Meshy import tools below only convert already-downloaded local GLBs. They do
+not submit Meshy API jobs, spend credits or add a paid fallback to local generation.
+
+Keep paid generation jobs, budget journals, reference images and downloaded GLBs
+in private staging. Review the source silhouette and PBR maps before fitting.
+`tools/MeshyWeaponExport.py --mode prepare` accepts the same explicit uniform-fit
+manifest as the GLB adapter. It snapshots each source, applies the reviewed fit,
+and emits a native-coordinate GLB with explicit tangents and a new `fit.json`.
+It rejects nonuniform source transforms, modifiers and missing UVs.
+
+Meshy can intentionally produce open, double-sided surfaces. The explicit
+`double_sided_policy: "duplicate_backfaces"` preserves them by adding reversed
+faces with negated normals and tangent frames. It requires
+`normal_basis_policy: "authored_tangent_seams"`. This policy restores the
+source's corner normals before ASCII export, then restores authored normal,
+tangent and sign seams after compilation by splitting welded vertices. Native
+positions, UVs, face winding and draw indices are validated; shaded seams are
+never averaged. The older `authored_tangents` policy keeps its stricter immutable
+native-normal behavior. Client qualification is required for either policy.
+
+The seam-restoration helper also compacts its static rigid RAW buffers. It drops
+unreferenced compiler buffers and vertices, shares identical blocks, and merges
+only vertices whose complete position/UV/normal/tangent/sign bytes match. Every
+surviving shaded corner is checked byte for byte. `NativeTangentSeams.compact_model`
+can apply the same pass to an existing compatible model; animated, skinned,
+emitter and unsupported draw layouts are rejected without writing the file.
+This reduces storage without changing the rendered triangles or silhouette.
+
+For composite items, run `tools/MeshyWeaponParts.py` on the prepared manifest.
+Declare `parts` using measured native Y cuts; `clip_ranges: [[lower, upper], ...]`
+supports paired staff/twinblade roles, with `null` for an unbounded end. Supply
+`joint_envelopes` entries with `y`, `center_xz`, `radii_xz` and `depth`, measured
+from the existing native connectors, plus the complete assembly's
+`part_icon_bounds`. The authoring step closes the new cuts, adds inward-extending
+joint sleeves, and preserves the source surface UVs and corner frames. Its
+output selects complete authored `source_nodes` for each part and shares maps
+across roles. Node selectors cannot overlap or be combined with clipping.
+Keep each part's own cross-section all the way to its cut. Never taper a source
+surface down to the connector envelope near a joint: two such parts meet tip to
+tip and the staff pinches at every boundary (the October 2026 staffs did this
+over 25 mm). `tools/RepairStaffJointTransitions.py` widens such quarterstaff
+bands in compiled parts, and `tools/tests/test_repair_staff_joint_transitions.py`
+audits every shipped quarterstaff part for a pinched joint.
+Shields keep one complete model and use the preparation output directly; retain
+their measured grip, clearance and impact dummies.
+
+Preparation and part authoring both require Blender's Python (`bpy`). For example,
+with `$blender` set to the Blender executable and fresh staging output folders:
+
+```powershell
+& $blender -b --factory-startup --python-exit-code 1 `
+  --python tools/MeshyWeaponExport.py -- --mode prepare `
+  --manifest "$env:TEMP/weapon-sources/manifest.json" `
+  --output "$env:TEMP/weapon-sources/prepared"
+
+& $blender -b --factory-startup --python-exit-code 1 `
+  --python tools/MeshyWeaponParts.py -- `
+  --manifest "$env:TEMP/weapon-sources/prepared/fit.json" `
+  --output "$env:TEMP/weapon-sources/parts"
+```
+
+Both entrypoints accept an optional `--repo` path. Part authoring preserves
+manifest-level settings, including `empty_parts` and explicit
+`composite_assemblies`. Explicit assemblies take precedence over generated
+assemblies for their base item, including assemblies using partial hilt sources.
+
+Run `MeshyWeaponExport.py --mode export` inside Blender on the resulting
+`fit.json`, then `--mode package` with ordinary Python and the pinned compiler
+and Crunch arguments described below. All stage outputs must be empty folders
+outside the repository. Review renders, compiled resource validation, mixed
+assemblies, actual hand/arm fit and native inventory selection before copying
+finished resources into the HAK.
+
+This path accepts static rigid models only. Animated projectile MDLs require a
+separate animation-preserving rebuild: retain their native root, mesh names,
+emitters and controller tracks, then compare those fields after compilation.
+Do not replace a projectile with the static held-item export or bypass the
+static seam patcher's animation/emitter rejection.
+
+### Generate closed shield surfaces
+
+Use `tools/workflows/trellis2_shield.json` for thin shield sources. It adds a
+Blender 4.0 surface reconstruction stage before UVs and material baking; the
+default weapon workflow remains available for other weapon families.
+
+Snapshot `tools/TrellisShieldSurface.py` and `tools/trellis2_shield_nodes/` into
+task-owned staging with the same relative layout. Link that snapshot's node
+package into the task-owned ComfyUI `custom_nodes` directory, then start that
+service with `SWLOR_BLENDER` set to the installed Blender 4.0 executable and
+`SWLOR_SHIELD_CACHE` set to an absolute task-owned cache directory. Do not alter
+or restart a shared service. Keep the helper snapshot unchanged while jobs run.
+The ordinary generation runner, manifests, ownership lock and recovery journals
+also apply to this workflow:
+
+```powershell
+python -B tools/GenerateWeaponModels.py "$env:TEMP/shield-sources/manifest.json" `
+  --workflow tools/workflows/trellis2_shield.json `
+  --output "$env:TEMP/shield-sources/generated" --preflight
+```
+
+After preflight succeeds, repeat with `--timeout 1800` instead of `--preflight`.
+The continuous UDF high surface is voxel reconstructed, then collapsed to the
+manifest's `target_faces` budget. This shield stage rejects an oversized result
+when collapse returns more triangles than that limit. The
+workflow unwraps that low surface and
+establishes its normals before baking the original material field and high
+surface detail onto that same mesh. Positive-Z float normals are validated
+before UNORM8 rounding. The helper rejects textured inputs rather than
+discarding authored materials or UVs. Preflight validates the Blender executable and cache settings before submitting
+work. Cache keys include the Blender executable hash/build and helper hash;
+ComfyUI history records those identities. Incomplete NPZ/report pairs from an
+interrupted publication are rebuilt, while changed complete entries are rejected.
+Payloads are flushed and their renames persisted before completion; both high
+and low surfaces receive component-aware zero-volume checks. Export still
+requires strict closed-surface validation.
+
+The default voxel size is `.003` in source coordinates. A source that fails
+closure needs inspection; any changed voxel size requires a separate workflow,
+fresh output and new journals. Preserve the failed history. Direct raw decode
+can retain perforated sheets even after closure, so inspect the front, rim,
+back and rear grip before accepting any reconstructed source. Topology tests do
+not establish visual quality or native hand fit.
+
+Run the focused repair checks inside Blender 4.0:
+
+```powershell
+& 'C:/Program Files/Blender Foundation/Blender 4.0/blender.exe' `
+  -b --factory-startup --python-exit-code 1 `
+  --python tools/tests/test_trellis_shield_surface.py
+```
+
+### Inspect, fit and package a generated GLB
+
+`tools/TrellisWeaponExport.py` runs `inspect` and `export` inside Blender 4.0;
+`package` uses ordinary Python with NumPy, NWN Crunch EE and the installed NWN:EE
+compiler. Every output directory must be empty and outside the repository.
+The adapter reads `baseitems.2da` from the initialized HAK submodule; pass `--repo`
+when the intended checkout differs from the tool's own checkout.
+
+Create a separate local fit manifest. Inspection requires only `schema_version`,
+and each asset's `asset`, `source`, `sha256` and `base_item`. Export additionally
+requires the measured transform, native resource names, texture budget, attachment
+review and icon canvas shown below. These values illustrate the schema, not an
+approved fit or a free appearance slot; replace them from the inspected source
+and audited consumers. `sha256` binds the complete self-contained GLB.
+
+```json
+{
+  "schema_version": 1,
+  "assets": [{
+    "asset": "spear_field", "source": "generated/spear_field/source.glb",
+    "sha256": "<source-sha256>", "base_item": 58,
+    "model": "wplss_t_081", "texture": "spear_field", "texture_size": 1024,
+    "scale": 1.0, "orientation": [[1,0,0],[0,1,0],[0,0,1]],
+    "source_grip": [0,0,0], "target_grip": [0,0,0], "icon_size": [32,128],
+    "parts": [
+      {"model":"wplss_b_011", "clip_max_y":-0.1},
+      {"model":"wplss_m_013", "clip_min_y":-0.1, "clip_max_y":0.1},
+      {"model":"wplss_t_081", "clip_min_y":0.1}
+    ],
+    "attachment": {
+      "review_notes": "Replace with measured hand, blade/edge and shared-slot findings",
+      "axis_pairs": [
+        {"source": [0,1,0], "target": [0,1,0]},
+        {"source": [1,0,0], "target": [1,0,0]}
+      ]
+    }
+  }]
+}
+```
+
+```powershell
+$blender = 'C:/Program Files/Blender Foundation/Blender 4.0/blender.exe'
+& $blender -b --factory-startup --python-exit-code 1 `
+  --python tools/TrellisWeaponExport.py -- --mode inspect `
+  --manifest "$env:TEMP/weapon-sources/fit.json" --output "$env:TEMP/weapon-sources/inspect"
+# After inspecting axes/materials and replacing the illustrative fit values:
+& $blender -b --factory-startup --python-exit-code 1 `
+  --python tools/TrellisWeaponExport.py -- --mode export `
+  --manifest "$env:TEMP/weapon-sources/fit.json" --output "$env:TEMP/weapon-sources/export"
+python -B tools/TrellisWeaponExport.py --mode package `
+  --export "$env:TEMP/weapon-sources/export" --output "$env:TEMP/weapon-sources/package" `
+  --crunch '<local-nwn_crunch.exe>'
+```
+
+Transforms use Blender's imported world coordinates, after glTF axis conversion:
+`target_grip + orientation * scale * (point - source_grip)`. Use uniform scale,
+a proper rotation and two independent reviewed axis pairs. Audit every native
+B/M/T consumer before replacing shared resources: ModelPart1 is bottom, 2 middle,
+3 top. Top-level `aliases` are only for simple models; composite variants use
+role-preserving aliases on their individual parts.
+
+Large shields use base item **56**, simple model family `ashlw_###`, inventory
+artwork `iashlw_###.dds`, and a **64-by-128** icon canvas (64-by-96 logical
+artwork). Export one complete model per shield appearance. Measure its native
+root, front and up axes from the source shield and verify the left-hand grip.
+Measure rear hardware in the actual native shield attachment frame; do not reuse
+a handheld weapon's `lhand_g` transform. Do not apply composite weapon cuts. Preserve the two native shield impact
+hooks with required `attachment_dummies`, each containing `name`
+(`imp_shield_1` or `imp_shield_2`), root-space `position`, and a unit XYZW
+`quaternion`. These hooks position impact effects; they are separate from the
+grip geometry. Keep the existing appearance IDs and persisted item instances.
+`parts` entries have `model`, `plane_y`, `clip_side` (`above`/`below`) and optional
+`aliases` for complementary uncapped splits. Optional top-level `empty_parts`
+entries require `model`, `base_item` and `icon_size` and are permitted only for
+explicitly audited simple-model IDs. Composite weapons must export real bottom,
+middle and top geometry; blank companion parts are rejected. Fit common joins,
+cap or cover the cuts, and verify independent mixed assemblies in the native
+client. Composite exports must supply all three roles within each asset, or explicitly
+list `composite_assemblies` with `base_item`, `bottom`, `middle`, `top` and
+`icon_bounds: {"min":[x,y,z],"max":[x,y,z]}` in fitted world coordinates. Every
+referenced model must be exported in the same manifest. Grouped sources share
+that framing for cameras and lighting; their icon canvases, art sizes, directions
+and rolls must match, and geometry outside the frame is rejected. This supports
+separately fitted source parts without absent companions or misaligned layers. Parts may use
+finite `clip_min_y` and `clip_max_y` bounds for a middle interval, or the legacy
+one-plane split. Multiple parts cut from one source must partition its Y axis
+without gaps or overlaps; normal interpolation stays linear across all cuts and
+normalizes only at the end. Neither clipping mode caps cuts automatically; author covered
+connectors or closed ends before native qualification. The tool checks output
+coverage and family/name collisions, not the full consumer graph.
+
+Before choosing cuts, inspect world-transformed native geometry for the full PR
+delta and the unchanged selectable parts in each affected appearance catalog.
+Do not infer universal compatibility from three nonempty models or new-only
+joint envelopes. Staff roles illustrate the difference: stock 01x-04x use bottom
+for the central grip (Y -0.3 to 0.9), middle for both adjacent end bands (-0.6 to
+-0.3 and 0.9 to 1.2), and top for both terminal sections (-0.8 to -0.6 and 1.2 to
+1.4). Stock 05x has an authentic lower/center/upper partition. A paired-band role
+therefore needs both disconnected sections within its native component; a generic
+two-plane split does not fit every family. Inspect legacy whole-weapon, blank,
+shifted-origin and differently partitioned exceptions separately. Empty axial
+slabs can disprove a fit, while continuous axial coverage does not prove surface
+contact, material continuity or visible compatibility. Confirm representative
+mixed assemblies in the native client and state the remaining limits explicitly.
+
+`icon_size` is the measured native power-of-two canvas, not just inventory cells.
+For example, a 2-by-5 logical area occupies 64-by-160 artwork in a 64-by-256 canvas;
+the adapter pads transparently without stretching it. Source material subsets,
+UV seams and authored corner normals are retained. Unsupported material features
+fail explicitly. Samplers support repeat wrapping, linear magnification and
+trilinear minification; clamp, mirror and other explicit filters are rejected.
+Normal reprojection fills all unused RGB texels from native-frame coverage before
+mip generation, preserving covered texels and alpha. Every matched face must
+cover a texel center; subtexel/degenerate UV faces fail explicitly. This removes untouched
+source-frame padding from every mip footprint. A double-sided source is rejected unless the fit explicitly sets
+`double_sided_policy` to `closed_surface` and its shells pass the closure/winding
+and enclosed-cavity checks; inspect the resulting culling and shading too.
+
+Inspection produces component/material reports, axis views and a local scene.
+Export produces ASCII models, MTRs, TGA intermediates, icon previews and a local
+`source_basis.npz` whose hash is bound into `export_manifest.json`. Package verifies
+those hashes and compiles MDLs first. Its reusable `tools/TrellisWeaponNormals.py`
+helper then matches native triangles, including barycentric matches for splits,
+and reprojects baked source normals into the actual compiled normal/tangent/sign
+basis before DDS compression. This accounts for glTF UV orientation and native
+handedness without applying SWTOR channel unpacking. UV ownership conflicts and
+unrepresentable negative tangent Z fail explicitly; they are never silently clamped.
+The same package command above performs this step; keep the source-basis file
+beside the export until packaging finishes. Package reports retain the matching,
+quantization and map-hash evidence alongside directed corner and dependency checks.
+The default `normal_basis_policy: "reproject"` remains strict and rejects ambiguous
+interpolated tangent handedness. An explicitly reviewed asset may instead select
+`normal_basis_policy: "authored_tangents"`: after compilation, the helper patches
+only existing, uniquely owned tangent/sign streams. It preserves compiler normals,
+positions, UVs, indices, materials and the staged normal TGA, and uses NWN's smooth
+handedness interpolation followed by its sign threshold. Mixed-sign triangle
+shading is undefined in glTF; this policy does not recover the high-poly normal
+field or promise identical glTF shading. Reports bind the source GLB and immutable
+basis hashes and record mixed-sign faces, byte preservation and encoding error.
+Both policies require close native shading review, including seams and highlights.
+
+Only the reviewed `package/runtime_resources` belong in the HAK. Local geometry
+repairs must preserve or reproject their baked normal field before this final
+source-to-native conversion; unit tangent checks alone do not establish matching shading.
+Keep repair inputs, manifests and proof reports local, and verify hand contact,
+attack poses, shared joins, ground appearance and inventory in NWN before adoption.
+
+Run the committed adapter and shared converter tests inside Blender so geometry
+and image checks execute as well as the pure Python checks:
+
+```powershell
+& $blender -b --factory-startup --python-exit-code 1 --python tools/tests/test_trellis_weapon_export.py
+& $blender -b --factory-startup --python-exit-code 1 --python tools/tests/test_import_blaster_model.py
+```
 ## Import a rigid, opaque GR2 blaster
 
 Use Blender **4.0** and the pinned SWTOR-Slicers GR2 importer **4.2.1**:
@@ -140,7 +533,18 @@ NWN:EE PBR uses MTR `texture0` for base color, `texture1` for OpenGL tangent nor
 `texture2` for scalar specularity, and `texture3` for linear roughness. The standard
 `inc_material` shader derives metallicness as `clamp(3 * specularity - 0.6, 0, 1)`.
 Keep scalar maps linear. Use distinct responses for exposed metals, coatings,
-composite grips and glass; avoid strong baked highlights. Prefer few meshes and
+composite grips and glass; avoid strong baked highlights.
+
+TRELLIS marks most hard surfaces as metal but gives them dark base colors
+(median linear luminance 0.085; real metal reflects 0.5-0.95) and satin
+roughness. NWN tints the reflection of a metal texel by its base color and picks
+the environment-map mip as `roughness * 30 - 1`, so that output renders near
+black and matte, which players read as cloth or plastic. `TrellisWeaponExport.py`
+therefore passes every material through `tools/TrellisNwnMaterial.py`: metal
+base color rises toward the physical range while keeping its hue (saturated
+finishes gain less), metal roughness tightens to 0.06-0.25, and non-metal texels
+get specularity 0.06 instead of a glossy 0.2. Its command line applies the same
+correction to already shipped maps and refuses maps it has converted before. Prefer few meshes and
 512-1024-square atlases sized to visible detail. The imported pistols span roughly
 1,200-6,100 triangles; these are reference costs, not a reason to flatten a design
 into coarse slabs. Compare shape construction, grip transitions, recessed detail
@@ -167,6 +571,15 @@ Compare textured previews before reducing larger maps;
 filter color in linear light and reconstruct/renormalize tangent normals. Constant
 material maps can use 4x4 DDS with full mipmaps. Avoid allocating large maps to solid
 colors. Preserve approved fit and silhouette when optimizing.
+`TrellisNwnMaterial.trim_dds_mips` can lower a reviewed material's resolution by
+retaining an existing complete BC mip chain from a smaller level onward, without
+recompression. It preserves the filtering already encoded in those levels; it
+does reduce detail. Compare identical views before and after, retain larger maps
+where highlights or seams degrade, and qualify the final material in the client.
+Share maps and whole material bundles only when their content and shader roles
+match. Keep the compiled bitmap fallback consistent with the MTR base color, and
+prove resources have no remaining HAK or stock-resource consumers before deleting
+retired assets.
 For opaque blaster maps, use these explicit options with `-fileformat dds
 -unflip -yflip -dropEmptyAlpha -dxtQuality uber`:
 
@@ -187,9 +600,9 @@ use `-A8R8G8B8`: the native `CResDDS::GetChannelCount` recognizes DXT1, DXT5,
 ATI1 and ATI2, but returns zero for the uncompressed RGBA FourCC. A generic DDS
 decoder accepting the image does not establish game compatibility.
 Verify both decoding and layered icon composition in the toolset,
-then verify native inventory selection as described below. Keep new/replacement
-inventory artwork DDS-only; do not add TGA companions or registration stubs as an
-automatic workaround.
+then verify native inventory selection as described below. Keep the artwork in
+the DDS; when no TGA of that name exists in any layer, add the 8x8 registration
+stub described below.
 
 For example, after extracting `nwn_crunch.exe` into `.tmp/blaster-tools/nwn-crunch/`:
 
@@ -208,7 +621,8 @@ Z may be reconstructed for comparison rather than read as a stored BC5 channel.
 Inspect texture details and the textured model; confirm game lighting in the client.
 
 Replace each runtime TGA, including inventory icons, with its DDS using the same basename. Do not keep
-both formats for the same map: texture lookup can prefer the TGA. MTR bindings are
+both formats for the same map: texture lookup can prefer the TGA. The one exception is the 8x8
+inventory-icon registration stub described under "Inventory lookup and unique artwork". MTR bindings are
 extensionless and do not change. Vesper-9 keeps four 1024-square maps; the imported
 blaster keeps two 1024-square maps and its 256-square specular map.
 
@@ -224,7 +638,7 @@ python -m unittest discover -s tools/tests -p test_pistol_inventory_icons.py
 
 This requires Pillow and the initialized HAK submodule. It checks committed game
 resources without authoring inputs: model/icon presence, 64x64 dimensions,
-DXT5 encoding, transparency, distinct visible pixels and stale TGA shadows of DDS icons. Legacy
+DXT5 encoding, transparency, distinct visible pixels and invalid TGA companions of DDS icons. Legacy
 TGA-only slots are included in the artwork audit; new/replacement icons use DDS.
 Review a labeled contact sheet and provide an icon preview with the handoff.
 
@@ -236,30 +650,47 @@ If it does not, inspect resource discovery and load precedence before redrawing
 artwork or changing item stats/appearance IDs.
 
 NWN:EE Windows x64 build **8193.37-17 / 26c6e573** has a second, separate issue:
-`CNWCItem::UpdateIcons` checks only TGA resource type 3 for each composite part.
-Without a same-named TGA in any loaded resource layer, it replaces that part's
+`CNWCItem::UpdateIcons` checks only TGA resource type 3 for each composite part
+and for complete (simple) item icons such as shields.
+Without a same-named TGA in any loaded resource layer, it replaces the requested
 resref with the base item's generic icon, even when the requested DDS exists.
-The Basic Pistol's native slot 201 and Part #111 demonstrate this fallback.
+The Basic Pistol's native slot 201 and Part #111 demonstrate this fallback;
+simple shield slots 57-60 also fall back when their icons are DDS-only.
 The artwork can be unique and correctly packed while the displayed icon is wrong.
 
-Keep new/replacement artwork DDS-only. Native inventory discovery requires a
-compatible client; rebuilding HAKs or changing server C# cannot alter this client
-check. Do not work around it by adding TGA artwork, registration stubs, or changing
-persisted weapon appearances. Broader engine background is available in the
+Once that TGA check passes, the inventory draws the same-named DDS, not the TGA
+(verified on stock 8193.37-17 with a magenta stub TGA beside a DDS icon, and again
+with the shield and greatsword icons in the weapon/shield texture fix). So keep
+the artwork in the DDS and give each icon that has no TGA in any layer (HAKs or
+the base game) an 8x8 registration stub: `tools/FixWeaponInventoryIcons.py audit`
+lists them and `stubs` writes a bottom-left TGA thumbnail of the DDS art beside
+each one. Do not change persisted weapon appearances to dodge the check. The
+pistol icon audit accepts only the exact 8x8 bottom-left registration format
+beside DDS artwork, rejects full-size TGA shadows, and requires registrations for
+the twelve slots without stock registrations. The rifle audit
+(`test_rifle_inventory_icons.py`) still rejects a TGA beside a DDS; its icons
+have no stubs yet. Broader engine background is available in the
 [texture notes](https://nwn.wiki/spaces/NWN1/pages/38174958/Textures).
+
+The inventory shows only the top-left `InvSlotWidth x InvSlotHeight * 32` pixels
+of each icon layer (64x160 for greatswords and twinblades, inside a 64x256
+canvas). Render inside that area, in the stock frame of the family, so layers
+join where retained stock layers expect them; `FixWeaponInventoryIcons.py audit`
+also lists art outside the slot, and `reframe` scales it back uniformly.
 
 ### Optional Windows client compatibility patch
 
 `tools/PatchDdsInventoryIcons.py` creates a separate client executable for the
-verified build. At the original composite-part lookup call, it preserves the TGA
-check, then tries DDS resource type 2033 for the **same resref** before allowing
-the original generic-icon fallback. Existing TGA icons and genuinely missing
+verified build. At the original composite-part and simple-icon lookup calls, it
+preserves the TGA check, then tries DDS resource type 2033 for the **same resref**
+before allowing the original generic-icon fallback. Existing TGA icons and genuinely missing
 resources retain their old behavior. No TGA resources are added or fabricated.
 
 The tool validates the complete source SHA-256, refuses other builds and previously
 modified binaries, and refuses to overwrite either the source or an existing
-output. It preserves the entry point and original code apart from that call,
-adds a readable/executable section with Windows unwind metadata, and recalculates
+output. It validates both lookup call sites and preserves the entry point and
+original code apart from those two calls; generic fallback and PLT lookups are
+unchanged. It adds a readable/executable section with Windows unwind metadata, and recalculates
 the PE checksum. It does not patch a running process, replace Steam's executable,
 change the server or distribute a game binary through Git/NWSync.
 
@@ -284,10 +715,11 @@ python -m unittest discover -s tools/tests -p test_dds_inventory_client_patch.py
 ```
 
 These tests execute the original and patched lookup instructions with a simulated
-resource index, reproduce the fallback for the two reported slots, cover every
-shipped DDS pistol icon, and check native DDS format recognition, preserved TGA
-behavior, missing-resource fallback, PE integrity and unwind metadata. They do
-not exercise the GPU or inventory window; record live client verification separately.
+resource index, reproduce the fallback for the reported pistol and shield slots,
+cover every shipped DDS pistol icon, and check native DDS format recognition, preserved TGA
+behavior, missing-resource fallback, unchanged generic/PLT calls, PE integrity and
+unwind metadata. They do not exercise the GPU or inventory window; record live
+client verification separately.
 
 ## Hand fit
 
@@ -299,15 +731,46 @@ scale 9.6 is a starting point, not a batch-wide fit guarantee: source grip sizes
 vary. Refit oversized grips uniformly around the contact pivot and review both
 sides. Widen the review camera for long barrels rather than truncating the check.
 
-The actual human right-hand reference is `pmh0_handr001`. Custom pistol animation
+The male human right-hand reference is `pmh0_handr001`. Custom pistol animation
 uses **bowshot**, whose hook retains its rest orientation; generic **xbowshot**
 rotates it differently. The human `rhand` hook sits at
 `(0.0110681, 0, -0.0961281)` relative to `rhand_g`.
 
+That helper uses only the male bare hand. The female normal human bind socket
+is `(0.00101395, 0.0104238, -0.0818723)` relative to `rhand_g`; do not reuse the
+male socket for a female reference. Inspect the actual female and male hands,
+open or fingerless glove styles, both equipped hands, and the playable normal
+body families in the client. Some hand meshes have permanently open fingers.
+
+Measure each actual handle's butt, neck, width and depth. Compare sections at
+the fingers' contact positions; a sample near the butt or a single Z threshold
+does not establish palm contact. An oversized handle needs a uniform scale
+correction about its grip before seating it. Keep the weapon's proportions and
+inspect the palm, back of the hand and reverse side for gaps and penetration.
+Positive weapon-space Z raises a hanging pistol toward the wrist; choose its
+offset from those contact views rather than a common catalog-wide Z target.
+Preserve muzzle attachments and model animation tracks as well as visible
+geometry. When fitting an animated model through its root, apply the same
+transform to animated root positions and retain event timing.
+
+Fixture body parts have extended fields too: keep `BodyPart_*` and
+`xBodyPart_*` synchronized. Set the intended parts with `SetCreatureBodyPart`
+and log `GetCreatureBodyPart` with each capture, alongside gender, phenotype,
+native base items and weapon appearance parts. A blueprint label alone does not
+prove that the client rendered the intended hand. Equipped armor can override
+those body parts: reproduce and log its hand appearance too. Permanently open
+fingers cannot demonstrate a closed grasp. Compare the actual left mesh as well;
+the male human bare left hand is asymmetric, not just a mirrored right hand.
+
+When cloning a model into a temporary comparison slot, rename only its model
+header and root node. A texture can share the original model's resref; replacing
+every occurrence also renames that texture and invalidates the material check.
+
 Render a local review scene already in NWN coordinates with:
 
 ```powershell
-SWLOR_Haks/nwnmdlcomp.exe -d -e SWLOR_Haks/sw_pt_rhand/pmh0_handr001.mdl .tmp/hand001.mdl
+& "$env:LOCALAPPDATA/SWLOR/tools/cleanmodels-qt/1.1.7/cleanmodels-qt/cleanmodels.exe" decompile `
+  SWLOR_Haks/sw_pt_rhand/pmh0_handr001.mdl .tmp/hand001.mdl
 & 'C:/Program Files/Blender Foundation/Blender 4.0/blender.exe' `
   -b --factory-startup --python-exit-code 1 `
   --python tools/RenderBlasterGrip.py -- `
@@ -327,7 +790,7 @@ When changing the converter, run its focused tests:
 The exporter writes transformed corner normals explicitly, including duplicated
 vertices at UV seams. Do not drop those normals and rely on smoothing group 1:
 the compiler would introduce hard lighting seams at the duplicated vertices.
-Set `NWN_EE_NWMAIN` to the installed `nwmain.exe` path to include the native
+Set `CLEANMODELS` to the pinned `cleanmodels.exe` path to include the
 compiler normal-preservation round trip in the tests below. Ordinary Python
 runs the portable tests and skips Blender-only coverage when unavailable.
 
@@ -343,28 +806,37 @@ Verify that the target native slot maps to an entry in the appearance catalog
 and has both model and inventory resources. Validation must inspect game resources
 directly; it must not depend on committed source manifests or Blender files.
 
-Ship **compiled NWN:EE MDLs**. ASCII models force the client to compile geometry on
-first load, which can cause a visible hitch. Use the installed game's native
-compiler, which retains EE material names and tangent data; the legacy 2003
-`nwnmdlcomp.exe` compiler can discard those fields. Keep `CompileModels: false`
-in `Build/hakbuilder.json` so that the legacy build step does not recompile them.
+Ship **compiled NWN:EE MDLs** using [cleanmodels-qt v1.1.7](https://github.com/plenarius/cleanmodels-qt/releases/tag/v1.1.7),
+which bundles CleanModels CLI v4.4.2. ASCII models force the client to compile
+geometry on first load, which can cause a visible hitch. Install the pinned
+Windows release once (archive and executable hashes are verified):
 
-Stage ASCII MDLs and all maps/MTRs in an ignored local resource folder, then run:
+```powershell
+powershell -ExecutionPolicy Bypass -File SWLOR_Haks/tools/SetupModelCompiler.ps1
+```
+
+The tools discover `%LOCALAPPDATA%/SWLOR/tools/cleanmodels-qt/1.1.7/cleanmodels-qt/cleanmodels.exe`.
+For a different install folder, set `CLEANMODELS` or pass `--compiler <path>`.
+Use the CLI bundled with the GUI; neither the old `nwnmdlcomp.exe` nor the game
+executable is part of the compile path. HAK packaging copies the precompiled
+bytes; leave the unused `CompileModels` configuration field false.
+
+Stage ASCII MDLs and all maps/MTRs in a local resource folder, then run:
 
 ```powershell
 python tools/CompileBlasterModels.py `
-  --nwmain 'C:/Program Files (x86)/Steam/steamapps/common/Neverwinter Nights/bin/win32/nwmain.exe' `
   --resources .tmp/blaster/review/resources --output .tmp/blaster/compiled
 ```
 
-This invokes `compilemodel <resref>` with an isolated user directory, waits for each
-process to exit, and checks the engine success log and binary header. Optional
-`--models wbwsh_m_044` limits the selection. Use a fresh output directory. Copy only
-compiled MDLs into runtime staging; logs and ASCII intermediates stay local.
+The helper compiles the selected models as one CLI batch, makes staged MTRs
+available for tangent generation, records `compile.log`, and checks every output's
+binary section sizes before publishing any MDL. Optional `--models wbwsh_m_044`
+limits the selection. Use a fresh output directory. Copy only compiled MDLs into
+runtime staging; logs and ASCII intermediates stay local.
 Check compiled geometry, UVs, normals, EE material names and texture dependencies
 with the native reader before packing. Verify tangent data when changing export or
 compiler paths, and compare visible triangle corners and UVs against the staged
-ASCII to detect compiler changes. Native compilation may split seam vertices or
+ASCII to detect compiler changes. Compilation may split seam vertices or
 remove degenerate triangles; vertex counts alone do not establish geometry loss.
 Remove exact zero-area export faces and compact unused vertices where practical.
 When comparing before/after compilation, match triangle corner positions and UVs,
@@ -372,10 +844,10 @@ not vertex indices. Any removed face must be proven zero-area; do not waive a
 mismatch for a visible face. On vertices referenced by faces, check finite unit
 normals/tangents, near-zero normal/tangent dot product and handedness of +1 or -1.
 The compiler may retain unused vertices after removing degenerate faces; their
-zero handedness is not a rendered tangent failure. The helper's header/log checks
+zero handedness is not a rendered tangent failure. The helper's header/report checks
 alone do not establish material, tangent or visual correctness.
 For later edits, read the binary with `MdlReader` and export a local editable mesh;
-do not use the legacy decompiler to round-trip EE material fields.
+use CleanModels when an ASCII decompile is needed, and verify the round trip.
 
 The normal Windows server build deploys its initiating Debug/Release/custom
 output and rebuilds changed HAKs into `debugserver/hak`. Verification builds use
@@ -392,7 +864,7 @@ Verify inventory/ground appearance, idle/attack grip, muzzle direction and body
 sizes in the client. Imported slot 44 has user approval for its final size/fit;
 Vesper-9 has offline hand and deployed-HAK verification, with live-client review
 pending. Record checks and feedback in the PR. See the skill's
-[troubleshooting reference](../../.codex/skills/swlor-blaster-models/references/troubleshooting.md)
+[troubleshooting reference](../../skills/swlor-blaster-models/references/troubleshooting.md)
 for stale deployment or appearance-editor problems.
 
 Publish companion HAK PRs for parent submodule changes and link them both ways.

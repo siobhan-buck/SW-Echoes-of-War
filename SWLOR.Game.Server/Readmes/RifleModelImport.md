@@ -6,6 +6,8 @@ normal-map decoding and material export with the [blaster converter](BlasterMode
 but uses rifle attachment coordinates, material validation and inventory dimensions.
 Keep original archives, extracted files, manifests, scenes and review images in
 ignored `.tmp/rifle/` staging. Only finished MDL, MTR and DDS resources belong in HAKs.
+Delete each intermediate once used and empty the staging folder after the finished
+resources are committed (see [AgentEnvironment.md](AgentEnvironment.md), "Disk hygiene").
 
 Rifles are base item **7**, item class **WBwXl**. The appearance editor ID is
 `color * 100 + model`; the native middle part is `model * 10 + color`.
@@ -56,7 +58,7 @@ The normal blue channel is not part of the decoded normal vector.
 Compress maps with the documented NWN Crunch channel presets; icons use DXT5
 DDS with alpha and no mipmaps (`-fileformat dds -unflip -yflip -DXT5 -dxtQuality uber -gamma 2.2 -mipMode None`). Native CResDDS cannot decode uncompressed RGBA DDS. Replace the matching old icon TGA so it cannot override
 the DDS. Compile staged ASCII models with `tools/CompileBlasterModels.py` and the
-installed NWN:EE executable. It accepts `wbwxl` resrefs as well as pistol resrefs.
+CleanModels CLI installed as described in the blaster guide. It accepts `wbwxl` resrefs as well as pistol resrefs.
 Keep `CompileModels: false` when packing HAKs. Validate native-reader geometry,
 normals, material bindings, texture dependencies and compiled triangle corners.
 Do not make validation depend on local source manifests.
@@ -75,7 +77,12 @@ Fit rifles to the male human (`pmh0`) only. Other bodies put the support hand
 somewhere else on the weapon: the female human's sits about 4 cm lower, and the
 Cathar male's sits about 11 cm further up the barrel. Do not fit a rifle to those
 bodies. `SWLOR_Haks/tools/GenerateRifleHoldAnimations.py` retargets the three clips
-for every playable body, so each support hand meets the weapon where `pmh0`'s does.
+for every playable body, the male human included, so each support palm sits centred
+under the barrel. The stock clips left the open palm beside the barrel (4.5 cm to the
+left at idle, touching only with the fingertips, and 8 cm to the right when ready or
+attacking). `SUPPORT_OFFSETS` in the generator moves the male human's palm, per clip,
+to the barrel axis at weapon-space x = -0.5 cm, seated slightly into the median fitted
+fore-end so the fingers wrap it. When fitting a rifle, seat its fore-end on that palm.
 The firing hand keeps its inherited weapon hook; keying the hook would split the
 shared robe `rhand` joint. Rerun the generator whenever those clips, body roots or
 default hands change, then follow the compile and robe refresh steps in its
@@ -84,7 +91,10 @@ docstring.
 `tools/RenderRifleGrip.py` reads the rifle pose from an ASCII animation model.
 Supply `--source <review.blend>`, `--hand <ASCII pmh0_handr001.mdl>`,
 `--animation <ASCII a_ba_non_combat.mdl>` for `--pose xbowr`, or `a_ba.mdl` for
-`xbowrdy`/`xbowshot`, and `--output <local review folder>`. For fitting rifles, also supply
+`xbowrdy`/`xbowshot`, and `--output <local review folder>`. Those are the stock clips; the
+renderer moves the support hand by the same `SUPPORT_OFFSETS` the hold banks use, so it shows
+the palm where it sits in game (`--stock-support` shows the stock palm instead). A test keeps
+the two offset tables equal. For fitting rifles, also supply
 `--skeleton <ASCII pmh0.mdl>` and `--left-hand <ASCII pmh0_handl001.mdl>`.
 This composes the complete arm hierarchy and shows both hands from both sides.
 Skeleton/animation node names must be matched case-insensitively: the skeleton's
@@ -100,5 +110,8 @@ per-model fits locally and apply changes to the existing compiled node transform
 where possible, preserving the verified geometry, UVs, normals and tangents.
 `tools/TranslateWeaponModel.py` does this: `--offset X Y Z` translates, and
 `--pitch DEGREES --pivot X Y Z` rotates about the weapon X axis through the grip
-contact (a positive pitch raises the muzzle). Imported rifle 161 uses `--pitch -4`
-and rifle 222 uses `--pitch -5`, both with pivot `0 0.02 0.01`.
+contact (a positive pitch raises the muzzle). `--roll` and `--yaw` then rotate
+about Y and Z through the same pivot. Imported rifle 161 uses `--pitch -4`
+and rifle 222 uses `--pitch -5`, both with pivot `0 0.02 0.01`. For the X-mirrored
+left-hand copies of a model (such as the Power Glove `wpl_*` models), negate the X
+offset, the pivot's X, roll and yaw.

@@ -328,8 +328,10 @@ namespace SWLOR.Game.Server.Feature.QuestDefinition
                 .AddItemReward("cap_gswd", 1)
                 .AddItemReward("cap_spear", 1)
                 .AddItemReward("cap_katar", 1)
+                .AddItemReward("cap_pglove", 1)
                 .AddItemReward("cap_staff", 1)
                 .AddItemReward("cap_pistol", 1)
+                .AddItemReward("cap_twinpistol", 1)
                 .AddItemReward("cap_shuriken", 1)
                 .AddItemReward("cap_twinblade", 1)
                 .AddItemReward("cap_rifle", 1)
@@ -558,7 +560,7 @@ namespace SWLOR.Game.Server.Feature.QuestDefinition
                 .IsRepeatable()
 
                 .AddState()
-                .SetStateJournalText("Telford Brelnak traced a distress beacon to an abandoned research station in orbit around Viscara. Its crew was brought back from the dead, and a rakghoul plague spread through the rest. Find a pilot to take you there, then put twenty of its horrors down for good.")
+                .SetStateJournalText("Telford Brelnak traced a distress beacon to an abandoned research station in orbit around Viscara. Its crew was brought back from the dead, and experimental Colicoids escaped their containment pens. Find a pilot to take you there, then put twenty of its horrors down for good.")
                 .AddKillObjective(NPCGroupType.AbandonedStation_Horror, 20)
 
                 .AddState()

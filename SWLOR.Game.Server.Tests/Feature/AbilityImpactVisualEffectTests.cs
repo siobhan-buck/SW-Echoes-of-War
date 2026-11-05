@@ -26,13 +26,47 @@ public class AbilityImpactVisualEffectTests
             .Where(type => !type.IsAbstract && typeof(IAbilityListDefinition).IsAssignableFrom(type)).ToArray();
         var built = new Dictionary<string, Dictionary<FeatType, AbilityDetail>>();
         var usedEffects = new HashSet<VisualEffect>();
+        var nativeReference = File.ReadAllLines(Path.Combine(root, "SWLOR.Game.Server", "Readmes", "VisualEffectReference.csv"));
 
         foreach (var entry in manifest.RootElement.EnumerateArray())
         {
             var id = entry.GetProperty("Id").GetString()!;
-            var enumName = id == "ShieldBash" ? "Vfx_Imp_Shield_Bash" : "Vfx_Ability_" + id;
-            Enum.TryParse<VisualEffect>(enumName, out var expected).Should().BeTrue($"{id} must have a stable effect reference");
-            usedEffects.Add(expected).Should().BeTrue($"{id} should have its own effect, shared only across ranks");
+            // Unarmed's authored motions use stock contact feedback only on positive damage.
+            // Its stance transitions have an authored motion without a target-impact burst.
+            VisualEffect? nativeContact = id switch
+            {
+                "Jab" or "PalmStrike" or "FinishingCombination" or "DirtyJab" or "LowKick" => VisualEffect.Vfx_Com_Blood_Spark_Small,
+                "Uppercut" => VisualEffect.Vfx_Com_Blood_Spark_Medium,
+                "PerfectForm" or "Haymaker" => VisualEffect.Vfx_Com_Blood_Spark_Large,
+                "FlowStance" or "BruiserStance" => VisualEffect.None,
+                _ => null
+            };
+            var declaresNativeEffect = entry.TryGetProperty("NativeImpactVisualEffect", out var nativeEffect);
+            var enumName = declaresNativeEffect ? nativeEffect.GetString()! :
+                id switch
+                {
+                    "ShieldBash" => "Vfx_Imp_Shield_Bash",
+                    "MercilessAngleTechnique" => "Vfx_Imp_Merciless_Angle",
+                    _ => "Vfx_Ability_" + id
+                };
+            var expected = nativeContact.GetValueOrDefault();
+            if (!nativeContact.HasValue)
+            {
+                Enum.TryParse(enumName, out expected).Should().BeTrue($"{id} must have a stable effect reference");
+                Enum.IsDefined(expected).Should().BeTrue($"{id} must reference a declared effect enum");
+                expected.Should().NotBe(VisualEffect.None);
+            }
+            ((int)expected).Should().NotBe(999,
+                $"{id} must avoid NWN's hardcoded Cows from Hell effect, which overrides visualeffects.2da");
+            if (declaresNativeEffect)
+            {
+                enumName.Should().NotStartWith("Vfx_Ability_", "authored effects retain their unique resource contract");
+                nativeReference.Should().Contain(line => Regex.IsMatch(line,
+                    $@"^(COM|IMP|FNF),[^,]+,{Regex.Escape(enumName)},{(int)expected},"),
+                    $"{id} must select its native impact enum and numeric row from the visual reference guide");
+            }
+            else if (!nativeContact.HasValue)
+                usedEffects.Add(expected).Should().BeTrue($"{id} should have its own authored effect, shared only across ranks");
             var definitions = entry.GetProperty("DefinitionFiles").EnumerateArray()
                 .Select(file => Path.ChangeExtension(file.GetString()!, null).Replace('/', '.').Replace('\\', '.')).ToArray();
             foreach (var definition in definitions)
@@ -64,18 +98,26 @@ public class AbilityImpactVisualEffectTests
                 }
                 matches.Should().ContainSingle($"{id}/{feat} should resolve to one active definition");
                 // These lines use native visuals in the impact action or positive-damage path.
-                var usesNativeImpact = animationOnlyDefinition != null ||
+                var usesNativeImpact = nativeContact.HasValue || animationOnlyDefinition != null ||
                     id is "WristRocket" or "ForceBurst" or "ForceJudgment" or "RadiantLance";
                 var ability = matches.Single().Value;
                 ability.SuccessfulImpactVisualEffect.Should().Be(usesNativeImpact ? VisualEffect.None : expected,
                     $"{id}/{feat} must use its intended impact path");
                 ability.DamageImpactVisualEffect.Should().Be(
-                    id is "ForceJudgment" or "RadiantLance" ? VisualEffect.Vfx_Imp_Sunstrike : VisualEffect.None,
+                    nativeContact ?? id switch
+                    {
+                        "ForceJudgment" or "RadiantLance" => VisualEffect.Vfx_Imp_Sunstrike,
+                        // Its authored burst is silent; the stock lightning carries the sound.
+                        "InnerCircleSurgeTechnique" => VisualEffect.Vfx_Imp_Lightning_M,
+                        _ => VisualEffect.None
+                    },
                     $"{id}/{feat} must bind the intended positive-damage visual");
                 if (usesNativeImpact)
                     ability.ImpactAction.Should().NotBeNull($"{id}/{feat} still needs its native impact action");
             }
 
+            if (nativeContact.HasValue)
+                continue;
             rows.Should().ContainKey((int)expected, $"{id} needs an installed visualeffects.2da row");
             var row = rows[(int)expected];
             row[Array.IndexOf(header, "Type_FD")].Should().Be("F", $"{id} is a finite impact burst");
@@ -83,9 +125,18 @@ public class AbilityImpactVisualEffectTests
                 .Where(column => column.name.StartsWith("Imp_") && column.name.EndsWith("_Node"))
                 .Select(column => row[column.index]).Where(value => value != "****").ToArray();
             models.Should().NotBeEmpty($"{id} needs a model attachment");
+            if (id == "MercilessAngleTechnique")
+            {
+                ((int)expected).Should().Be(1127);
+                models.Should().Equal(new[] { "vx_merc_angl" },
+                    "Merciless Angle must retain its authored crimson slash model");
+            }
             foreach (var model in models)
             {
                 model.Length.Should().BeLessThanOrEqualTo(16);
+                // Native model resources ship in NWN's base archives; authored effects must
+                // remain compiled and present in our HAK source.
+                if (declaresNativeEffect) continue;
                 var path = Path.Combine(root, "SWLOR_Haks", "sw_vfx", model + ".mdl");
                 File.Exists(path).Should().BeTrue($"{id} needs compiled model {model}");
                 var bytes = File.ReadAllBytes(path);
@@ -128,6 +179,71 @@ public class AbilityImpactVisualEffectTests
         service.Should().Contain("onGeometryResolved?.Invoke(geometry)");
         service.Should().Contain("if (damage > 0 && trackedImpact?.Ability is { } impactAbility &&");
         service.Should().Contain("EffectVisualEffect(impactAbility.DamageImpactVisualEffect)");
+    }
+
+    [Test]
+    public void ElectricalTechniqueAreaBursts_AreUniquePerAbilityAndRenderWithASound()
+    {
+        var root = FindRepositoryRoot();
+        var abilityRoot = Path.Combine(root, "SWLOR.Game.Server", "Feature", "AbilityDefinition");
+
+        // Row 151 (Vfx_Fnf_Storm) is a blank placeholder that renders nothing.
+        foreach (var file in Directory.GetFiles(abilityRoot, "*.cs", SearchOption.AllDirectories))
+        {
+            File.ReadAllText(file).Should().NotContain("VisualEffect.Vfx_Fnf_Storm",
+                $"{Path.GetFileName(file)} must not use the blank Vfx_Fnf_Storm row");
+        }
+
+        // Each ability has its own area burst; the player technique and its NPC twin share it.
+        var expected = new Dictionary<string, VisualEffect>
+        {
+            ["StaticBurst"] = VisualEffect.Vfx_Fnf_Electric_Explosion,
+            ["ArcPulse"] = VisualEffect.Fnf_Dispel,
+            ["IonBurst"] = VisualEffect.Vfx_Fnf_Mystical_Explosion,
+            ["FinalSuppression"] = VisualEffect.Vfx_Fnf_Pwstun,
+            ["WardenMark"] = VisualEffect.Vfx_Fnf_Word,
+        };
+        expected.Values.Distinct().Should().HaveCount(expected.Count, "each ability needs its own area burst");
+        foreach (var (name, effect) in expected)
+        {
+            foreach (var path in new[] { $"Mimicry/{name}TechniqueAbilityDefinition.cs", $"NPC/{name}AbilityDefinition.cs" })
+            {
+                File.ReadAllText(Path.Combine(abilityRoot, path)).Should().Contain($"VisualEffect.{effect}",
+                    $"{path} must use its ability's own area burst");
+            }
+        }
+
+        var table = File.ReadAllLines(Path.Combine(root, "SWLOR_Haks", "sw_2da", "visualeffects.2da"));
+        var header = Regex.Split(table.First(line => line.TrimStart().StartsWith("Label ")).Trim(), @"\s+");
+        var rows = table.Where(line => Regex.IsMatch(line, @"^\s*\d+\s"))
+            .Select(line => Regex.Split(line.Trim(), @"\s+"))
+            .ToDictionary(parts => int.Parse(parts[0]), parts => parts.Skip(1).ToArray());
+        foreach (var effect in expected.Values)
+        {
+            var row = rows[(int)effect];
+            header.Where(name => name.StartsWith("Imp_") && name.EndsWith("_Node"))
+                .Select(name => row[Array.IndexOf(header, name)])
+                .Should().Contain(value => value != "****", $"{effect} needs a model");
+            row[Array.IndexOf(header, "SoundImpact")].Should().NotBe("****", $"{effect} needs a sound");
+        }
+    }
+
+    [Test]
+    public void InnerCircleSurge_PlaysAnAudibleStockLightningWithItsSilentAuthoredBurst()
+    {
+        var root = FindRepositoryRoot();
+        var ability = new SWLOR.Game.Server.Feature.AbilityDefinition.Mimicry.InnerCircleSurgeTechniqueAbilityDefinition()
+            .BuildAbilities()[FeatType.InnerCircleSurgeTechnique];
+        ability.SuccessfulImpactVisualEffect.Should().Be(VisualEffect.Vfx_Ability_InnerCircleSurgeTechnique);
+        ability.DamageImpactVisualEffect.Should().Be(VisualEffect.Vfx_Imp_Lightning_M);
+
+        var table = File.ReadAllLines(Path.Combine(root, "SWLOR_Haks", "sw_2da", "visualeffects.2da"));
+        var header = Regex.Split(table.First(line => line.TrimStart().StartsWith("Label ")).Trim(), @"\s+");
+        var rows = table.Where(line => Regex.IsMatch(line, @"^\s*\d+\s"))
+            .Select(line => Regex.Split(line.Trim(), @"\s+"))
+            .ToDictionary(parts => int.Parse(parts[0]), parts => parts.Skip(1).ToArray());
+        rows[(int)VisualEffect.Vfx_Imp_Lightning_M][Array.IndexOf(header, "SoundImpact")]
+            .Should().NotBe("****", "the stock lightning supplies the cast's impact sound");
     }
 
     private static string FindRepositoryRoot()

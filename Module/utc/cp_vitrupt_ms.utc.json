@@ -126,7 +126,7 @@
   },
   "Comment": {
     "type": "cexostring",
-    "value": "Vital Rupture master in Viscara - Militia Command Room."
+    "value": "Holdout Captain Marek Dolan (Viral Cascade line) in Viscara - Militia Command Room."
   },
   "Con": {
     "type": "byte",
@@ -155,7 +155,7 @@
   "Description": {
     "type": "cexolocstring",
     "value": {
-      "0": "A human knife master who taught the rupture cut in the Veles Militia Annex before anyone else there held a knife. He does not drill students; he performs on them once with his vibroknife, and once has always been enough."
+      "0": "A human knife master and holdout captain who taught the cutting drills of the Veles Militia Annex before anyone else there held a knife. He does not drill his recruits; he performs on them once with his vibroknife, and once has always been enough."
     }
   },
   "Dex": {
@@ -386,7 +386,7 @@
   "FirstName": {
     "type": "cexolocstring",
     "value": {
-      "0": "Vital Rupture Master"
+      "0": "Holdout Captain Marek Dolan"
     }
   },
   "fortbonus": {
@@ -802,6 +802,21 @@
         "Name": {
           "type": "cexostring",
           "value": "PERK_LEVEL_755"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "IS_BOSS"
         },
         "Type": {
           "type": "dword",

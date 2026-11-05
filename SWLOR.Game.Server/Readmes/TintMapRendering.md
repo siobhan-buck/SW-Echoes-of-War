@@ -1,5 +1,41 @@
 # Tint-map material lighting
 
+## Keep dye colors stable
+
+Players choose dyes and expect them to look the same after every update. Shader,
+palette, mask, and material edits have each shifted existing armor colors, so
+these rules hold for every change in `SWLOR_Haks`:
+
+- **No silent dye changes.** `SWLOR_Haks/tools/CheckDyeAppearance.py` fingerprints
+  every tint material (each `sw_tint_mtr` material and any other MTR that samples
+  the dye palette: its directives and the exact content of every texture and TXI
+  it binds, tint masks included), every custom shader those materials use, the
+  palette atlas, and each existing model's rows in `tintmap.2da` and
+  `cloaktint.2da` (material and dye layers), and compares them with
+  `tools/DyeAppearanceBaseline.json`. `BuildHaks.cmd` runs it,
+  and `TestDyeAppearance.py` covers it. A failure means existing parts would take
+  dyes differently. Undo the change, or, when the change is intended, get the
+  owner's approval, capture before/after client screenshots of the affected parts
+  with the same dyes next to an unchanged part (`InEngineVisualVerification.md`),
+  run `CheckDyeAppearance.py --update`, and put the captures in the pull request.
+  New materials are additions and need no update.
+- **Dyed metal follows the palette.** A material whose mask has Metal 1 or Metal 2
+  binds no specular (`texture2`) or roughness (`texture3`) map: the engine takes
+  metal reflectance from a bound specular map instead of the palette, and dyed
+  metal turns pale and nonmetallic. Keep authored normal maps. When imported
+  armor ships such maps, add them to `PALETTE_SPECULAR_MAPS` so the generator
+  unbinds them. Maps shared with nonmetal parts use `PALETTE_SPECULAR_MASK_MAPS`
+  to opt in only the affected metal mask (forearm 30 shares its maps with the
+  cloth-only forearm 103). `tools/PaletteMetalMaterials.json` records audited
+  playable materials, their exact metal masks and original reflectance inputs.
+  Those combinations bind neither map, without changing other materials or masks
+  that share the textures.
+  Profile signatures still retain the authored inputs so aliases do not move.
+  The remaining 44 grandfathered entries are unused material variants or bindings
+  outside the playable normal-phenotype model and helmet catalogs. Keep them in
+  `legacyMetalSpecular`; `--update` never adds to it, and corrected materials leave
+  it. Active playable armor, collars, headgear and droid parts have been corrected.
+
 The generated tint materials share three fragment shaders in
 `SWLOR_Haks/sw_shader`: `fs_plt_tinter`, `fs_plt_tinter_nm`, and
 `fs_plt_hair_nm`. A change to palette lighting must cover all three, including
@@ -26,14 +62,31 @@ explicit authoring requires `--game-data`. The client draws every cloak mesh wit
 the `cloakmodel.TEXTURE` PLT, even where its bitmap names the model, another PLT,
 or nothing that exists (model 007's only visible mesh is the `cala_cloak` skin), so
 every mesh is bound. Authoring refuses a mesh naming a real TGA, DDS, or MTR.
+Cloak palette alpha is reflection coverage only when the native cloak has an
+environment map. Otherwise it controls binary cutout coverage, including the
+Mantle's invisible Cloth 2 preset 61. The shared material uses the opaque pass:
+`fs_cloaktint` discards palette alpha below 0.5 and keeps the remaining pixels
+opaque, independently of the wearer's material fade. This matches the repository's
+punch-through cutoff; fractional palette alpha does not request blended rendering.
+These cloaks must not acquire metal reflection from alpha. Exact RGB tints retain
+neutral-reference palette coverage for every layer on cutout cloaks; reflective
+cloaks keep nonmetal RGB opaque and use reference alpha only for metal reflection.
+The cloak shader enables `FORCE_ALLOW_DISCARD` before `inc_standard`: the opaque
+white placeholder otherwise lets NWN suppress the cutout even when palette alpha
+is zero. The GPU regression checks composited pixels around the cutoff with
+blending enabled and disabled, in both native `NO_DISCARD` modes.
 
 Authored MTRs can inherit a same-name DDS/TGA without declaring `texture0`.
 `TintMapMaterialSources.json` records that input as `implicitTexture0`.
-Helmet 101, both human neck 12 textures, and female human left shin 264 have
-obsolete PLT atlases that differ from their authored diffuse artwork.
+Helmet 101 and both human neck 12 textures have obsolete PLT atlases that differ
+from their authored diffuse artwork.
 `GenerateAuthoredDiffuseTintMaps.py` registers a uniform channel selector while
 retaining the full-resolution diffuse and normal/specular textures. Cloth 1
-controls helmet 101 and shin 264; Skin controls the necks' authored surfaces.
+controls helmet 101; Skin controls the necks' authored surfaces. Female left shin
+264 is not one of them: its leftover DDS repeats the shared shin 264 palette's art
+(identical UVs, correlation 0.996), but it overrode the palette natively, so the
+left shin ignored dyes the right one took. `MIRRORED_MATERIAL_PROFILES` in
+`GenerateTintMapAssets.py` gives it the right shin's profile; both sides now dye alike.
 The mapped shader's opt-in `useAuthoredDiffuse` preserves original colors for
 native presets and reset. Explicit RGB replaces the hue using the original
 luminance detail, without sampling the obsolete PLT. Helmet 101 retains its
@@ -349,6 +402,19 @@ poses, so each joint keeps the garment's authored world bind and its native
 inverse skin binds unchanged. They carry no animation tracks of their own.
 Independent cloth helpers stay beneath them and keep their authored curves.
 
+Those static joints still need engine part IDs. The compiler numbers only nodes
+with tracks, so a track-less joint gets part -1, and the engine animates nothing
+beneath a -1 node. In 145 of 1,609 generated roots, coat tails, skirt bones and
+belt flaps sat at their bind shape. On robes 20, 21 and 236 that shape hugs the hips,
+so long pelvis parts poked through the back of the coat. The native robes swing
+those helpers through `a_fa_coat`. After compiling each animation bridge,
+`RobeAnimations.number_static_garment_ancestors` gives every such `rg_` joint an
+unused part ID in the geometry and in every clip. No controllers are added, so each
+wearer keeps its own adapter transform. Wearer roots compiled against the
+bridge inherit the IDs by name, which `validate_body_parts` confirms.
+`validate_static_garment_parts` fails a bridge that still has a tracked node beneath
+an unnumbered garment joint.
+
 Do not copy body tracks onto garment joints instead. The engine keeps channels
 that a clip omits from the previous clip: `custom1start`/`custom1lp` (Point
 and the carrier for every authored ability animation), the talk clips that
@@ -430,49 +496,240 @@ with approximately 121 minutes for the preceding full rebuild. This is a no-op
 measurement, not a changed-build benchmark. All 3,256 compiled outputs remained
 byte-identical when adopting the validated build cache.
 
-The legacy model compiler adds inverse local translations without composing
+Models built with the legacy compiler could add inverse local translations without composing
 their rotations. A rotated skin beneath a translated parent therefore receives
 incorrect inverse bone translations; robe 116 was displaced by roughly 1.7m
-on human bodies. Compilation corrects a mesh only when every used binding
+on human bodies. Compilation previously corrected a mesh only when every used binding
 matches that compiler calculation, using `inverse(boneWorld) * meshWorld`.
 Unrelated authored inverse bindings remain intact. The repair covers all 40
 source variants of robe 116 and their generated RGB roots. Regression coverage
 includes an actual compiled rotated mesh, its skinned vertex positions, and a
 scan of the complete robe catalog; preserving old inverse-bind bytes alone is
-not sufficient to prove correct placement.
+not sufficient to prove correct placement. CleanModels composes these transforms
+directly; the current adapter does not apply that legacy postcompile repair.
 
-Robe 236's torso coverings (`coat_top` / `coat_top2`) originally used dangly
-meshes despite having zero constraints on every
-vertex, sending an immobile panel through the cloth-physics renderer. A September
-16 report showed that panel displaced above the hood; skeleton and inverse-bind
-checks alone did not cover that renderer path. The correction keeps the authored
-vertices, materials, transforms, animation IDs and skin bindings, while removing
-cloth simulation from these static panels. Both native phenotype 0/22 models and
-generated RGB body roots are covered; the elf variants were already rigid.
-`SWLOR_Haks/tools/MakeRobePanelsRigid.py --robe 236 --game-data "<NWN data>" --apply`
-recompiles and validates the affected models before installing any output. It
-reports and skips ASCII targets, whose inverse bindings cannot be preserved by
-the compiled-model audit, while continuing with compiled targets for the robe. It
-refreshes owned resource hashes and drops affected cached build proofs. Run
-`python -B -m unittest discover -s SWLOR_Haks/tools -p "TestRigidRobePanels.py"`
-to check all native and RGB variants. In-game confirmation is still required for
-the reported displacement after deploying the updated `sw_pt_robe` and
-`sw_pt_root` HAKs.
+Robe 236 (Long Duster) keeps the models released with the Combat Upgrade
+(SWLOR_NWN #2277, SWLOR_Haks `8a1ab83c7f`). After that release its torso covering
+was made rigid (#432), then skinned to the torso with the hood and belt (#455), and its
+generated skirts were re-weighted (#539, #549). Players found the result worse than
+the released robe, so it was reverted in November 2026.
+`SWLOR_Haks/tools/RestoreRobe236Release.py --apply` rebuilds the 16 native phenotype
+0/22 models from pinned release blobs and keeps three later corrections: animation part
+IDs follow the current coat animation parents; the female Ewok/Ugnaught model keeps its
+own sit and sitdown clips as `AlignRobeAnimations.py` aligned them (its released geometry
+is recompiled with the aligned clips' exact controller values, because released clips
+would fork the animation bridge shared by every female-dwarf robe); and the male
+Ewok/Ugnaught right sleeve keeps its forearm cuff weights. Then regenerate the `p??200`
+RGB roots from those models with `GenerateRobeRgbModels.py`, so normal bodies draw the released coverings:
+a cloth-physics torso panel (rigid on elves) and a hood and belt that ride the torso
+joint without skin weights. `BindRobePanels.py --all` skips robe 236, and both panel
+tools refuse `--robe 236`. `TestRobe236Release.py` checks the native bytes, part IDs,
+generated coverings and these exclusions. Accepted trade-off: the reports behind the
+reverted repairs (a September 16 report of the torso panel displaced above the hood,
+and a later one of the upper robe displaced after movement or a skill) can recur. The
+November live check on all eight bodies showed no displacement after conjure, walking
+or idle, but it did not cover every ability clip.
 
-A subsequent player report after that update still showed the upper robe
-displaced after movement or a skill. The torso covering, hood (`hood002`) and
-belt (`beltjr`) now use skin meshes with a single full torso weight, matching the
-bone-following renderer used by the sleeves and skirt. Their rigid shapes,
-materials, local transforms, animation IDs and existing sleeve/skirt inverse
-bindings are preserved. New panel inverse binds are calculated from the compiled
-world transforms rather than relying on the legacy compiler's calculation.
-This covers all 24 native and RGB models across eight body families.
-Run `SWLOR_Haks/tools/BindRobePanels.py --robe 236 --panel coat_top --panel coat_top2
---panel hood002 --panel beltjr --game-data "<NWN data>" --apply` to reproduce the
-repair. `python -B -m unittest discover -s SWLOR_Haks/tools -p "TestBoundRobePanels.py"`
-checks all 72 panel bindings and compiled vertex placement through movement,
-skills and idle. Rebuild `sw_pt_robe` and `sw_pt_root`; confirmation of the native
-client's animation transitions remains an in-game check.
+The panel tools still own every other robe. `MakeRobePanelsRigid.py --robe <id>
+--game-data "<NWN data>" --apply` removes cloth simulation from static panels whose
+dangly constraints are all zero, keeping the authored vertices, materials, transforms,
+animation IDs and skin bindings; it skips ASCII targets. `BindRobePanels.py --all
+--game-data "<NWN data>" --apply` gives each static attachment in the catalog a single
+full weight on its body bone, so it uses the bone-following renderer instead of drifting
+after animation changes. New inverse binds come from the compiled world transforms.
+Run `TestRigidRobePanels.py` and `TestBoundRobePanels.py`, then rebuild `sw_pt_robe`
+and `sw_pt_root`.
+
+Normal-body robe 236 uses the generated `p??200` roots, whether or not the
+item has custom RGB. Its skirts are weighted to separate coat helpers, as in the native robe.
+An earlier repair weighted them to `pelvis_g`, the thighs and the shins instead, so they
+followed the legs in authored ability clips such as Force Leap. Those clips animate the body
+but omit the coat helpers. That binding made the coat hug the hips and let long pelvis parts
+poke through the back. Once the helpers received engine part IDs (see above), it was retired.
+`RobeSkirtBindings.py` now copies the native robe's skirt palettes, bone maps, inverse binds
+and weights back onto the unchanged RGB rig. Its rest-shape error is below 1e-7 m. Geometry,
+traversal, animation IDs and every other skin stay byte-identical. The trade-off matches the
+native robes: in ability clips that omit the coat tracks, the skirt holds its previous pose
+while the legs move. The generator applies no skirt policy, so regeneration keeps the native
+weights.
+
+Run `python -B SWLOR_Haks/tools/RobeSkirtBindings.py --apply` to repair the existing
+catalog, or `--check` to verify it. `TestRobeSkirtBindings.py` checks that all eight
+variants use the native coat-helper bones, that the restoration is idempotent, and that
+every weighted helper sits below numbered joints.
+Rebuild/install `sw_pt_root.hak` together with `sw_anim_m.hak` and `sw_anim_f.hak`:
+the helper part IDs live in the animation bridges too, and with older bridges the
+skirts stay static. No module repack or C# deploy is required.
+
+SWLOR's custom emote slots (`customN` start, loop and end clips: crouch, kneel, squat, lie
+down and the rest) carry no tracks for the robe cloth helpers, so the engine latched the
+coat panels, skirt bones and belt flaps in their idle pose and the coat jutted out from the
+hips like a board (robe 12 on emotes). `FillRobeEmoteMotion.py` adds orientation tracks for
+every untracked cloth helper in those clips of the eight playable-body bridges. Each cloth
+chain hangs from its hip anchor, runs over the knee on its side only while that knee reaches
+out that side (front cloth forward, back cloth backward), and lies along the floor, toward
+the feet when the wearer lies down. Authored cloth tracks, body tracks, other clips and the
+skeleton stay byte-identical, and `GenerateRobeRgbModels.py` applies the same fill when it
+packages new bridges. Ability clips (`sw_*`) are unchanged: their cloth still holds its
+previous pose. Run `python -B SWLOR_Haks/tools/FillRobeEmoteMotion.py --apply` to repair the
+installed banks or `--check` to verify them;
+`python -B -m unittest discover -s SWLOR_Haks/tools -p "TestFillRobeEmoteMotion.py"` guards
+every emote clip of every playable bridge. Rebuild `sw_anim_m.hak` and `sw_anim_f.hak`; no
+module repack or C# deploy is required.
+
+Stock body clips also animate attachment joints that have no part ID (part -1), and the
+engine applies those tracks by joint name: `belt_g1` repeats the pelvis sway so rigid belts
+turn with the hips, and the female clips turn `lshoulder_g`/`rshoulder_g` under the shoulder
+pads (pause1, walk, the two-handed clips). Bridge generation maps body tracks by part ID
+only (`Library.body_track_names`), so every robe phenotype lost them. Rigid belts (3 to 12,
+23 and every other belt that is not a skin) then stayed square to the root while the hips turned under them, offset
+and tilted against the robe-free body; skinned belts with part-skin aliases (19, 30, 31,
+110 to 114, 153, 223 to 227) are weighted to the pelvis and were unaffected.
+`RestoreRobeBodyTracks.py` copies every such track byte for byte, with its -1 part ID, from
+the wearer's body clip into the same clip of the eight playable-body bridges, exactly as the
+stock clip carries it. Joints whose body tracks never leave the bind pose (`cloak_g`, `head`
+and others) are left alone, and garment tracks, other body tracks and the skeleton stay
+byte-identical. Keeping part -1 matters: numbering these joints would renumber every robe
+root compiled against the bridge. `GenerateRobeRgbModels.py` applies the same restoration
+when it packages new bridges. Run
+`python -B SWLOR_Haks/tools/RestoreRobeBodyTracks.py --apply --game-data "<NWN>/data"` to
+repair the installed banks or `--check` to verify them;
+`python -B -m unittest discover -s SWLOR_Haks/tools -p "TestRestoreRobeBodyTracks.py"`
+(stock animations from `NWN_GAME_DATA` or the default Steam install) checks every playable
+bridge and replays idle, walk and run on a robe wearer against the plain body. Rebuild
+`sw_anim_m.hak` and `sw_anim_f.hak`; no module repack or C# deploy is required.
+
+Several chest, belt, pelvis, neck and shoulder parts carry long skirts or capes in the part
+mesh: the coat skirts of chests 028, 059, 154, 269 and 310, the skirt belts 019, 110, 112
+and 114, skirts in the pelvis family, and the full-length capes of neck 291 and shoulders 260.
+Each half of a skirt or cape was weighted to its own thigh and shin, so striding pulled the
+halves apart: the back tore open and the legs showed through it. A body part only reaches
+the normal body's bones, and a least-squares fit shows no blend of them reproduces robe
+236's coat helpers. Four test-server rounds (October 2026) narrowed the binding down:
+
+- Pelvis only: no tear, but a frozen shell the legs strode through.
+- Pelvis plus the stock back belt flap (`fb1_g01`, `fb2_g01`, `fb4_g01`), which the walk, run,
+  sit, kneel, knockdown and `sw_*` ability clips swing like coat tails: it moved like fabric,
+  but hung off to one side when standing. The flaps hang from `rootdummy`, not the pelvis,
+  and the stock idles stand in a contrapposto: in `pause1` the root sits 7 cm to the right
+  of the feet, the left foot 10 cm forward and out, the right foot back, and the flap leans
+  3 to 14 degrees sideways. A coat that ignores the legs hangs with the hips, narrower than
+  the stance, its left panel behind the forward leg.
+- Each side on its own leg below the hips, the back seam on both thighs and the flap below:
+  centred, but the back's upper band followed the thighs while its lower part hung from the
+  flap, so it bent at the buttocks into a stiff shell (up to 33 degrees further out than the
+  original when standing), and in a run the side panels followed the striding legs into a
+  tent while the back stood out level (up to 97 degrees).
+
+For the models it owns in `ChestSkirtBindings.json`, `ChestSkirtBindings.py` keeps the flap-and-pelvis back that moved like fabric and lets
+only a share of each side panel follow its own leg (`LEGS`, 60%). Above the hip joints a
+vertex keeps the pelvis binding. From the hips to the middle back flap joint it eases onto
+the pelvis and, away from a seam (`SEAM` to `SIDE`, 30 to 90 degrees round from the back,
+and from the front of a closed skirt), that share of its own thigh, and below the knee its
+shin. Over the same band the back flap takes a share that is full at the back and fades to
+nothing at the front (`FALLOFF`, 180 degrees), so the side panels trail with the back; a
+closed skirt's front hangs from the front tabard flap (`FRONT_FALLOFF`). Vertices on the
+body's axis stay on the pelvis (`AXIS`). Chest 269 and belts 019, 112 and 114, whose backs
+are cut flared, take 60% of the flap: at full strength they stood out level behind runners.
+Capes hang below the shoulders from the stock cloak bones (`CLOAK_COLUMNS`, three columns
+of four joints the walk, run and idle clips swing like a stock cloak), split by height and
+sideways between the joints around them, and ease back onto the source's torso binding at
+the top. Below the hips (capes: below the cloak's second row) the weights depend only on
+the bind position, so even uneven source weights move together; the geometry, inverse
+binds and bone tables stay as they were, missing bones take free palette slots, and the
+bind shape is unchanged.
+
+The engine pairs clip tracks with the wearer's joints by part ID, and the dwarf (Ugnaught,
+Ewok) and half-orc (Cathar) roots number their flap and cloak joints apart from `a_ba`, so
+neither ever moves on them (client-verified for the flaps). On those bodies a skirt's legs
+carry, below the hips, the share the source gave them there on average (`still_share`) and
+the pelvis the rest, with a narrow back seam (`STILL_SEAM`, 25 degrees; per style
+`still_seam`), and capes keep their original binding.
+Bothan female chest 310 is not rebound: its external bone table does not match the `pfe0`
+skeleton. Belt 226 and pelvis 198 stay as originally rigged at the test server's request;
+the manifest's `restored` list keeps them so.
+
+Human pelvis 034 has a separate owner: `PelvisSkirtBindings.py` and its pinned
+manifest. It retains the accepted 2026-10-31 released pelvis 035 rig, original rear
+panels, UVs and width, with local front/side position corrections and corresponding
+native metadata. Legacy human 035 is protected in the generic manifest's `restored`
+list. Do not reapply the generic thigh/flap weights to either human model. Canonical
+034 keeps its existing material identity and dye mapping for the 035-to-034 migration;
+matching UVs do not make their dye masks interchangeable. Its focused guard is
+`TestPelvisSkirtBindings.py`; regenerate part-skin aliases after its recipe changes.
+See `GarmentModelRules.md` for the required fit/motion and clipping acceptance checks.
+
+The engine keeps a joint that a clip does not track where the previous clip left it. SWLOR's
+custom emotes (`/paraderest` among them) carried no flap tracks, and their libraries'
+skeletons lacked the flap joints, so the flaps kept the idle's sideways lean and the
+flap-hung skirts hung up to 22 cm to one side in parade rest. `FillEmoteFlapTracks.py`
+copies the stock belt and flap joints (`belt_g1` and its chains, with their part IDs and
+bind transforms) into the skeletons of the emote libraries `a_ba_non_combat` and
+`a_ba_non_combat2`, and gives each of their 145 custom emote clips one rest key (identity)
+on every flap joint; the engine only applies clip tracks for joints the animation model's
+skeleton carries (client-verified: tracks without the skeleton joints changed nothing). No
+other unregistered normal-phenotype part may use these flap joints: belt 226 and pelvis
+198, back on their original leg weights, no longer do. The shared tracks also reach the
+accepted flap bindings of canonical human pelvis 034. `TestFillEmoteFlapTracks.py`
+checks consumers against both the generic and specialized recipe manifests; robe aliases
+are checked on their receiving skeletons by `TestPartSkinModels.py`. These consumers change only in
+the custom emotes; the dwarf and half-orc roots number their flaps apart and are
+unaffected. The custom emotes in the other animation libraries (`a_ba_med_weap`, whose
+point-pistol clips another tool owns, `a_ba_int`, `a_fa_int`, `a_ba_dnc`, `a_ba_casts`,
+`jedi_anim`), the robe phenotypes' own banks, and stock clips without flap or cloak tracks
+(`runfl`, `runfr`, `pausewalkfl`, `pausewalkfr`, injured walks) still hold the previous pose,
+as do the cloak bones in every custom emote, as stock cloaks do.
+Neck 32 is a hooded cloak built as a dangly mesh fixed to the neck, so it only swayed
+around the neck and the striding legs passed through its lower half. `NeckCloakSkins.py`
+decompiles it, turns the dangly mesh into an externally skinned mesh with the same geometry,
+materials and UVs, keeps the hood and collar on the neck and hangs the cloak from the cloak
+bones as above, then compiles it with CleanModels against the wearer's skeleton; every
+compiled vertex must sit where the original put it. The dwarf and half-orc bodies keep the
+dangly original.
+
+The following numerical tolerances bound specific legacy fixtures, not an acceptable
+visible clipping budget. Passing them does not clear an on-screen breakthrough;
+`GarmentModelRules.md`'s native acceptance criteria still apply.
+
+`TestChestSkirtBindings.py` measures every rebound model against its original. Over the
+walk and run clips the hem of every skirt that reaches below the knee moves against the
+pelvis, at most 7% of leg samples show behind a skirt or cape where its bones swing (55%
+hip-bound; on flapless bodies no more than the original plus 3 points, or 10%), at most 25%
+poke out in front of a closed skirt (originally up to 75%), the 99.5th-percentile edge
+stretch stays below 4x (13.7x with the original leg weights), the back panel leans out at
+most 65 degrees on average while running, and an open coat reaches at most 30 cm in front
+of the hips below the knees (the tent reached 50). Standing (`pause1`, `pause2`) each hem
+edge stays within 17 cm of where the original put it beside the feet and the hem at most
+20 cm further off-centre (`/paraderest`: 12 and 5 cm), and the back panel leans out at
+most 20 degrees more than the original's. `TestNeckCloakSkins.py` checks the neck 32 skins
+rebuild byte for byte, keep the hood on the neck and the cloak on the cloak bones, and
+cover the legs from behind in walk and run. `TestFillEmoteFlapTracks.py` checks the
+emote libraries rebuild byte for byte, change no existing track, carry the flap joints in
+their skeletons and hold the flaps straight under the hips in `/paraderest`. The originals
+are read from the Git blobs recorded in `ChestSkirtBindings.json`, `NeckCloakSkins.json`
+and `EmoteFlapTracks.json`. Other parts with
+leg-weighted skirts are unchanged.
+Run `python -B SWLOR_Haks/tools/ChestSkirtBindings.py --apply` and
+`python -B SWLOR_Haks/tools/NeckCloakSkins.py --apply` (needs CleanModels) and
+`python -B SWLOR_Haks/tools/FillEmoteFlapTracks.py --apply`, then
+`python -B SWLOR_Haks/tools/GeneratePartSkinModels.py --apply`,
+`python -B SWLOR_Haks/tools/GenerateShoulderModels.py --apply` and
+`python -B SWLOR_Haks/tools/GenerateNeckModels.py --game-data "<NWN>/data" --apply`, which
+renumber the robe-body aliases whose bone mapping changed. Their `--check`,
+`CheckNeckModels.py` and the three test modules (stock dwarf and half-orc animations from
+`NWN_GAME_DATA` or the default Steam install; a few minutes) guard them. Rebuild
+`sw_pt_chest.hak`, `sw_pt_belt.hak`, `sw_pt_pelvis.hak`, `sw_pt_neck.hak`,
+`sw_pt_lshoul.hak`, `sw_pt_rshoul.hak`, `sw_cr_creature.hak` and `sw_2da.hak` together
+and restart the server,
+which reads the renumbered aliases from `partrender.2da`, `shoulderrender.2da` and
+`neckrender.2da`.
+
+Robe 236's tint map is built from its original PLT, not the March 2026 revision
+(SWLOR_Haks #291) that raised the coat's Leather 1 shade from a mean of 38 to 61 and
+made every dye render the coat much lighter. Both genders share that source. The
+tint shaders reproduce the native PLT exactly, so a lighter coat means a lighter
+source, not a rendering defect. `TestRobe236CoatShade.py` fails if the materials
+are regenerated from the brightened PLT.
 
 The catalog audit extends this treatment to every visible static attachment
 under a body bone, including nested belts, chest ornaments and leg coverings.
@@ -636,6 +893,19 @@ Preserve the engine's authored specular and roughness maps, material overrides,
 palette alpha, and hair cutouts. Disabling specularity globally or editing each
 NPC would hide the initialization error and remove intentional material detail.
 
+Dyed metal is the exception (see "Keep dye colors stable"): a bound specular map
+replaces the palette's metal reflectance. `PALETTE_SPECULAR_MAPS`
+(`GenerateTintMapAssets.py`) lists the maps of the two sets added in haks #529: the
+Republic Trooper (chest 99, pelvis 156, shoulders 197, biceps, forearms and hands
+101, thighs 121, shins 102, feet 186, helmet 37) and the Havoc armor (chest
+316/317, pelvis 270, shoulders 261, biceps 278, forearms 282, hands 267, thighs 269,
+shins 272, feet 272, helmet 321). They are about 0.1 to 0.3 on metal and made dyed
+metal a pale nonmetallic sheen; players reported both sets as washed out next to
+other parts with the same metal color. The generator writes `texture2 null` and
+`texture3 null` for listed maps and keeps the normal and illumination maps; material profile
+signatures still see the authored maps, so scoped alias names do not change.
+`TestPaletteSpecularMaps.py` guards the list and the checked-in materials.
+
 Match the engine's color-space ordering as well: blend the legacy reflection
 gray into the palette RGB **before** `ApplyColorSpace`, then perform the optional
 environment-map blend in linear space. Mixing gray into already-linear RGB
@@ -687,6 +957,23 @@ DDS/TXI pair. Both the asset audit and C# corpus test require the pair; the GPU
 test rejects missing or enabled-mipmap TXIs before issuing compressed uploads.
 Rebuild and deploy all three `sw_tint*.hak` archives after this repair.
 
+## Smooth dye edges on reported materials
+
+By default `fs_plt_tinter` and `fs_plt_tinter_nm` take each pixel's dye layer
+from the nearest mask texel and filter only the shade. The native PLT renderer
+filtered the resolved colors instead, so on a converted part every boundary
+between two dye layers can render as a texel staircase. Players see this as a
+lower-resolution, jagged texture, even though the mask matches the PLT exactly.
+Materials listed in `SMOOTH_TINT_MATERIALS` (`GenerateTintMapAssets.py`) get
+`smoothTintEdges 1.0`, which resolves the four neighboring texels and filters
+their colors like the native PLT. Current opt-ins: helmets 53 and 287, and
+neck 267 with its scoped aliases. Every converted multi-layer mask uses the
+nearest-layer default, so a new report of jagged dye edges usually needs only
+a new opt-in. Confirm it against the pre-conversion PLT before adding one.
+`TestHelmetTintFiltering.py --game-data <dir>` guards the opt-in list and
+compares each opt-in mask's edges with resolved-color filtering on the GPU.
+Rebuild `sw_tint_mtr.hak` after a change and restart the client.
+
 ## Regression scene and checks
 
 ### Cover native body-part texture fallbacks
@@ -714,6 +1001,26 @@ behavior and verify the resulting binary mesh bindings as well as catalog
 rows. The GPU regression resolves the reported feet and shins through
 the catalog and checks their actual packed masks select Leather2 row 23 with
 zero environment-map coverage.
+
+A surviving stock PLT does not protect a stock part that stays in the KEY/BIF
+layer. Many stock parts name another part's texture as their bitmap (female
+chest 4 names `pfh0_chest001`, belt 5 names `pmh0_belt007`). Once that name is
+a generated tint MTR, its non-null `texture0` wins over the selected PLT, and the
+part draws the other part's mask on its own UVs. Every such stock armor part of a
+playable model family on the normal phenotype (`ContentStandards.md` Characters) is
+imported into its part folder and bound to the palette its native lookup selects,
+converting that stock PLT when no tint source exists yet. Converting a stock PLT
+creates a new MTR name that other stock parts may also borrow, so repeat the
+import until `python -B SWLOR_Haks/tools/TestStockPartTintBindings.py --game-data
+"<NWN>/data"` reports no borrowed tint maps. Import the stock MDL first and
+convert its PLT with `--generate-preserving`; the remaining imports bind through
+`--refresh-model-bindings`.
+
+A stock part that keeps its own native PLT renders palette presets but never exact
+RGB, and a stock part whose palette is converted but whose MDL stays in the KEY/BIF
+layer has no `tintmap.2da` row, so runtime colors never reach it. Every part the
+appearance editor offers to a playable body is therefore imported and converted the
+same way, and every resolved catalog model must have a `tintmap.2da` row.
 
 PLT replacement changes the underlying diffuse texture, not the existing
 SharedMaterial configuration. Preserve the original normal, specular,
@@ -752,7 +1059,22 @@ Leaving converted MDLs in text format makes the client compile them while
 loading creatures. The tint asset audit rejects active tint models in this
 format.
 
-Use `SWLOR_Haks/tools/CompileModels.py` before packaging changed model folders.
+Install the pinned CleanModels CLI with `SWLOR_Haks/tools/SetupModelCompiler.ps1`,
+then use `SWLOR_Haks/tools/CompileModels.py` before packaging changed model folders.
+The shared adapter uses CleanModels v4.4.2 from cleanmodels-qt v1.1.7; it does not
+patch or run the legacy compiler. `CLEANMODELS` selects a custom install path.
+The new compiler hash invalidates generation caches; existing shipped assets
+retain their original compiler provenance until explicitly regenerated and validated.
+Historical bank repacking records the current audit compiler separately in
+`validation_compiler_sha256` and checks current tool fingerprints without
+relaxing resource hashes. Cross-compiler motion revisions preserve the original
+rig and unselected native components, remapping only candidate animation IDs.
+New compiler proofs track MTR contents and unresolved material lookups so
+material-only edits invalidate no-op runs, model caches, and checkpoints.
+The adapter fills omitted static identity rotations in temporary ASCII inputs
+because v4.4.2 otherwise emits non-unit quaternions for those defaults. The bank
+reader supports both compiler layouts and relocates parent offsets without
+changing controller or event bytes.
 Select individual resources with repeated `--model <resref>` arguments, or a
 branch's changes with `--since <HAK-base-commit>`. Supply `--game-data
 "<NWN>/data"` for stock supermodels. The default run stages and validates;
@@ -763,9 +1085,9 @@ Legacy sources may need `--repair-legacy-inputs` for omitted neutral UV data or
 an unused final constraint. Each repair is recorded. The explicit
 `--allow-missing-supermodels` option retains unresolved supermodel names while
 compiling the local hierarchy as NWN does; it rejects any skin bone that would
-require the missing model. Compile-only vertex tags prevent the old compiler
-from merging different skin weights, and authored normals and vertex colors
-are restored in the binary data when the compiler would discard them.
+require the missing model. CleanModels preserves authored skin weights, normals,
+and vertex colors directly; the adapter no longer tags UVs, patches vertex
+arrays, or repairs legacy compiler skin bindings after compilation.
 
 Validation must inspect the binary geometry, UVs, skin weights, vertex colors,
 node transforms, and material bindings. A decompile-only comparison is
@@ -821,6 +1143,32 @@ The HAK build rejects stale source/output hashes, a deleted repository input,
 and edits to the generator, skin remapping, or model parser code. Generated aliases must stay
 excluded from tint source discovery: they share the source neck's materials.
 Rebuild `sw_pt_neck.hak` and `sw_2da.hak` and deploy the matching server assembly.
+
+### Other part skins on robe skeletons
+
+Chest, pelvis, belt, hand, shin and shoulder meshes can be external skins too,
+with the same traversal problem (female human pelvis 10 under robes 20, 21 and
+236 bound its thighs to `rp_` spacers; the male one bound to cloak bones).
+`SWLOR_Haks/tools/GeneratePartSkinModels.py` covers every modular armor slot
+except necks and male human shoulders, which keep their own generators. It
+resolves each robe body's part through the phenotype default chain, compares
+the source's bone table with that body, and emits one compiled alias
+(`<prefix>0_<part><id>`, IDs from 1000) per source and mapping. Robe bodies
+of one family share a layout, so `partlayout.2da` maps each robe body to a
+layout and `partrender.2da` lists that layout's aliases; the tables stay
+small and the aliases cost about 142 MB. ASCII parts are compiled by the
+engine and none are external skins.
+
+`PartSkinModelRenderer` projects only the equipped armor's parts in the item
+appearance packet; saved armor keeps authored IDs. Naked body parts are not
+projected: the appearance editor and droid records read those IDs directly.
+
+After changing robe bodies, base bodies or part meshes, run
+`python -B SWLOR_Haks/tools/GeneratePartSkinModels.py --apply`, then `--check`
+and `python -B -m unittest TestPartSkinModels` from `SWLOR_Haks/tools`. The
+HAK build runs `--check`, which re-plans from the current sources. Rebuild the
+`sw_pt_*` HAKs that gained aliases and `sw_2da.hak`, and deploy the matching
+server assembly.
 
 ### Exercise the reported NPCs
 

@@ -156566,7 +156566,7 @@
               },
               "PointY": {
                 "type": "float",
-                "value": -31.0
+                "value": -41.0
               },
               "PointZ": {
                 "type": "float",
@@ -156581,7 +156581,7 @@
               },
               "PointY": {
                 "type": "float",
-                "value": -31.0
+                "value": -41.0
               },
               "PointZ": {
                 "type": "float",
@@ -157734,7 +157734,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — viscaralake"
+            "0": "Stuck - viscaralake"
           }
         },
         "MapNote": {

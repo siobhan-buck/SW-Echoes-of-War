@@ -38,6 +38,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("rhydelalphada", 1, 1, true).AddItem("rhydelalphadb", 1, 1, true).AddItem("bp_rhydelalpha", 1, 1, true)
                 .AddItem("recipe_dr_psn2", 1, 1, true);
             _builder.Create("DATHTARN_APEX_COMP").AddItem("tarnapexmawcm", 1, 1);
+            _builder.Create("DATHTARN_APEX_WARDROBE").AddItem("wd_apex_horn", 1, 1);
             _builder.Create("DATHTARN_QUILL_COMP").AddItem("quillstalkercm", 1, 1);
             _builder.Create("DATHTARN_RHYDEL_COMP").AddItem("rhydelalphacm", 1, 1);
         }
@@ -52,6 +53,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
             _builder.Create("DATHGROTTO_STALKER_RARES").IsRare()
                 .AddItem("totem_charm", 1, 1, true).AddItem("spirit_hide", 1, 1, true).AddItem("bp_ritecrown", 1, 1, true);
             _builder.Create("DATHGROTTO_ALPHA_COMP").AddItem("alpha_fang", 1, 1);
+            _builder.Create("DATHGROTTO_ALPHA_WARDROBE").AddItem("wd_glow_spores", 1, 1);
             _builder.Create("DATHGROTTO_SPINE_COMP").AddItem("spine_quill", 1, 1);
             _builder.Create("DATHGROTTO_STALKER_COMP").AddItem("spirit_totem", 1, 1);
         }
@@ -194,6 +196,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("recipe_chistaff", 10)
                 .AddItem("recipe_chilngswd", 10)
                 .AddItem("recipe_chikatar", 10)
+                .AddItem("recipe_chipglove", 10)
                 .AddItem("recipe_chishuri", 10)
                 .AddItem("recipe_chirifle", 10)
                 .AddItem("recipe_chitwinbl", 10)
@@ -267,11 +270,13 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("kwi_longsword", 20)
                 .AddItem("kwi_electroblade", 20)
                 .AddItem("kwi_katar", 20)
+                .AddItem("kwi_pglove", 20)
                 .AddItem("kwi_staff", 20)
                 .AddItem("kwi_twinblade", 20)
                 .AddItem("kwi_twinelec", 20)
                 .AddItem("kwi_spear", 20)
                 .AddItem("kwi_pistol", 20)
+                .AddItem("kwi_twinpistol", 20)
                 .AddItem("kwi_rifle", 20)
                 .AddItem("kwi_shield", 10)
                 .AddItem("kwi_h_cloak", 10)
@@ -348,11 +353,13 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("kwi_longsword", 20)
                 .AddItem("kwi_electroblade", 20)
                 .AddItem("kwi_katar", 20)
+                .AddItem("kwi_pglove", 20)
                 .AddItem("kwi_staff", 20)
                 .AddItem("kwi_twinblade", 20)
                 .AddItem("kwi_twinelec", 20)
                 .AddItem("kwi_spear", 20)
                 .AddItem("kwi_pistol", 20)
+                .AddItem("kwi_twinpistol", 20)
                 .AddItem("kwi_rifle", 20)
                 .AddItem("kwi_shield", 10)
                 .AddItem("kwi_h_cloak", 10)
@@ -428,11 +435,13 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("kwi_longsword", 20)
                 .AddItem("kwi_electroblade", 20)
                 .AddItem("kwi_katar", 20)
+                .AddItem("kwi_pglove", 20)
                 .AddItem("kwi_staff", 20)
                 .AddItem("kwi_twinblade", 20)
                 .AddItem("kwi_twinelec", 20)
                 .AddItem("kwi_spear", 20)
                 .AddItem("kwi_pistol", 20)
+                .AddItem("kwi_twinpistol", 20)
                 .AddItem("kwi_rifle", 20)
                 .AddItem("kwi_shield", 10)
                 .AddItem("kwi_h_cloak", 10)

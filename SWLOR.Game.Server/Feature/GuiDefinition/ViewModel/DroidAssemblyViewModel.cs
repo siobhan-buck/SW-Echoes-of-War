@@ -45,6 +45,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         private int _pistol;
         private int _rifle;
         private int _throwing;
+        private int _unarmed;
+        private int _twinPistol;
         private int _armor;
         private int _fireResistance;
         private int _poisonResistance;
@@ -229,6 +231,18 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             set => Set(value);
         }
 
+        public string Unarmed
+        {
+            get => Get<string>();
+            set => Set(value);
+        }
+
+        public string TwinPistol
+        {
+            get => Get<string>();
+            set => Set(value);
+        }
+
         public string Armor
         {
             get => Get<string>();
@@ -318,14 +332,27 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             WatchOnClient(model => model.PersonalityIndex);
         }
 
-        private void Reset()
+        /// <summary>
+        /// Returns the installed parts and clears the assembly. A part without room stays installed with its stats.
+        /// </summary>
+        /// <returns>False when a part stayed installed.</returns>
+        private bool Reset()
         {
             Error = string.Empty;
             Name = string.Empty;
+            PersonalityIndex = 0;
+
+            if (!ReturnParts())
+            {
+                // The build stays open so the parts that stayed can be removed once there is room.
+                ProcessNotStarted = false;
+                IsBuildInProgress = true;
+                return false;
+            }
+
             ProcessNotStarted = true;
             IsBuildInProgress = false;
             IsCPUSelected = false;
-            PersonalityIndex = 0;
 
             _tier = 0;
             _level = 0;
@@ -350,6 +377,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _pistol = 0;
             _rifle = 0;
             _throwing = 0;
+            _unarmed = 0;
+            _twinPistol = 0;
             _armor = 0;
             _fireResistance = 0;
             _poisonResistance = 0;
@@ -367,42 +396,37 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             BodyResref = BlankTexture;
             ArmsResref = BlankTexture;
             LegsResref = BlankTexture;
+            return true;
+        }
 
-            if (!string.IsNullOrWhiteSpace(_cpuItem))
-            {
-                var item = ObjectPlugin.Deserialize(_cpuItem);
-                ObjectPlugin.AcquireItem(Player, item);
-            }
+        /// <summary>
+        /// Returns each installed part that fits and removes its stats. The CPU is returned last, and only once the other
+        /// parts are out, because it holds them.
+        /// </summary>
+        /// <returns>True when no part is left installed.</returns>
+        private bool ReturnParts()
+        {
+            foreach (var serialized in new[] { _headItem, _bodyItem, _armsItem, _legsItem })
+                ReturnPart(serialized);
 
-            if (!string.IsNullOrWhiteSpace(_headItem))
-            {
-                var item = ObjectPlugin.Deserialize(_headItem);
-                ObjectPlugin.AcquireItem(Player, item);
-            }
+            if (string.IsNullOrWhiteSpace(_headItem) && string.IsNullOrWhiteSpace(_bodyItem) &&
+                string.IsNullOrWhiteSpace(_armsItem) && string.IsNullOrWhiteSpace(_legsItem))
+                ReturnPart(_cpuItem);
 
-            if (!string.IsNullOrWhiteSpace(_bodyItem))
-            {
-                var item = ObjectPlugin.Deserialize(_bodyItem);
-                ObjectPlugin.AcquireItem(Player, item);
-            }
+            return string.IsNullOrWhiteSpace(_cpuItem) && string.IsNullOrWhiteSpace(_headItem) &&
+                   string.IsNullOrWhiteSpace(_bodyItem) && string.IsNullOrWhiteSpace(_armsItem) &&
+                   string.IsNullOrWhiteSpace(_legsItem);
+        }
 
-            if (!string.IsNullOrWhiteSpace(_armsItem))
-            {
-                var item = ObjectPlugin.Deserialize(_armsItem);
-                ObjectPlugin.AcquireItem(Player, item);
-            }
+        private void ReturnPart(string serialized)
+        {
+            if (string.IsNullOrWhiteSpace(serialized))
+                return;
 
-            if (!string.IsNullOrWhiteSpace(_legsItem))
-            {
-                var item = ObjectPlugin.Deserialize(_legsItem);
-                ObjectPlugin.AcquireItem(Player, item);
-            }
-
-            _cpuItem = string.Empty;
-            _headItem = string.Empty;
-            _bodyItem = string.Empty;
-            _armsItem = string.Empty;
-            _legsItem = string.Empty;
+            var item = ObjectPlugin.Deserialize(serialized);
+            var part = Droid.LoadDroidPartItemPropertyDetails(item);
+            if (Item.TryAcquireItem(Player, item))
+                RemovePart(part);
         }
 
         private void ShowError(string text)
@@ -442,6 +466,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             Pistol = $"Pistol: {_pistol}";
             Rifle = $"Rifle: {_rifle}";
             Throwing = $"Throwing: {_throwing}";
+            Unarmed = $"Unarmed: {_unarmed}";
+            TwinPistol = $"Twin Pistol: {_twinPistol}";
             Armor = $"Armor: {_armor}";
             FireResistance = $"Fire RES: {_fireResistance}";
             PoisonResistance = $"Poison RES: {_poisonResistance}";
@@ -570,6 +596,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _pistol += part.Pistol;
             _rifle += part.Rifle;
             _throwing += part.Throwing;
+            _unarmed += part.Unarmed;
+            _twinPistol += part.TwinPistol;
             _armor += part.Armor;
             AdjustResistances(part.Resistances, 1);
 
@@ -626,15 +654,19 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _pistol -= part.Pistol;
             _rifle -= part.Rifle;
             _throwing -= part.Throwing;
+            _unarmed -= part.Unarmed;
+            _twinPistol -= part.TwinPistol;
             _armor -= part.Armor;
             AdjustResistances(part.Resistances, -1);
 
             RefreshStats();
         }
 
-        public Action OnCloseWindow() => () =>
+        /// <summary>Runs whenever the window closes, whether the player closes it or the server does.</summary>
+        public override Action OnWindowClosed() => () =>
         {
-            Reset();
+            if (!Reset())
+                SendMessageToPC(Player, Item.ItemsHeldMessage);
         };
 
         public Action OnClickCPU() => () =>
@@ -655,10 +687,14 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                     else
                     {
                         var item = ObjectPlugin.Deserialize(_cpuItem);
-                        ObjectPlugin.AcquireItem(Player, item);
-                        CPUResref = BlankTexture;
                         var part = Droid.LoadDroidPartItemPropertyDetails(item);
+                        if (!Item.TryAcquireItem(Player, item))
+                        {
+                            ShowError(Item.InventoryFullMessage);
+                            return;
+                        }
 
+                        CPUResref = BlankTexture;
                         RemovePart(part);
                     }
                 });
@@ -696,10 +732,14 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 ShowModal("Will you remove the Head part?", () =>
                 {
                     var item = ObjectPlugin.Deserialize(_headItem);
-                    ObjectPlugin.AcquireItem(Player, item);
-                    HeadResref = BlankTexture;
                     var part = Droid.LoadDroidPartItemPropertyDetails(item);
+                    if (!Item.TryAcquireItem(Player, item))
+                    {
+                        ShowError(Item.InventoryFullMessage);
+                        return;
+                    }
 
+                    HeadResref = BlankTexture;
                     RemovePart(part);
                 });
             }
@@ -735,10 +775,14 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 ShowModal("Will you remove the Body part?", () =>
                 {
                     var item = ObjectPlugin.Deserialize(_bodyItem);
-                    ObjectPlugin.AcquireItem(Player, item);
-                    BodyResref = BlankTexture;
                     var part = Droid.LoadDroidPartItemPropertyDetails(item);
+                    if (!Item.TryAcquireItem(Player, item))
+                    {
+                        ShowError(Item.InventoryFullMessage);
+                        return;
+                    }
 
+                    BodyResref = BlankTexture;
                     RemovePart(part);
                 });
             }
@@ -774,10 +818,14 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 ShowModal("Will you remove the Arms part?", () =>
                 {
                     var item = ObjectPlugin.Deserialize(_armsItem);
-                    ObjectPlugin.AcquireItem(Player, item);
-                    ArmsResref = BlankTexture;
                     var part = Droid.LoadDroidPartItemPropertyDetails(item);
+                    if (!Item.TryAcquireItem(Player, item))
+                    {
+                        ShowError(Item.InventoryFullMessage);
+                        return;
+                    }
 
+                    ArmsResref = BlankTexture;
                     RemovePart(part);
                 });
             }
@@ -813,10 +861,14 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 ShowModal("Will you remove the Legs part?", () =>
                 {
                     var item = ObjectPlugin.Deserialize(_legsItem);
-                    ObjectPlugin.AcquireItem(Player, item);
-                    LegsResref = BlankTexture;
                     var part = Droid.LoadDroidPartItemPropertyDetails(item);
+                    if (!Item.TryAcquireItem(Player, item))
+                    {
+                        ShowError(Item.InventoryFullMessage);
+                        return;
+                    }
 
+                    LegsResref = BlankTexture;
                     RemovePart(part);
                 });
             }
@@ -858,7 +910,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
             ShowModal("Are you sure you want to reset everything?", () =>
             {
-                Reset();
+                if (!Reset())
+                    ShowError(Item.InventoryFullMessage);
             });
         };
 
@@ -925,6 +978,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 var ipPistol = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.Pistol, _pistol);
                 var ipRifle = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.Rifle, _rifle);
                 var ipThrowing = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.Throwing, _throwing);
+                var ipUnarmed = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.Unarmed, _unarmed);
+                var ipTwinPistol = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.TwinPistol, _twinPistol);
                 var ipArmor = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.Armor, _armor);
                 var ipFireResistance = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.ResistanceFire, _fireResistance);
                 var ipPoisonResistance = ItemPropertyCustom(ItemPropertyType.DroidStat, (int)DroidStatSubType.ResistancePoison, _poisonResistance);
@@ -958,6 +1013,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 BiowareXP2.IPSafeAddItemProperty(controller, ipPistol, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
                 BiowareXP2.IPSafeAddItemProperty(controller, ipRifle, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
                 BiowareXP2.IPSafeAddItemProperty(controller, ipThrowing, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
+                BiowareXP2.IPSafeAddItemProperty(controller, ipUnarmed, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
+                BiowareXP2.IPSafeAddItemProperty(controller, ipTwinPistol, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
                 BiowareXP2.IPSafeAddItemProperty(controller, ipArmor, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
                 BiowareXP2.IPSafeAddItemProperty(controller, ipFireResistance, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);
                 BiowareXP2.IPSafeAddItemProperty(controller, ipPoisonResistance, 0f, AddItemPropertyPolicy.ReplaceExisting, false, false);

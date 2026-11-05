@@ -61,6 +61,9 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
             var criticalRateAdjustment = DeviceAbilityEffects.GetAssaultGadgetCriticalRateAdjustment(activator);
             var duration = (int)CapstoneAbility.ActiveDurationSeconds;
             var blastRadius = DeviceAbilityEffects.ApplyBlastRadiusBonus(activator, 5f);
+            var blastDamageAdjustment = DeviceAbilityEffects.GetBlastDamageAdjustment(activator, damageAdjustment);
+
+            // Only the single-target strike adds gadget DMG; the area bursts use their base damage.
 
             Ability.ApplyTelegraphedCombatImpact(
                 activator,
@@ -78,8 +81,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 damageType: CombatDamageType.Fire,
                 targetVisualEffect: VisualEffect.Vfx_Com_Hit_Fire,
                 areaVisualEffect: VisualEffect.Fnf_Fireball,
-                damagePercentAdjustment: damageAdjustment,
-                baseDamageAdjustment: baseDamageAdjustment,
+                damagePercentAdjustment: blastDamageAdjustment,
                 afterSuccessfulHit: _ => DeviceAbilityEffects.ApplyTacticalUplink(activator),
                 hitChancePercentAdjustment: hitChanceAdjustment,
                 criticalRatePercentAdjustment: criticalRateAdjustment,
@@ -120,8 +122,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 damageType: CombatDamageType.Sonic,
                 targetVisualEffect: VisualEffect.Vfx_Imp_Sonic,
                 areaVisualEffect: VisualEffect.Vfx_Fnf_Sound_Burst,
-                damagePercentAdjustment: damageAdjustment,
-                baseDamageAdjustment: baseDamageAdjustment,
+                damagePercentAdjustment: blastDamageAdjustment,
                 afterSuccessfulHit: hitTarget =>
                 {
                     InterruptActivation(hitTarget);

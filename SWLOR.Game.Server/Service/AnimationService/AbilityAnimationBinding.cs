@@ -8,6 +8,11 @@ namespace SWLOR.Game.Server.Service.AnimationService;
 /// <summary>Connects catalog motions to exact feat ranks without changing ability mechanics.</summary>
 public static class AbilityAnimationBinding
 {
+    /// <summary>Opt-in cast gestures finish before combat resumes; an instant cast has no windup.</summary>
+    public static float? ImmediateDuration(AbilityDetail ability, float castWindow) =>
+        !ability.FitsAuthoredAnimationToCastWindow ? null :
+        !float.IsFinite(castWindow) || castWindow <= 0f ? 0f : Math.Min(ability.AuthoredAnimation.Duration, castWindow);
+
     public static AnimationClip ActivationClip(AbilityDetail ability, bool isPlayer, float? animationWindow = null, bool equipmentCompatible = true) =>
         !equipmentCompatible || ability.HasGeneratedAnimationBinding && (!isPlayer || !ability.UsesImmediateAuthoredAnimation && animationWindow.HasValue &&
             (ability.AuthoredAnimation == null || ability.AuthoredAnimation.Duration > animationWindow.Value))
@@ -23,7 +28,14 @@ public static class AbilityAnimationBinding
         !equipmentCompatible && !ability.HasGeneratedAnimationBinding && ability.AuthoredAnimation != null
             ? Animation.Invalid
             : ability.HasGeneratedAnimationBinding && ActivationClip(ability, isPlayer, animationWindow, equipmentCompatible) == null
-                ? ability.NativeAnimationType : ability.AnimationType;
+                ? IncompatibleGestureFallback(ability, isPlayer, equipmentCompatible) : ability.AnimationType;
+
+    private static Animation IncompatibleGestureFallback(AbilityDetail ability, bool isPlayer, bool equipmentCompatible) =>
+        isPlayer && !equipmentCompatible && UsesGestureFallback(ability) ? Animation.CastOutAnimation : ability.NativeAnimationType;
+
+    // A skipped grip-gated gesture with no native animation would otherwise play nothing.
+    public static bool UsesGestureFallback(AbilityDetail ability) =>
+        ability.UsesImmediateAuthoredAnimation && ability.HasGeneratedAnimationBinding && ability.NativeAnimationType == Animation.Invalid;
 
     // Gameplay callers resolve equipment before installing a gesture or queued swing replacement.
     public static AnimationClip ActivationClip(AbilityDetail ability, uint creature, float? animationWindow = null) =>

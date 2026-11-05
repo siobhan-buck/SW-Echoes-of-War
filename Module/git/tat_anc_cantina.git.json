@@ -25188,7 +25188,7 @@
         "LocName": {
           "type": "cexolocstring",
           "value": {
-            "2": "Gamorï¿½en"
+            "2": "Gamoréen"
           }
         },
         "Looping": {
@@ -30146,7 +30146,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck â€” tat_anc_cantina"
+            "0": "Stuck - tat_anc_cantina"
           }
         },
         "MapNote": {

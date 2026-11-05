@@ -7,6 +7,7 @@ using SWLOR.Game.Server.Service.LootService;
 using SWLOR.Game.Server.Service.PerkService;
 using SWLOR.Game.Server.Service.StatService;
 using SWLOR.NWN.API.NWScript.Enum;
+using SWLOR.NWN.API.NWScript.Enum.Area;
 
 namespace SWLOR.Game.Server.Service
 {
@@ -127,13 +128,13 @@ namespace SWLOR.Game.Server.Service
             var table = GetLootTableByName(lootTableName);
             if (rareBonusChance > 0 && table.IsRare)
             {
-                chance += rareBonusChance;
+                chance += table.GetRareChanceBonus(rareBonusChance);
             }
             for (int x = 1; x <= attempts; x++)
             {
                 if (Random.D100(1) > chance) continue;
 
-                var item = table.GetRandomItem(rareBonusChance);
+                var item = table.GetRandomItemWithRareBonus(rareBonusChance);
                 var quantity = Random.Next(item.MaxQuantity) + 1;
 
                 // CreditFinder perk - Increase the quantity of gold found.
@@ -238,8 +239,11 @@ namespace SWLOR.Game.Server.Service
         [NWNEventHandler(ScriptName.OnItemHit)]
         public static void MarkCreditfinderAndTreasureHunterOnTarget()
         {
-            var attacker = OBJECT_SELF;
-            var target = GetSpellTargetObject();
+            RecordWeaponHitFindBonuses(OBJECT_SELF, GetSpellTargetObject());
+        }
+
+        public static void RecordWeaponHitFindBonuses(uint attacker, uint target)
+        {
             if (GetIsPC(target) || GetIsDM(target))
                 return;
 
@@ -277,7 +281,11 @@ namespace SWLOR.Game.Server.Service
             var area = GetArea(self);
             var position = GetPosition(self);
             var facing = GetFacing(self);
-            var lootPosition = Vector3(position.X, position.Y, position.Z - 0.11f);
+            var lootPosition = CorpsePlacement.GetLootPosition(
+                position,
+                GetAreaSize(Dimension.Width, area) * 10f,
+                GetAreaSize(Dimension.Height, area) * 10f,
+                ground => GetGroundHeight(Location(area, ground, 0f)));
             var spawnLocation = Location(area, lootPosition, facing);
             var npcStats = Stat.GetNPCStats(self);
 

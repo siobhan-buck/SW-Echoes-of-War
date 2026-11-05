@@ -357,6 +357,41 @@ namespace SWLOR.Game.Server.Service
             return NuiFindWindow(player, windowId) != 0;
         }
 
+        /// <summary>Checks cached window tethers before querying the physical UI target.</summary>
+        public static bool HasOpenWindowTetheredTo(uint uiTarget, uint tetherObject)
+        {
+            if (!GetIsObjectValid(uiTarget) || !GetIsObjectValid(tetherObject))
+                return false;
+
+            var controller = GetIsDMPossessed(uiTarget) ? GetMaster(uiTarget) : uiTarget;
+            if (!GetIsObjectValid(controller) || (!GetIsPC(controller) && !GetIsDM(controller)))
+                return false;
+
+            var playerId = GetObjectUUID(controller);
+            if (string.IsNullOrWhiteSpace(playerId) ||
+                !_playerWindows.TryGetValue(playerId, out var windows) || windows == null)
+                return false;
+
+            return HasOpenTetheredWindow(windows.Select(window =>
+                    (window.Key, window.Value?.ViewModel?.TetherObject ?? OBJECT_INVALID)),
+                tetherObject, type => IsWindowOpen(uiTarget, type));
+        }
+
+        private static bool HasOpenTetheredWindow(IEnumerable<(GuiWindowType Type, uint Tether)> windows,
+            uint tetherObject, Func<GuiWindowType, bool> isWindowOpen)
+        {
+            if (windows == null || tetherObject == OBJECT_INVALID)
+                return false;
+
+            foreach (var (type, tether) in windows)
+            {
+                if (tether == tetherObject && isWindowOpen(type))
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Shows or hides a specific window for a given player.
         /// </summary>
@@ -499,7 +534,7 @@ namespace SWLOR.Game.Server.Service
 
         /// <summary>
         /// Skips the default NWN window open events and shows the SWLOR windows instead.
-        /// Applies to the Journal, Character Sheet, Player Guide, and Item Examine panels.
+        /// Applies to the Journal, Character Sheet, Player Guide, Item Examine, and Player List panels.
         /// </summary>
         [NWNEventHandler(ScriptName.OnModuleGuiEvent)]
         public static void ReplaceNWNGuis()
@@ -536,6 +571,13 @@ namespace SWLOR.Game.Server.Service
             else if (panelType == GuiPanel.ExamineItem)
             {
                 ExamineItemViewModel.ShowExamineWindow(player, target);
+            }
+            else if (panelType == GuiPanel.PlayerList)
+            {
+                if (DMPresence.IsControlledByDM(player))
+                    DMPresence.ToggleWindow(player, GuiWindowType.PlayerList);
+                else
+                    TogglePlayerWindow(player, GuiWindowType.PlayerList);
             }
         }
 

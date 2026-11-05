@@ -2,6 +2,15 @@
 
 Gameplay icons must communicate what an effect does before the player reads a tooltip. These standards apply to ability, feat, spell, status-effect, and other gameplay-facing icons. Environment textures, portraits, item appearance textures, and non-gameplay art are outside this standard.
 
+Sections: Semantic Color · Every Applied Status Effect Carries an Icon · Stat-Configured Icons · Force Alignment Marker · Uniqueness · Rank Display · Framing · Artwork Quality · Generation Approach · Source Of Truth · Enforcement (commands)
+
+Required for every icon change:
+
+- Icon resrefs are meaningful abbreviations of at most 16 characters, with no hash or generator suffixes.
+- After changing an icon referenced by `feat.2da` or `spells.2da`, run `tools/GenerateCooldownIcons.ps1 -Force`.
+- After changing any gameplay icon or manifest entry, run `tools/UpdateGameplayIconStandards.ps1 -AuditOnly` and fix every failure.
+- The regenerating modes of `UpdateGameplayIconStandards.ps1` rewrite the manifest, `effecticons.2da`, `EffectIconType.cs`, and status-effect code together. Run them only in your own worktree and review the whole diff.
+
 ## Semantic Color
 
 Icons use semantic color on the frame, glow, optional rank badge, or other outer accent. The center artwork may retain discipline flavor, such as Force, Devices, Beastmaster, weapon, medical, command, or elemental identity.
@@ -120,6 +129,8 @@ Production gameplay TGA files must use bottom-left TGA origin (`image descriptor
 
 Inventory item TGAs use transparent backgrounds and transparent outer borders, matching native NWN inventory art. Do not stamp semantic frames or dark mattes into 64x64 inventory resources. The opacity and semantic-frame requirements below apply to 32x32 action/status icons.
 
+New and replaced inventory and currency icons keep their artwork in DDS: single-level DXT5, rows stored bottom-up, no TXI. Encode them with `write_icon` in `tools/FixWeaponInventoryIcons.py`. Icons drawn only by NUI, such as currencies (`cur_*`), ship as DDS alone; delete any old TGA of the same name so it cannot shadow the DDS. Native inventory icons also need the same-named 8x8 TGA registration stub (`FixWeaponInventoryIcons.py stubs`, see `BlasterModelImport.md`) in place of a full-size TGA. The TGA rules for feat, spell, ability, and status-effect icons above are unchanged.
+
 Production action/status gameplay TGA files must be fully opaque. Do not leave transparent or partially transparent edge pixels in feat, spell, ability, or status-effect icons.
 
 ## Artwork Quality
@@ -191,7 +202,7 @@ Generated status-effect labels in `effecticons.2da` must use compact PascalCase 
 
 Item artwork uses the existing `GameplayIconManifest.csv`. Original sources and generation prompts live in `SWLOR_Haks/sw_item_source/`. Use meaningful 32x32 action resrefs and engine-required 64x64 `i<ItemClass>_<model>` inventory aliases. Inventory aliases must have transparent backgrounds and borders; only action icons use the shared semantic frame and regular green cooldown tools. Run `python tools/NormalizeInventoryIconTransparency.py --apply` after exporting framed ESS inventory aliases. Ranks of one function share artwork; different functions need distinct designs.
 
-Current appearances come from blueprints. Legacy conversion belongs only in new player migration 19 and server migration 27; historical mappings are icon test fixtures. Retain unused numeric ESS slots as original artwork aliases for saved custom appearances; `sw_item_source/general/native-library.csv` records their source mappings and hashes.
+Current appearances come from blueprints. Legacy conversion belongs only in player migration 19 (server migration 27 converted stored items in production and is retired); historical mappings are icon test fixtures. Retain unused numeric ESS slots as original artwork aliases for saved custom appearances; `sw_item_source/general/native-library.csv` records their source mappings and hashes.
 
 Icon tools and audits must fail when a gameplay icon violates these standards:
 

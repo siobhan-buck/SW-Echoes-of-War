@@ -92,12 +92,14 @@ public class GatheringPerkRegressionTests
     public void TreasureHunterAndCreditfinder_PreserveCreatureLootBonuses()
     {
         var loot = ReadSource("Service", "Loot.cs");
-        var markTarget = ExtractMethod(loot, "public static void MarkCreditfinderAndTreasureHunterOnTarget()");
+        var itemHit = ExtractMethod(loot, "public static void MarkCreditfinderAndTreasureHunterOnTarget()");
+        itemHit.Should().Contain("RecordWeaponHitFindBonuses(OBJECT_SELF, GetSpellTargetObject());");
+        var markTarget = ExtractMethod(loot, "public static void RecordWeaponHitFindBonuses(uint attacker, uint target)");
         var spawnLoot = ExtractMethod(
             loot,
             "private static List<uint> SpawnLoot(uint source, uint receiver, string lootTableName, int chance, int attempts)");
         var lootTable = ReadSource("Service", "LootService", "LootTable.cs");
-        var chooseItem = ExtractMethod(lootTable, "public LootTableItem GetRandomItem(int treasureHunterLevel)");
+        var chooseItem = ExtractMethod(lootTable, "public LootTableItem GetRandomItemWithRareBonus(int rareBonusChance)");
 
         markTarget.Should().Contain("Perk.GetPerkLevel(attacker, PerkType.CreditFinder)");
         markTarget.Should().Contain("Perk.GetPerkLevel(attacker, PerkType.TreasureHunter) * 10");
@@ -110,12 +112,13 @@ public class GatheringPerkRegressionTests
 
         spawnLoot.Should().Contain("var creditPercentIncrease = creditFinderLevel * 0.2f;");
         spawnLoot.Should().Contain("if (rareBonusChance > 0 && table.IsRare)");
-        spawnLoot.Should().Contain("chance += rareBonusChance;");
-        spawnLoot.Should().Contain("table.GetRandomItem(rareBonusChance)");
+        spawnLoot.Should().Contain("chance += table.GetRareChanceBonus(rareBonusChance);");
+        spawnLoot.Should().Contain("table.GetRandomItemWithRareBonus(rareBonusChance)");
         spawnLoot.Should().Contain("quantity += (int)(quantity * creditPercentIncrease);");
 
-        chooseItem.Should().Contain("if (treasureHunterLevel > 0 && item.IsRare)");
-        chooseItem.Should().Contain("weight += treasureHunterLevel * 10;");
+        chooseItem.Should().Contain("if (rareBonusChance > 0 && item.IsRare)");
+        chooseItem.Should().Contain("weight += rareBonusChance;");
+        lootTable.Should().Contain("GetRandomItemWithRareBonus(treasureHunterLevel * 10)");
     }
 
     [TestCase(0, 0, 0)]

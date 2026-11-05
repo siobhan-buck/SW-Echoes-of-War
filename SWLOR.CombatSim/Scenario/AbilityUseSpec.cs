@@ -9,6 +9,15 @@ namespace SWLOR.CombatSim.Scenario
         /// <summary>FeatType name of the ability rank, e.g. "Benevolence3".</summary>
         public string Feat { get; set; }
 
+        public int? WeaponPower { get; set; }
+        public int WeaponHits { get; set; } = 1;
+        public int WeaponDamagePercent { get; set; } = 100;
+        public string RequiredSetup { get; set; } = "Any";
+        public bool WaitForWeave { get; set; }
+        public bool IsControl { get; set; }
+        /// <summary>Rotation policy: wait until this much current stamina is available before selecting the action.</summary>
+        public int MinimumStaminaBeforeUse { get; set; }
+
         public AbilityTarget Target { get; set; } = AbilityTarget.Enemy;
 
         /// <summary>Ally name for <see cref="AbilityTarget.NamedAlly"/>.</summary>
@@ -28,5 +37,9 @@ namespace SWLOR.CombatSim.Scenario
 
         /// <summary>Damage for hostile abilities. Healing and shield magnitudes come from the effect catalog.</summary>
         public DamageSpec Damage { get; set; }
+        /// <summary>Optional rotation condition for a Twin Pistol Cadence spender.</summary>
+        public int MinimumCadence { get; set; }
+        /// <summary>Explicit channel cancellation opportunity, measured from its start; no terrain or player movement is inferred.</summary>
+        public float? ChannelInterruptAfterSeconds { get; set; }
     }
 }

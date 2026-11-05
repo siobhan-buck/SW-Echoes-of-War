@@ -3,9 +3,11 @@ using System.Linq;
 using System.Text;
 using SWLOR.Game.Server.Core;
 using SWLOR.Game.Server.Entity;
+using SWLOR.Game.Server.Service.CurrencyService;
 using SWLOR.Game.Server.Service.LanguageService;
 using SWLOR.Game.Server.Service.StatService;
 using SWLOR.NWN.API.NWScript.Enum;
+using SkillCategoryType = SWLOR.Game.Server.Service.SkillService.SkillCategoryType;
 using SkillType = SWLOR.Game.Server.Service.SkillService.SkillType;
 
 namespace SWLOR.Game.Server.Service
@@ -277,7 +279,7 @@ namespace SWLOR.Game.Server.Service
                         new LanguageCommand("Mando'a", SkillType.Mandoa, new []{"mandoa"}),
                         new LanguageCommand("Mirialan", SkillType.Mirialan, new []{"mirialan"}),
                         new LanguageCommand("Mon Calamarian", SkillType.MonCalamarian, new []{"moncalamarian", "moncal"}),
-                        new LanguageCommand("Nautila", SkillType.Nautila, new []{ "nautilan" }),
+                        new LanguageCommand("Nautila", SkillType.Nautila, new []{ "nautila", "nautolan" }),
                         new LanguageCommand("Rodese", SkillType.Rodese, new []{"rodese", "rodian"}),
                         new LanguageCommand("Shyriiwook", SkillType.Shyriiwook, new []{"shyriiwook", "wookieespeak"}),
                         new LanguageCommand("Togruti", SkillType.Togruti, new []{"togruti"}),
@@ -292,6 +294,60 @@ namespace SWLOR.Game.Server.Service
 
                 return _languages;
             }
+        }
+
+        /// <summary>
+        /// Raises a language to its maximum rank.
+        /// Languages don't level up like normal skills (no stat increases, SP, etc.),
+        /// so it's safe to set the rank directly.
+        /// </summary>
+        /// <param name="dbPlayer">The player entity.</param>
+        /// <param name="language">The language to master.</param>
+        public static void Master(Player dbPlayer, SkillType language)
+        {
+            var maxRank = Skill.GetSkillDetails(language).MaxRank;
+            if (!dbPlayer.Skills.TryGetValue(language, out var playerSkill))
+            {
+                playerSkill = new PlayerSkill();
+                dbPlayer.Skills[language] = playerSkill;
+            }
+
+            playerSkill.Rank = maxRank;
+            playerSkill.XP = Skill.GetRequiredXP(maxRank) - 1;
+        }
+
+        /// <summary>
+        /// Retrieves the languages a player has not yet mastered, in display order.
+        /// </summary>
+        /// <param name="dbPlayer">The player entity.</param>
+        /// <returns>The languages below their maximum rank.</returns>
+        public static List<SkillType> GetUnmasteredLanguages(Player dbPlayer)
+        {
+            return Skill.GetActiveSkillsByCategoryForDisplay(SkillCategoryType.Languages)
+                .Where(language => !dbPlayer.Skills.TryGetValue(language.Key, out var playerSkill) ||
+                                   playerSkill.Rank < language.Value.MaxRank)
+                .Select(language => language.Key)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Spends one language token to master a language the player has not mastered yet.
+        /// The caller is responsible for saving the player entity.
+        /// </summary>
+        /// <param name="dbPlayer">The player entity.</param>
+        /// <param name="language">The language to master.</param>
+        /// <returns>true if a token was spent, false otherwise.</returns>
+        public static bool TryMasterWithToken(Player dbPlayer, SkillType language)
+        {
+            if (!dbPlayer.Currencies.TryGetValue(CurrencyType.LanguageToken, out var tokens) || tokens <= 0)
+                return false;
+
+            if (!GetUnmasteredLanguages(dbPlayer).Contains(language))
+                return false;
+
+            dbPlayer.Currencies[CurrencyType.LanguageToken] = tokens - 1;
+            Master(dbPlayer, language);
+            return true;
         }
     }
 }

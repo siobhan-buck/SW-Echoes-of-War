@@ -8,6 +8,7 @@ using SWLOR.Game.Server.Enumeration;
 using SWLOR.Game.Server.Service;
 using SWLOR.Game.Server.Service.CombatService;
 using SWLOR.Game.Server.Service.WeatherService;
+using SWLOR.NWN.API.NWScript.Enum.Area;
 using Precipitation = SWLOR.NWN.API.NWScript.Enum.Weather;
 using WeatherRuntime = SWLOR.Game.Server.Service.Weather;
 
@@ -167,6 +168,7 @@ public class WeatherTests
 
     [TestCase(PlanetType.Tatooine, WeatherStorm.Sand, WeatherHazard.Sand)]
     [TestCase(PlanetType.Hutlar, WeatherStorm.Snow, WeatherHazard.Snow)]
+    [TestCase(PlanetType.Eshan, WeatherStorm.Snow, WeatherHazard.Snow)]
     public void RegionalStorms_StartInStrongWind_AndClearWhenWindDrops(PlanetType planet, WeatherStorm storm, WeatherHazard hazard)
     {
         var climate = WeatherPlanetDefinitions.GetPlanetClimates()[planet];
@@ -176,6 +178,27 @@ public class WeatherTests
         var cleared = WeatherConditions.Create(6, 8, 8, climate, 0, 0, 0, true, storm, NoRoll);
         cleared.Storm.Should().Be(WeatherStorm.None);
         cleared.GetHazard(false).Should().Be(WeatherHazard.None);
+    }
+
+    [Test]
+    public void Eshan_CalmWeatherUsesItsAuthoredColdDescription()
+    {
+        var climate = WeatherPlanetDefinitions.GetPlanetClimates()[PlanetType.Eshan];
+        var conditions = WeatherConditions.Create(10, 1, 1, climate, 0, 0, 0, true, WeatherStorm.None, NoRoll);
+
+        conditions.Heat.Should().Be(3);
+        conditions.GetFeedback(climate, false, false).Should().Be(climate.ColdMildText);
+        climate.ColdMildText.Should().Contain("Eshan");
+    }
+
+    [Test]
+    public void Eshan_SnowstormsNeverCombineWithRain()
+    {
+        var climate = WeatherPlanetDefinitions.GetPlanetClimates()[PlanetType.Eshan];
+        var conditions = WeatherConditions.Create(10, 7, 9, climate, 0, 0, 0, true, WeatherStorm.None, _ => 0);
+
+        conditions.Storm.Should().Be(WeatherStorm.Snow);
+        conditions.Precipitation.Should().Be(Precipitation.Snow);
     }
 
     [Test]
@@ -401,6 +424,46 @@ public class WeatherTests
         Method("OnAreaEnter").Should().Contain("GetIsPC(creature)").And.Contain("EnsureMist(area, state)");
         Method("OnModuleHeartbeat").Should().Contain("EnsureMist(area, state)");
         Method("TryGetGroundLocation").Should().Contain("GetGroundHeight(location)");
+    }
+
+    [Test]
+    public void NativeWeather_ResendsOnlyRealPrecipitationChanges()
+    {
+        var area = new WeatherAreaState();
+        area.TryApplyWeather(WeatherType.Rain, Precipitation.Clear).Should().BeTrue("the first front always sets the override");
+        area.AppliedWeather.Should().Be(WeatherType.Rain);
+
+        // Rain to thunderstorm and rain to rain keep the native rain the clients already draw.
+        area.TryApplyWeather(WeatherType.Rain, Precipitation.Rain).Should().BeFalse();
+        area.TryApplyWeather(WeatherType.Clear, Precipitation.Rain).Should().BeTrue();
+        area.TryApplyWeather(WeatherType.Clear, Precipitation.Clear).Should().BeFalse();
+        area.TryApplyWeather(WeatherType.Snow, Precipitation.Clear).Should().BeTrue();
+
+        // Another script (DM weather tools) changed the native weather: restore it.
+        area.TryApplyWeather(WeatherType.Snow, Precipitation.Clear).Should().BeTrue();
+        area.TryApplyWeather(WeatherType.Snow, Precipitation.Snow).Should().BeFalse();
+
+        area.Invalidate();
+        area.TryApplyWeather(WeatherType.Snow, Precipitation.Snow).Should().BeFalse("modifier changes do not resend unchanged weather");
+    }
+
+    [TestCase(Precipitation.Clear, WeatherType.Clear)]
+    [TestCase(Precipitation.Rain, WeatherType.Rain)]
+    [TestCase(Precipitation.Snow, WeatherType.Snow)]
+    [TestCase(Precipitation.Foggy, WeatherType.Clear)]
+    public void NativeWeather_MapsPrecipitation(Precipitation precipitation, WeatherType expected)
+    {
+        new WeatherConditions(6, 8, 3, precipitation, WeatherStorm.None).NativeWeather.Should().Be(expected);
+    }
+
+    [Test]
+    public void Runtime_StormChangesKeepNativeRain_AndOnlySendChangedWeather()
+    {
+        var update = Method("SetWeather", 1);
+        update.Should().Contain("state.TryApplyWeather(conditions.NativeWeather, NWScript.GetWeather(area))")
+            .And.Contain("NWScript.SetWeather(area, conditions.NativeWeather)");
+        update.IndexOf("TryApplyWeather").Should().BeLessThan(update.IndexOf("NWScript.SetWeather("));
+        Source().Split("NWScript.SetWeather(").Length.Should().Be(2, "every native weather send goes through the guard");
     }
 
     [Test]

@@ -13,7 +13,7 @@ namespace SWLOR.Game.Server.Feature.MigrationDefinition;
 /// <summary>Updates reviewed inventory artwork in place, including saved nested inventories.</summary>
 public static class ItemIconMigration
 {
-    // Fixed legacy appearances for player migration 19 and server migration 27.
+    // Fixed legacy appearances for the combined player and stored-item migrations.
     private static readonly Dictionary<string, (int BaseItem, int OldModel, int NewModel, string OldIcon, string NewIcon)> Models =
         new(StringComparer.OrdinalIgnoreCase)
         {
@@ -644,6 +644,10 @@ public static class ItemIconMigration
             ["de_tblade_b2"] = (516, 222, 153, "iit_ess2_222", "iit_ess2_153"),
             ["de_throw_b1"] = (516, 222, 150, "iit_ess2_222", "iit_ess2_150"),
             ["de_throw_b2"] = (516, 222, 150, "iit_ess2_222", "iit_ess2_150"),
+            ["de_twinpist_b1"] = (523, 221, 221, "iit_ess9_221", "iit_ess9_221"),
+            ["de_twinpist_b2"] = (523, 221, 221, "iit_ess9_221", "iit_ess9_221"),
+            ["de_unarmed_b1"] = (523, 220, 220, "iit_ess9_220", "iit_ess9_220"),
+            ["de_unarmed_b2"] = (523, 220, 220, "iit_ess9_220", "iit_ess9_220"),
             ["de_vblade_b1"] = (516, 222, 155, "iit_ess2_222", "iit_ess2_155"),
             ["de_vblade_b2"] = (516, 222, 155, "iit_ess2_222", "iit_ess2_155"),
             ["de_verve1"] = (516, 32, 154, "iit_ess2_032", "iit_ess2_154"),
@@ -1379,9 +1383,14 @@ public static class ItemIconMigration
     /// <summary>Converts recognized pre-update appearances; leaves customized models intact.</summary>
     public static int GetUpdatedModel(string resref, int baseItem, int currentModel)
     {
-        return resref != null && Models.TryGetValue(resref, out var model) &&
+        var updated = resref != null && Models.TryGetValue(resref, out var model) &&
                model.BaseItem == baseItem && model.OldModel == currentModel
             ? model.NewModel : currentModel;
+        // Creature archives use this artwork-only pass to preserve authored stats
+        // and equipment slots. Repair reserved helmet models in that same visit.
+        return baseItem == (int)BaseItem.Helmet
+            ? HeadgearSlotMigration.GetCorrectedModel(resref, BaseItem.Helmet, updated)
+            : updated;
     }
 
     /// <summary>Updates only recognized legacy icon metadata on stored item records.</summary>
@@ -1402,6 +1411,7 @@ public static class ItemIconMigration
             if (GetObjectType(current) == ObjectType.Item)
             {
                 changed |= MigrateItem(current);
+                changed |= FurnitureRenameMigration.RenameItem(current);
                 changed |= MigrateDroidInventory(current);
             }
             if (GetObjectType(current) == ObjectType.Creature)
@@ -1417,9 +1427,10 @@ public static class ItemIconMigration
 
     internal static bool MigrateItem(uint item)
     {
+        var changed = ItemAppearanceCatalogMigration.ConvertItem(item);
         var oldModel = GetItemAppearance(item, ItemAppearanceType.SimpleModel, 0);
         var newModel = GetUpdatedModel(GetResRef(item), (int)GetBaseItemType(item), oldModel);
-        if (oldModel == newModel) return false;
+        if (oldModel == newModel) return changed;
         ItemPlugin.SetItemAppearance(item, ItemAppearanceType.SimpleModel, 0, newModel);
         return true;
     }
@@ -1452,15 +1463,25 @@ public static class ItemIconMigration
     private static bool MigrateDroidInventory(uint item)
     {
         const string variable = "CONSTRUCTED_DROID";
-        var serialized = GetLocalString(item, variable);
+        if (!MigrateDroidArtwork(GetLocalString(item, variable), MigrateSerializedObject, out var updated)) return false;
+        SetLocalString(item, variable, updated);
+        return true;
+    }
+
+    internal delegate bool SerializedMigration(string serialized, out string updated);
+
+    /// <summary>Updates artwork in a saved droid's parts and items; <paramref name="migrate"/> converts one saved object.</summary>
+    internal static bool MigrateDroidArtwork(string serialized, SerializedMigration migrate, out string updated)
+    {
+        updated = serialized;
         if (string.IsNullOrWhiteSpace(serialized)) return false;
         var droid = JsonConvert.DeserializeObject<ConstructedDroid>(serialized);
         if (droid == null) return false;
         var changed = false;
         bool Field(string value, Action<string> setter)
         {
-            if (!MigrateSerializedObject(value, out var updated)) return false;
-            setter(updated);
+            if (!migrate(value, out var migrated)) return false;
+            setter(migrated);
             return true;
         }
         changed |= Field(droid.SerializedCPU, value => droid.SerializedCPU = value);
@@ -1478,7 +1499,7 @@ public static class ItemIconMigration
         }
         changed |= Inventory(droid.Inventory);
         changed |= Inventory(droid.EquippedItems);
-        if (changed) SetLocalString(item, variable, JsonConvert.SerializeObject(droid));
+        if (changed) updated = JsonConvert.SerializeObject(droid);
         return changed;
     }
 }

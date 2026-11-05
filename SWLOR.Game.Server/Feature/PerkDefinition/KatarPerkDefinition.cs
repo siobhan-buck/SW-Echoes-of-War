@@ -199,7 +199,7 @@ namespace SWLOR.Game.Server.Feature.PerkDefinition
                 .AddPerkLevel()
                 .GrantsFeat(FeatType.TwinIntercept1)
                 .DroidAISlots(1)
-                .Description("Automatically targets your current Guarded ally if they are within 5 meters. Grants that target temporary HP equal to 15% of your maximum HP for 30 seconds and grants you +20 Guard for 30 seconds.")
+                .Description("Automatically targets your current Guarded ally if they are within 5 meters. Grants that target 68 temporary HP plus 3.75% of your maximum HP for 30 seconds and grants you +20 Guard for 30 seconds.")
                 .Price(4)
                 .RequirementSkill(SkillType.Katar, 30);
         }
@@ -396,8 +396,8 @@ namespace SWLOR.Game.Server.Feature.PerkDefinition
                 .GrantsFeat(FeatType.RedirectingGuardTrait)
                 .Description("When you control a target attacking an ally, gain +15% Enmity toward that target for 30 seconds.")
                 .IncreasesStat(StatType.StatusAppliedRequiredCategory, (int)StatusEffectCategory.Control)
-                .IncreasesStat(StatType.StatusAppliedSelfEnmityPercentAdjustment, 15)
-                .IncreasesStat(StatType.StatusAppliedSelfDurationSeconds, 30)
+                .IncreasesStat(StatType.StatusAppliedTargetAttackingAllyEnmityToSourcePercentAdjustment, 15)
+                .IncreasesStat(StatType.StatusAppliedTargetAttackingAllyEnmityDurationSeconds, 30)
                 .Price(4)
                 .RequirementSkill(SkillType.Katar, 15);
         }
@@ -446,6 +446,7 @@ namespace SWLOR.Game.Server.Feature.PerkDefinition
                 .IncreasesStat(StatType.DamageTakenNextSkillAbilitySkillType, (int)SkillType.Katar)
                 .IncreasesStat(StatType.DamageTakenNextSkillAbilityDamageBonus, 20)
                 .IncreasesStat(StatType.DamageTakenNextSkillAbilityWindowSeconds, 30)
+                .IncreasesStat(StatType.DamageTakenNextSkillAbilityRequiredCategory, (int)StatusEffectCategory.Control)
                 .Price(4)
                 .RequirementSkill(SkillType.Katar, 25);
         }

@@ -32,16 +32,19 @@ namespace SWLOR.Game.Server.Service
             public DateTime LastBroadcastUtc { get; set; }
         }
 
-        private const string ShuttleInteriorResref = "starship1_int";
+        internal const string ShuttleInteriorResref = "shuttle";
+        private const string LegacyShuttleInteriorResref = "starship1_int";
         private const string ShuttleFlightIdVariable = "SHUTTLE_FLIGHT_ID";
         private const string TerminalTag = "flights_terminal";
         private const string TerminalPlanetVariable = "CURRENT_LOCATION";
         private const string EntranceWaypointTag = "PROPERTY_ENTRANCE";
+        private const string ConsoleWaypointTag = "SHUTTLE_STATUS_CONSOLE";
         private const string ExitPlaceableTag = "building_exit";
         private const string ShipComputerTag = "ShipComputer";
         private const string PilotChairTag = "pilot_chair";
         // A droid using the parts-based "(Dynamic) Droid" appearance, which supports the sit animation.
         private const string PilotDroidResref = "maledroid";
+        private const int PilotDroidSoundset = 910;
         private const float BoardingRangeMeters = 15f;
         private const int BoardingCallSeconds = 60;
 
@@ -49,6 +52,7 @@ namespace SWLOR.Game.Server.Service
         private static readonly Dictionary<string, (PlanetType Origin, PlanetType Destination)> _ticketHolders = new();
         private static readonly Dictionary<string, DateTime> _boardingNotBeforeUtc = new();
         private static readonly Dictionary<(PlanetType Origin, PlanetType Destination), DateTime> _announcedBoardings = new();
+        private static readonly ShuttleMissedBoardingTracker _missedBoardings = new();
         private static DateTime _lastTickUtc;
 
         /// <summary>
@@ -131,6 +135,7 @@ namespace SWLOR.Game.Server.Service
         {
             var now = DateTime.UtcNow;
 
+            RearmReturnedPassengers();
             ProcessDepartures(now);
             ProcessBoardingCalls(now);
             ProcessArrivals(now);
@@ -182,7 +187,9 @@ namespace SWLOR.Game.Server.Service
                     GetIsDMPossessed(player) ||
                     !IsAtBoardingTerminal(player, origin))
                 {
-                    NotifyMissedBoarding(player, origin, destination, now);
+                    // Tell the player once; later departures stay silent until they return to the terminal.
+                    if (_missedBoardings.RecordMiss(playerId))
+                        NotifyMissedBoarding(player, origin, destination, now);
                     continue;
                 }
 
@@ -191,6 +198,7 @@ namespace SWLOR.Game.Server.Service
                 {
                     _ticketHolders.Remove(playerId);
                     _boardingNotBeforeUtc.Remove(playerId);
+                    _missedBoardings.Clear(playerId);
                     continue;
                 }
 
@@ -203,6 +211,7 @@ namespace SWLOR.Game.Server.Service
                 DB.Set(ride);
                 _ticketHolders.Remove(playerId);
                 _boardingNotBeforeUtc.Remove(playerId);
+                _missedBoardings.Clear(playerId);
                 boardedAnyone = true;
 
                 var entrance = flight.EntranceLocation;
@@ -221,6 +230,56 @@ namespace SWLOR.Game.Server.Service
             {
                 Log.Write(LogGroup.Server, $"Shuttle flight {flightId} departed {origin} for {destination}.");
             }
+        }
+
+        /// <summary>
+        /// Re-enables boarding calls and missed-shuttle messages for players who missed a departure
+        /// and have since come back within range of a flights terminal for their route.
+        /// </summary>
+        private static void RearmReturnedPassengers()
+        {
+            foreach (var playerId in _missedBoardings.GetMissed())
+            {
+                if (!_ticketHolders.TryGetValue(playerId, out var route))
+                {
+                    _missedBoardings.Clear(playerId);
+                    continue;
+                }
+
+                var player = GetOnlinePlayerById(playerId);
+                if (GetIsObjectValid(player) && !GetIsDead(player) && !GetIsDMPossessed(player) &&
+                    IsAtBoardingTerminal(player, route.Origin))
+                {
+                    _missedBoardings.Clear(playerId);
+                    SendLateBoardingCall(player, playerId, route);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sends the boarding call to a re-armed ticket holder when the route's call for the
+        /// upcoming departure was already announced before they came back.
+        /// </summary>
+        private static void SendLateBoardingCall(uint player, string playerId, (PlanetType Origin, PlanetType Destination) route)
+        {
+            var now = DateTime.UtcNow;
+            var next = ShuttleSchedule.GetNextDepartureUtc(route.Origin, route.Destination, now);
+            if ((next - now).TotalSeconds > BoardingCallSeconds ||
+                !_announcedBoardings.TryGetValue(route, out var announced) || announced != next ||
+                !_boardingNotBeforeUtc.TryGetValue(playerId, out var notBefore) || next < notBefore)
+                return;
+
+            SendBoardingCall(player, route.Destination, next - now);
+        }
+
+        /// <summary>
+        /// Sends the boarding call message to one player.
+        /// </summary>
+        private static void SendBoardingCall(uint player, PlanetType destination, TimeSpan untilDeparture)
+        {
+            var destinationName = Planet.GetPlanetByType(destination).Name;
+            var wait = Time.GetTimeLongIntervals(untilDeparture, false);
+            SendMessageToPC(player, ColorToken.Cyan($"Now boarding: shuttle to {destinationName} departs in {wait}. Be within {(int)BoardingRangeMeters} meters of the flights terminal!"));
         }
 
         /// <summary>
@@ -254,8 +313,6 @@ namespace SWLOR.Game.Server.Service
 
                 _announcedBoardings[route] = next;
 
-                var destinationName = Planet.GetPlanetByType(route.Destination).Name;
-                var wait = Time.GetTimeLongIntervals(next - now, false);
                 foreach (var (playerId, ticketRoute) in _ticketHolders)
                 {
                     if (ticketRoute != route)
@@ -264,11 +321,14 @@ namespace SWLOR.Game.Server.Service
                     if (!_boardingNotBeforeUtc.TryGetValue(playerId, out var notBefore) || next < notBefore)
                         continue;
 
+                    if (_missedBoardings.HasMissed(playerId))
+                        continue;
+
                     var player = GetOnlinePlayerById(playerId);
                     if (!GetIsObjectValid(player))
                         continue;
 
-                    SendMessageToPC(player, ColorToken.Cyan($"Now boarding: shuttle to {destinationName} departs in {wait}. Be within {(int)BoardingRangeMeters} meters of the flights terminal!"));
+                    SendBoardingCall(player, route.Destination, next - now);
                 }
             }
         }
@@ -466,6 +526,40 @@ namespace SWLOR.Game.Server.Service
         }
 
         /// <summary>
+        /// Reads the dedicated template directly; instance templates are intentionally absent
+        /// from the persistent-location cache. Older modules may not have its boarding tags.
+        /// </summary>
+        private static IEnumerable<(string Tag, ObjectType Type)> GetShuttleTemplateObjects()
+        {
+            for (var area = GetFirstArea(); GetIsObjectValid(area); area = GetNextArea())
+            {
+                if (GetResRef(area) != ShuttleInteriorResref)
+                    continue;
+
+                for (var obj = GetFirstObjectInArea(area); GetIsObjectValid(obj); obj = GetNextObjectInArea(area))
+                    yield return (GetTag(obj), GetObjectType(obj));
+                yield break;
+            }
+        }
+
+        /// <summary>
+        /// Uses the passenger layout only when its boarding and pilot contracts are present.
+        /// A code-first deployment or module rollback continues using the original freighter.
+        /// </summary>
+        private static string SelectFlightInterior(IEnumerable<(string Tag, ObjectType Type)> objects)
+        {
+            var hasEntrance = false;
+            var hasPilotChair = false;
+            foreach (var obj in objects)
+            {
+                hasEntrance |= obj.Tag == EntranceWaypointTag && obj.Type == ObjectType.Waypoint;
+                hasPilotChair |= obj.Tag == PilotChairTag && obj.Type == ObjectType.Placeable;
+            }
+
+            return hasEntrance && hasPilotChair ? ShuttleInteriorResref : LegacyShuttleInteriorResref;
+        }
+
+        /// <summary>
         /// Creates the shuttle interior instance for a flight: removes the exit and ship computer,
         /// adds the status console, and seats the pilot droid.
         /// </summary>
@@ -475,12 +569,17 @@ namespace SWLOR.Game.Server.Service
                 return;
 
             var destinationName = Planet.GetPlanetByType(flight.Destination).Name;
-            var area = Area.CreateInstance(ShuttleInteriorResref, "shuttle_flight", $"Passenger Shuttle - {destinationName}");
+            var interiorResref = SelectFlightInterior(GetShuttleTemplateObjects());
+            if (interiorResref != ShuttleInteriorResref)
+                Log.Write(LogGroup.Server, "Passenger shuttle template is missing its boarding waypoint or pilot chair; using starship1_int. Repack and deploy the module to enable the shuttle interior.");
+
+            var area = Area.CreateInstance(interiorResref, "shuttle_flight", $"Passenger Shuttle - {destinationName}");
             SetLocalString(area, ShuttleFlightIdVariable, flight.FlightId);
             flight.Area = area;
 
             var entrancePosition = Vector3(1f, 1f, 0f);
             var entranceFacing = 0f;
+            Location consoleLocation = null;
             var pilotChair = OBJECT_INVALID;
 
             var objectsToDestroy = new List<uint>();
@@ -491,6 +590,10 @@ namespace SWLOR.Game.Server.Service
                 {
                     entrancePosition = GetPosition(obj);
                     entranceFacing = GetFacing(obj);
+                }
+                else if (tag == ConsoleWaypointTag)
+                {
+                    consoleLocation = GetLocation(obj);
                 }
                 else if (tag == ExitPlaceableTag || tag == ShipComputerTag)
                 {
@@ -511,7 +614,8 @@ namespace SWLOR.Game.Server.Service
 
             flight.EntranceLocation = Location(area, entrancePosition, entranceFacing);
 
-            var console = CreateObject(ObjectType.Placeable, TerminalTag, flight.EntranceLocation);
+            // Interiors without a console point (the legacy freighter) fall back to the boarding point.
+            var console = CreateObject(ObjectType.Placeable, TerminalTag, consoleLocation ?? flight.EntranceLocation);
             SetName(console, "Shuttle Status Console");
             SetLocalInt(console, Communication.SuppressChatAuditVariable, 1);
             SetPlotFlag(console, true);
@@ -536,6 +640,7 @@ namespace SWLOR.Game.Server.Service
                 return;
 
             SetName(droid, "Shuttle Pilot Droid");
+            SetSoundset(droid, PilotDroidSoundset);
             SetPlotFlag(droid, true);
             SetImmortal(droid, true);
 
@@ -621,6 +726,12 @@ namespace SWLOR.Game.Server.Service
                 origin == destination)
                 return false;
 
+            if (Planet.TryGetClosedMessage(destination, out var closedMessage))
+            {
+                SendMessageToPC(player, ColorToken.Red(closedMessage));
+                return false;
+            }
+
             var playerId = GetObjectUUID(player);
             var existingRide = GetRide(playerId);
             if (existingRide != null)
@@ -652,6 +763,7 @@ namespace SWLOR.Game.Server.Service
             DB.Set(ride);
             _ticketHolders[playerId] = (origin, destination);
             _boardingNotBeforeUtc[playerId] = DateTime.UtcNow;
+            _missedBoardings.Clear(playerId);
 
             if (tax > 0 && !string.IsNullOrWhiteSpace(cityPropertyId))
             {
@@ -684,6 +796,7 @@ namespace SWLOR.Game.Server.Service
             DB.Delete<ShuttleRide>(ride.Id);
             _ticketHolders.Remove(playerId);
             _boardingNotBeforeUtc.Remove(playerId);
+            _missedBoardings.Clear(playerId);
 
             SendMessageToPC(player, $"Your shuttle ticket has been refunded for {ride.FarePaid} credits. Taxes are non-refundable.");
             return true;
@@ -769,6 +882,11 @@ namespace SWLOR.Game.Server.Service
             var originName = Planet.GetPlanetByType(ride.Origin).Name;
             var destinationName = Planet.GetPlanetByType(ride.Destination).Name;
             SendMessageToPC(player, ColorToken.Yellow($"You still have a shuttle ticket from {originName} to {destinationName}. Automatic boarding resumes in {wait} if you are within {(int)BoardingRangeMeters} meters of a flights terminal at {originName}. You can refund your ticket at any flights terminal before boarding."));
+
+            // The reminder above covers this session. Stay quiet about later departures until
+            // the player is back at the terminal.
+            if (!IsAtBoardingTerminal(player, ride.Origin))
+                _missedBoardings.RecordMiss(playerId);
         }
 
         [NWNEventHandler(ScriptName.OnModuleExit)]

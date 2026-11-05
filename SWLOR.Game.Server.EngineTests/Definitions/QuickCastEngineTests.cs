@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NWN.Native.API;
 using SWLOR.Game.Server.EngineTests.Framework;
+using SWLOR.Game.Server.Feature.AbilityDefinition;
 using SWLOR.Game.Server.Service.AbilityService;
 using SWLOR.Game.Server.Service.PerkService;
 using SWLOR.Game.Server.Service.SkillService;
@@ -14,6 +15,39 @@ namespace SWLOR.Game.Server.EngineTests.Definitions;
 
 public static class QuickCastEngineTests
 {
+    [EngineTest("Power Cell III self-casts through its native alias and restores stamina", Category = "QuickCast", TimeoutSeconds = 30f)]
+    public static async Task NativePowerCellIII(EngineTestContext ctx)
+    {
+        using var fixture = await PlayerAbilityFixture.CreateAsync(ctx);
+        var player = fixture.Creature;
+        fixture.Update(record =>
+        {
+            record.Perks[PerkType.PowerCell] = 3;
+            record.Skills[SkillType.Devices].Rank = 50;
+        });
+        CreaturePlugin.AddFeat(player, FeatType.PowerCell3);
+        ctx.SetResources(player, 100, 100);
+        fixture.Update(record => record.Stamina = 50);
+        SetLocalInt(player, Stat.SuppressNaturalRegenVariable, 1);
+        var expectedStamina = 50 - 7 + GameMath.PercentOf(Stat.GetMaxStamina(player), 18);
+        await ctx.ExecuteInCreatureContextAsync(player, () =>
+            ctx.Assert(!QuickCast.TryCast(player, FeatType.AutoCastPowerCell3, out _), "default-off setting rejects alias"));
+        fixture.Update(record => record.Settings.SelfQuickCastEnabled = true);
+        QuickCast.ApplyPreferences(player);
+        ctx.Assert(CreaturePlugin.GetKnowsFeat(player, FeatType.AutoCastPowerCell3), "self setting grants native alias");
+        ctx.Assert(!CreaturePlugin.GetKnowsFeat(player, FeatType.PowerCell3), "manual presentation is replaced");
+        await ctx.ExecuteInCreatureContextAsync(player, () => UseNativeFeat(player, FeatType.AutoCastPowerCell3));
+        await ctx.WaitUntilAsync(() => StatusEffect.HasStatusEffect<Feature.StatusEffectDefinition.PowerCell3StatusEffect>(player) &&
+                                      !Activity.IsBusy(player), 8f, "self-targeted Power Cell impact");
+        ctx.AssertEqual(expectedStamina, Stat.GetCurrentStamina(player), "seven stamina cost and eighteen percent restoration");
+        await ctx.ExecuteInCreatureContextAsync(player, () =>
+            ctx.Assert(!QuickCast.TryCast(player, FeatType.AutoCastPowerCell3, out _), "normal cooldown blocks repeated cast"));
+        fixture.Update(record => record.Settings.SelfQuickCastEnabled = false);
+        QuickCast.ApplyPreferences(player);
+        ctx.Assert(CreaturePlugin.GetKnowsFeat(player, FeatType.PowerCell3), "disabling restores manual presentation");
+        ctx.Assert(!CreaturePlugin.GetKnowsFeat(player, FeatType.AutoCastPowerCell3), "disabling removes alias");
+    }
+
     private static unsafe void UseNativeFeat(uint player, FeatType feat)
     {
         // Normal client hotkeys reach CNWSCreature.UseFeat with self as the alias target.
@@ -106,6 +140,8 @@ public static class QuickCastEngineTests
             await ctx.WaitUntilAsync(() => Ability.GetLastCompletedAbilityImpactSummary(player) != null && !Activity.IsBusy(player), 10f, "native hostile feat impact");
             ctx.AssertEqual("Force Drain I", Ability.GetLastCompletedAbilityImpactSummary(player).Ability.Name, "ordinary hostile ability pipeline completed");
             ctx.AssertEqual(96, Stat.GetCurrentFP(player), "ordinary FP cost is charged");
+            // The ability resumes the attack shortly after its impact; cancel that resumed attack.
+            await ctx.WaitUntilAsync(() => ActionInterruption.GetQueuedAttackTarget(player) == enemy, 5f, "resumed attack");
             await ctx.ExecuteInCreatureContextAsync(player, () => ClearAllActions(true));
             await ctx.WaitFrameAsync();
             await ctx.ExecuteInCreatureContextAsync(player, () =>

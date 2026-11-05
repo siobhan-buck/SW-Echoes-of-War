@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SWLOR.Game.Server.Core;
 using SWLOR.NWN.API.NWNX;
+using NWNXLib = NWN.Native.API.NWNXLib;
 
 namespace SWLOR.Game.Server.Service
 {
@@ -12,14 +13,20 @@ namespace SWLOR.Game.Server.Service
         private static readonly Dictionary<Guid, uint> _partyLeaders = new();
 
         /// <summary>
-        /// When a member of a party accepts an invitation, add them to the caches.
+        /// When a player accepts an invitation and the engine puts them in the inviter's party, add them to the caches.
+        /// The engine can still refuse the acceptance after the Before event, such as for an expired invitation.
         /// </summary>
-        [NWNEventHandler(ScriptName.OnPartyAcceptInvitationBefore)]
+        [NWNEventHandler(ScriptName.OnPartyAcceptInvitationAfter)]
         public static void JoinParty()
         {
             var creature = OBJECT_SELF;
             var requester = StringToObject(EventsPlugin.GetEventData("INVITED_BY"));
 
+            if (!GetFactionEqual(creature, requester) || IsInParty(requester, creature))
+                return;
+
+            // Accepting moves the player out of any party they were already in.
+            RemoveCreatureFromParty(creature);
             AddToParty(requester, creature);
         }
 
@@ -88,6 +95,23 @@ namespace SWLOR.Game.Server.Service
         }
 
         /// <summary>
+        /// When a party member is kicked, update the caches.
+        /// A kick raises only the kick events, never the leave events.
+        /// </summary>
+        [NWNEventHandler(ScriptName.OnPartyKickAfter)]
+        public static void KickFromParty()
+        {
+            var kicker = OBJECT_SELF;
+            var kicked = StringToObject(EventsPlugin.GetEventData("KICKED"));
+
+            // The engine refuses kicks from anyone but the leader.
+            if (!IsInParty(kicker, kicked) || GetFactionEqual(kicker, kicked))
+                return;
+
+            RemoveCreatureFromParty(kicked);
+        }
+
+        /// <summary>
         /// When the leader of a party changes, update the caches.
         /// </summary>
         [NWNEventHandler(ScriptName.OnPartyTransferLeadershipBefore)]
@@ -106,6 +130,39 @@ namespace SWLOR.Game.Server.Service
         {
             var creature = GetExitingObject();
             RemoveCreatureFromParty(creature);
+        }
+
+        /// <summary>
+        /// Takes a player out of their party, as leaving or being kicked through the native party controls does.
+        /// Script-driven removal skips the NWNX party events, so the caches are updated here instead.
+        /// </summary>
+        /// <param name="player">The player leaving or being removed.</param>
+        public static void RemoveFromCurrentParty(uint player)
+        {
+            RemoveFromParty(player);
+            RemoveCreatureFromParty(player);
+        }
+
+        /// <summary>
+        /// Hands party leadership to another member, as the native party controls do.
+        /// </summary>
+        /// <param name="currentLeader">The party's current leader.</param>
+        /// <param name="newLeader">The member who becomes leader.</param>
+        /// <returns>true if the engine accepted the transfer.</returns>
+        public static bool TransferLeadership(uint currentLeader, uint newLeader)
+        {
+            var creature = NWNXLib.g_pAppManager.m_pServerExoApp.GetCreatureByGameObjectID(currentLeader);
+            var faction = creature?.GetFaction();
+            if (faction == null || faction.TransferLeadership(newLeader, currentLeader) == 0)
+                return false;
+
+            // The faction only reorders its members. Send the new order so every member's party bar moves the crown.
+            faction.SendFactionUpdateList();
+
+            if (_creatureToParty.TryGetValue(newLeader, out var partyId))
+                _partyLeaders[partyId] = newLeader;
+
+            return true;
         }
 
         /// <summary>

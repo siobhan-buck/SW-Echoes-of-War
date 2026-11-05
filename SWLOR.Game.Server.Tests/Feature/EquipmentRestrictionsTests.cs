@@ -74,7 +74,7 @@ public class EquipmentRestrictionsTests
             null,
             leftHandType);
 
-        error.Should().Be("Pistols may only be paired with a shield in the left hand.");
+        error.Should().Be("Pistols may only be paired with a shield or companion pistol in the left hand.");
     }
 
     [TestCase(BaseItem.Pistol)]
@@ -87,7 +87,7 @@ public class EquipmentRestrictionsTests
             pistolType,
             null);
 
-        error.Should().Be("Pistols may only be paired with a shield in the left hand.");
+        error.Should().Be("Pistols may only be paired with a shield or companion pistol in the left hand.");
     }
 
     [TestCase(InventorySlot.LeftHand)]
@@ -177,7 +177,7 @@ public class EquipmentRestrictionsTests
             BaseItem.Longsword);
 
         offHandError.Should().Be("Pistols may only be equipped in the right hand.");
-        pairedWithWeaponError.Should().Be("Pistols may only be paired with a shield in the left hand.");
+        pairedWithWeaponError.Should().Be("Pistols may only be paired with a shield or companion pistol in the left hand.");
     }
 
     [TestCase(BaseItem.Pistol, "b_pistol", BaseItem.Sling)]
@@ -219,21 +219,6 @@ public class EquipmentRestrictionsTests
             requestedSlot);
 
         result.Should().Be(expectedSlot);
-    }
-
-    [TestCase(BaseItem.Bullet, true, true)]
-    [TestCase(BaseItem.Bullet, false, false)]
-    [TestCase(BaseItem.Arrow, true, false)]
-    public void PistolAmmunitionMigration_ClearsAnOccupiedBulletSlotBeforeEquipping(
-        BaseItem normalizedLegacyAmmoType,
-        bool bulletSlotOccupied,
-        bool expected)
-    {
-        var result = PistolBaseItemCompatibility.ShouldClearBulletSlot(
-            normalizedLegacyAmmoType,
-            bulletSlotOccupied);
-
-        result.Should().Be(expected);
     }
 
     [TestCase(BaseItem.Pistol, BaseItem.Sling, true, true, true, false, true)]

@@ -29,7 +29,7 @@ internal static class BulkMotionAuthor
         var category = motion.Category;
         var gripPrefix = motion.EquipmentRequirement switch
         {
-            "OneHanded" or "WeaponAndShield" or "Pistol" => "1h",
+            "OneHanded" or "OneHandedWithOffHand" or "WeaponAndShield" or "Pistol" or "PistolWithOffHand" => "1h",
             "TwoHanded" => "2h",
             "Polearm" => "pl",
             "DualWield" => "2w",
@@ -268,7 +268,7 @@ internal static class BulkMotionAuthor
                 choreographies.Add(category, recipes);
             }
             var choreography = recipes.SingleOrDefault(recipe => recipe.Id == entry.Id);
-            var sourceNames = choreography?.Beats.Where(b => b.SourceModel != null).Select(b => b.SourceModel!).Distinct().Order().ToArray() ?? [];
+            var sourceNames = choreography?.Beats.SelectMany(b => new[] { b.SourceModel, b.GripModel }).OfType<string>().Distinct().Order().ToArray() ?? [];
             foreach (var sourceName in sourceNames)
             {
                 if (choreographyModels.ContainsKey(sourceName)) continue;

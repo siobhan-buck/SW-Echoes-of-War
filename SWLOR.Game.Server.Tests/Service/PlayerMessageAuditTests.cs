@@ -50,7 +50,7 @@ public class PlayerMessageAuditTests
         var root = FindRepositoryRoot();
         var files = new[] { "Service/Space.cs", "Service/Ability.cs", "Service/StatusEffect.cs",
             "Service/Faction.cs", "Service/Guild.cs", "Service/Skill.cs", "Service/BeastMastery.cs",
-            "Service/QuestService/QuestObjectives.cs", "Feature/RoleplayXP.cs", "Service/Mimicry.cs",
+            "Service/QuestService/QuestObjectives.cs", "Service/QuestService/KillTargetObjective.cs", "Feature/RoleplayXP.cs", "Service/Mimicry.cs",
             "Service/Fishing.cs", "Service/Weather.cs", "Feature/ScavengePoint.cs",
             "Feature/StatusEffectDefinition/GuardedStatusEffect.cs" }
             .Select(relative => Path.Combine(root, "SWLOR.Game.Server", relative)).ToList();
@@ -172,11 +172,12 @@ public class PlayerMessageAuditTests
     public void SkillCapWarnings_ShareOneProductionLimitAcrossSkillsAndOutcomes()
     {
         var file = Path.Combine(FindRepositoryRoot(), "SWLOR.Game.Server", "Service", "Skill.cs");
-        var warnings = ReadCalls(file).Where(call => MethodName(call) == "SendWarningToPlayer").ToArray();
-        warnings.Should().HaveCount(2);
-        warnings.Select(call => call.ArgumentList.Arguments[1].Expression.ToString())
-            .Should().OnlyContain(key => key == "\"SKILL_CAP\"",
-                "the same global cap condition must not produce a burst of warnings when one kill awards several skills");
+        var keys = ReadCalls(file).Where(call => MethodName(call) == "SendWarningToPlayer")
+            .Select(call => call.ArgumentList.Arguments[1].Expression.ToString()).ToArray();
+        keys.Where(key => key != "\"SKILL_LIMIT\"").Should().HaveCount(2).And.OnlyContain(key => key == "\"SKILL_CAP\"",
+            "the same global cap condition must not produce a burst of warnings when one kill awards several skills");
+        keys.Should().ContainSingle(key => key == "\"SKILL_LIMIT\"",
+            "a skill at its rank limit has its own throttled warning, separate from the cap");
     }
 
     [Test]
