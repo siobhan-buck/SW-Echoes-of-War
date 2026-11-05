@@ -272,10 +272,11 @@ __pycache__/
 SWLOR.Game.Server/nwnpath.config
 debugserver
 enginetests-home
+Module/palette-refresh
 Module/packing
 Module/temp0
-Module/Star Wars LOR v2.BackupMod
-Module/Star Wars LOR v2.mod
+Module/Star Wars EOW.BackupMod
+Module/Star Wars EOW.mod
 /Module/SWLOR_Empty.mod
 /Module/SWLOR_Empty.BackupMod
 

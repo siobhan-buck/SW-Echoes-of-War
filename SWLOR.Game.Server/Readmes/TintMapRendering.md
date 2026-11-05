@@ -846,7 +846,7 @@ The runtime model registry can still report success because `tintmap.2da`
 lives in `sw_2da`, independently of the material and mask HAKs.
 
 After changing the module HAK list, run the CLI with `--pack
-".\Star Wars LOR v2.mod" --no-prompt` from `Module` and deploy that rebuilt
+".\Star Wars EOW.mod" --no-prompt` from `Module` and deploy that rebuilt
 module. The normal `DeployBuild` operation copies the existing packed module;
 it does not repack changes to `module.ifo.json`. An old module paired with
 converted model HAKs can therefore leave custom NPCs without any texture or

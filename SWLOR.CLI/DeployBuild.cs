@@ -88,13 +88,13 @@ namespace SWLOR.CLI
 
         private void BuildModule()
         {
-            var modulePath = "../Module/Star Wars LOR v2.mod";
+            var modulePath = "../Module/Star Wars EOW.mod";
             if (!File.Exists(modulePath))
             {
-                Console.WriteLine("warning : Skipping module deployment: Module/Star Wars LOR v2.mod is missing. Run PackModule.cmd from the Module directory, then rebuild. Any existing deployed module is preserved; server binaries were updated.");
+                Console.WriteLine("warning : Skipping module deployment: Module/Star Wars EOW.mod is missing. Run PackModule.cmd from the Module directory, then rebuild. Any existing deployed module is preserved; server binaries were updated.");
                 return;
             }
-            File.Copy(modulePath, ModulesPath + "/Star Wars LOR v2.mod", true);
+            File.Copy(modulePath, ModulesPath + "/Star Wars EOW.mod", true);
         }
 
         private static void CopyAll(DirectoryInfo source, DirectoryInfo target, string excludeFile)

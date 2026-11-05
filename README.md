@@ -31,7 +31,7 @@ Neverwinter Nights: https://store.steampowered.com/app/704450/Neverwinter_Nights
 
 2. At command line: ``git clone --recursive https://github.com/<your_username>/SWLOR_NWN.git``
 
-3. Run SWLOR_NWN/Module/PackModule.cmd to generate the Star Wars LOR v2.mod file.
+3. Run SWLOR_NWN/Module/PackModule.cmd to generate the Star Wars EOW.mod file.
   
 4. Open SWLOR.Game.Server.sln with Visual Studio
   

@@ -64,10 +64,10 @@ cd Build
 ```bash
 # Pack module
 cd Module
-..\tools\SWLOR.CLI\RunCLI.cmd -p ".\Star Wars LOR v2.mod"
+..\tools\SWLOR.CLI\RunCLI.cmd -p ".\Star Wars EOW.mod"
 
 # Unpack module
-..\tools\SWLOR.CLI\RunCLI.cmd -u ".\Star Wars LOR v2.mod"
+..\tools\SWLOR.CLI\RunCLI.cmd -u ".\Star Wars EOW.mod"
 ```
 
 ## Input Files
