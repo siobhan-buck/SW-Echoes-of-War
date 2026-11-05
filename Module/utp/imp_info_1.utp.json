@@ -6,7 +6,7 @@
   },
   "Appearance": {
     "type": "dword",
-    "value": 157
+    "value": 30826
   },
   "AutoRemoveKey": {
     "type": "byte",
@@ -22,7 +22,7 @@
   },
   "Comment": {
     "type": "cexostring",
-    "value": "Invisible Object"
+    "value": ""
   },
   "Conversation": {
     "type": "resref",
@@ -30,17 +30,17 @@
   },
   "CurrentHP": {
     "type": "short",
-    "value": 15
+    "value": 10
   },
   "Description": {
     "type": "cexolocstring",
     "value": {
-      "0": "Welcome to Star Wars: Echoes of War\r\n\r\nFirst and foremost, a huge thank you to Zunath for making the original Star Wars: Legends of the Old Republic an Open Source project. Community collaboration is what keeps NWN alive.\r\n\r\nIf you're new to how the systems on this server differ to regular NWN, please visit the website at https://wiki.starwars.com/\r\n\r\nPlease note that we take no credit for this website, it is maintained by the original SWLOR team. Mechanically, our systems are currently the same, and we only differ in narrative choice and focus. Where those differences are important, we'll note it in our Discord.\r\n\r\nHere are a few quick things you should know:\r\n\r\n1. Press 'C' to open your character sheet to access important options.\r\n\r\n2. You can purchase some starting items from the vendor in the northern part of this area.\r\n\r\n3. You can customize your character appearance from the 'Appearance' button on your character sheet.\r\n\r\n4. /help will printout a useful list of chat commands in your combat log.\r\n\r\n5. We log ALL chat messages, including tells, to our database for auditing purposes. By continuing to play here you agree to allow your conversations to be stored.\r\n\r\n6. Until you name another player, you see their gray public description.\r\n\r\nType /name <label>, then click another player, to save a private name or nickname that only you see. Example: /name Mira.\r\n\r\nTo set your own gray public description, type /name <description>, then click yourself. Example: /name A Weathered Human.\r\n\r\nType /introduce <name> to offer a name or alias to visible players within 20m. Example: /introduce Mira. This command has a 5-minute cooldown.\r\n\r\nUse /introductions to review offered names and choose Remember or Dismiss. An introduction saves no name until the recipient chooses Remember.\r\n\r\nIf you need any further help please visit our Discord channel:\r\n\r\nMay the Force be with you!"
+      "0": "Welcome to Star Wars: Echoes of War!\r\n\r\nFire and foremost, a massive thank you to Zunath for making the original Star Wars: Legends of the Old Republic an Open Source Project. Community Collaboration is what keeps NWN alive.\r\n\r\nIf you're new to how the systems on this server differ to regular NNW, please visit the wiki at https://wiki.starwars.com/\r\n\r\nWe take no credit for this website, it is maintained entirely by the original SWLOR team. We mention it here because mechanically, our server runs the same systems as the SWLOR server. The differences between SWLOR and this server are at present purely narrative and design philosophy focused, with more specific details located in our Discord. We have already changed some areas to fit our lore, and this is an evolving process, so you should expect changes to continue into the future. Please also note that we're a very small team that primarily just loves Star Wars and loves RP, and so our dev cycle is bound to be far less structured then that of the original server. We're here to have fun and tell good stories, so if you are too, you'll fit right in!\r\n\r\nHere are a few quick things you should know:\r\n\r\n1. Press 'C' to open your character sheet to access important options.\r\n\r\n2. You can purchase some starting items from the vendor in the Northern part of this area.\r\n\r\n3. You can customize your character appearance from the 'Appearance' button on your character sheet.\r\n\r\n4. /help will print out a useful list of commands in your combat log.\r\n\r\n5. We log ALL chat messages, including tells, to our database for auditing purposes. By continuing to play here you agree to allow your conversations to be stored.\r\n\r\n6. Until you name another player, you see their grey Public Description.\r\n\r\nType /name <label>, then click another player, to save a private name or nickname that only you can see. Example: /name Mira\r\n\r\nTo set your own grey Public Description,  type /name <description>, then click on yourself. Example: /name A Weathered Human\r\n\r\nType /introduce <name> to offer a name or alias to visible players within 20m. Example: /introduce Mira\r\n\r\nUse /introductions to review offered names and choose Remember or Dismiss. An introduction saves no name until the recipient chooses Remember.\r\n\r\nIf you need further help, don't hesitate to ask in Discord.\r\n\r\nMay the Force be with you!\r\n"
     }
   },
   "DisarmDC": {
     "type": "byte",
-    "value": 15
+    "value": 0
   },
   "Faction": {
     "type": "dword",
@@ -48,7 +48,7 @@
   },
   "Fort": {
     "type": "byte",
-    "value": 16
+    "value": 5
   },
   "Hardness": {
     "type": "byte",
@@ -56,11 +56,11 @@
   },
   "HasInventory": {
     "type": "byte",
-    "value": 1
+    "value": 0
   },
   "HP": {
     "type": "short",
-    "value": 15
+    "value": 10
   },
   "Interruptable": {
     "type": "byte",
@@ -76,7 +76,7 @@
   },
   "Lockable": {
     "type": "byte",
-    "value": 0
+    "value": 1
   },
   "Locked": {
     "type": "byte",
@@ -150,11 +150,11 @@
   },
   "OpenLockDC": {
     "type": "byte",
-    "value": 18
+    "value": 0
   },
   "PaletteID": {
     "type": "byte",
-    "value": 9
+    "value": 1
   },
   "Plot": {
     "type": "byte",
@@ -162,7 +162,7 @@
   },
   "PortraitId": {
     "type": "word",
-    "value": 515
+    "value": 0
   },
   "Ref": {
     "type": "byte",
@@ -174,11 +174,11 @@
   },
   "Tag": {
     "type": "cexostring",
-    "value": "ImportantInfo"
+    "value": "imp_info_1"
   },
   "TemplateResRef": {
     "type": "resref",
-    "value": "importantinfo"
+    "value": "imp_info_1"
   },
   "TrapDetectable": {
     "type": "byte",
@@ -210,7 +210,7 @@
   },
   "Useable": {
     "type": "byte",
-    "value": 1
+    "value": 0
   },
   "Will": {
     "type": "byte",
