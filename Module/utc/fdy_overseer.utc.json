@@ -708,7 +708,7 @@
         },
         "Value": {
           "type": "cexostring",
-          "value": "HUTLAR_FOUNDRY_OVERSEER_SHARD,100,1"
+          "value": "HUTLAR_FOUNDRY_OVERSEER_SALVAGE,100,6"
         }
       },
       {
@@ -723,7 +723,7 @@
         },
         "Value": {
           "type": "cexostring",
-          "value": "HUTLAR_FOUNDRY_OVERSEER_SALVAGE,100,6"
+          "value": "HUTLAR_FOUNDRY_OVERSEER_CREDITS,100,1"
         }
       },
       {
@@ -738,22 +738,22 @@
         },
         "Value": {
           "type": "cexostring",
-          "value": "HUTLAR_FOUNDRY_OVERSEER_CREDITS,100,1"
+          "value": "MUSIC_DISCS_BOSS,5,1"
         }
       },
       {
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
-          "value": "LOOT_TABLE_10"
+          "value": "IS_BOSS"
         },
         "Type": {
           "type": "dword",
-          "value": 3
+          "value": 1
         },
         "Value": {
-          "type": "cexostring",
-          "value": "MUSIC_DISCS_BOSS,5,1"
+          "type": "int",
+          "value": 1
         }
       }
     ]

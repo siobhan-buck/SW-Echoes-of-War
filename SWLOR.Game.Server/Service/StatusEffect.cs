@@ -210,6 +210,17 @@ namespace SWLOR.Game.Server.Service
             Console.WriteLine($"Loaded {_statusEffects.Count} status effects.");
         }
 
+        /// <summary>
+        /// Creates a fresh instance of a registered status effect so a caller can set per-application options before applying it.
+        /// </summary>
+        public static IStatusEffect CreateStatusEffect(Type statusEffectClass)
+        {
+            if (!TryCreateStatusEffect(statusEffectClass, out var statusEffect))
+                throw new KeyNotFoundException($"Status effect '{statusEffectClass?.Name ?? "null"}' is not registered.");
+
+            return statusEffect;
+        }
+
         private static bool TryCreateStatusEffect(Type statusEffectClass, out IStatusEffect statusEffect)
         {
             if (statusEffectClass != null &&
@@ -514,19 +525,29 @@ namespace SWLOR.Game.Server.Service
         {
             // A deferred application is timed when it runs after the swing.
             if (IsDeferredNativeAttackStatusEffect(statusEffect, creature))
-                return ApplyStatusEffectInternal(statusEffect, source, creature, durationSeconds, isPermanent,
-                    resistanceOverride, sourceDamageType, replacedStatusEffectType);
+                return RecordCapstoneProof(ApplyStatusEffectInternal(statusEffect, source, creature, durationSeconds, isPermanent,
+                    resistanceOverride, sourceDamageType, replacedStatusEffectType), statusEffect, source, creature);
 
             var profile = FrameProfiler.Start();
             try
             {
-                return ApplyStatusEffectInternal(statusEffect, source, creature, durationSeconds, isPermanent,
-                    resistanceOverride, sourceDamageType, replacedStatusEffectType);
+                return RecordCapstoneProof(ApplyStatusEffectInternal(statusEffect, source, creature, durationSeconds, isPermanent,
+                    resistanceOverride, sourceDamageType, replacedStatusEffectType), statusEffect, source, creature);
             }
             finally
             {
                 FrameProfiler.Stop(FrameMetric.StatusEffectApply, profile, statusEffect.Name);
             }
+        }
+
+        // Capstone quest steps count a kill only after the player used their skill's mechanic on it.
+        private static bool RecordCapstoneProof(bool applied, IStatusEffect statusEffect, uint source, uint creature)
+        {
+            if (applied)
+                CapstoneProof.RecordStatusEffect(source, creature, statusEffect.GetType(),
+                    statusEffect.OriginatingAbility ?? Ability.GetActiveAbilityImpactSummary(source)?.Ability);
+
+            return applied;
         }
 
         private static bool ApplyStatusEffectInternal(
@@ -1836,6 +1857,8 @@ namespace SWLOR.Game.Server.Service
             if (GetStatusEffectSourceType(statusEffectType) != StatusEffectSourceType.Stance)
                 return;
 
+            MeleeTechnique.OnStanceChanged(creature);
+
             RemoveStatusEffectBySourceType(
                 creature,
                 StatusEffectSourceType.Stance,
@@ -2076,6 +2099,8 @@ namespace SWLOR.Game.Server.Service
 
         private static void NotifyStatusEffectRemoved(uint creature, IStatusEffect statusEffect)
         {
+            if (statusEffect.SourceType == StatusEffectSourceType.Stance)
+                MeleeTechnique.OnStanceChanged(creature);
             if (statusEffect is IStatusEffectRemovedHandler handler)
                 handler.AfterRemoved(creature);
         }
@@ -2349,6 +2374,7 @@ namespace SWLOR.Game.Server.Service
             {
                 effect.OnBeforeDamageTaken(defender, attacker, damage, damageType, deliveryType);
             }
+            MeleeTechnique.PrepareDirectDamage(attacker, defender, deliveryType);
         }
 
         /// <summary>
@@ -2393,6 +2419,16 @@ namespace SWLOR.Game.Server.Service
         {
             _nativeAttackSwingDepth.TryGetValue(attacker, out var depth);
             _nativeAttackSwingDepth[attacker] = depth + 1;
+        }
+
+        /// <summary>
+        /// Discards a destroyed attacker's open native attack cycle and its deferred effects without applying them,
+        /// so a reused object ID never starts inside a stale cycle.
+        /// </summary>
+        public static void ForgetDestroyedNativeAttackSwing(uint attacker)
+        {
+            _nativeAttackSwingDepth.Remove(attacker);
+            _deferredNativeAttackStatusEffects.Remove(attacker);
         }
 
         /// <summary>

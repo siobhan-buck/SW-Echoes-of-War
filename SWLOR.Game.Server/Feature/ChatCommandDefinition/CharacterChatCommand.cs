@@ -31,13 +31,17 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
             CDKey();
             Skills();
             EndCall();
+            AnswerCall();
+            DeclineCall();
             Recipes();
             Perks();
             Techniques();
+            Hotbars();
             DeleteCommand();
             LanguageCommand();
             ToggleEmoteStyle();
             Customize();
+            ArmorVisibility();
             Disguises();
             HeadScale();
             AlwaysWalk();
@@ -50,6 +54,7 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
             ChangeDescription();
             OrderCompanion();
             ResetWindows();
+            Overflow();
 
             return _builder.Build();
         }
@@ -124,31 +129,44 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
                 .Permissions(AuthorizationLevel.Player, AuthorizationLevel.DM, AuthorizationLevel.Admin)
                 .Action((user, target, location, args) =>
                 {
-                    // Handle active calls
-                    if (HoloCom.IsInCall(user))
-                    {
-                        var callTarget = HoloCom.GetTargetForActiveCall(user);
-                        HoloCom.SetIsInCall(user, callTarget, false);
-                        SendMessageToPC(user, "You end your HoloCom call.");
-                    }
-                    // Handle outgoing call attempts
-                    else if (HoloCom.IsCallSender(user))
-                    {
-                        var callReceiver = HoloCom.GetCallReceiver(user);
-                        if (GetIsObjectValid(callReceiver))
-                        {
-                            // Notify the receiver that the call attempt has ended
-                            SendMessageToPC(callReceiver, "Your HoloCom stops buzzing.");
-                        }
-
-                        // Clean up call attempt state
-                        HoloCom.CleanupCallAttempt(user, callReceiver);
-                        SendMessageToPC(user, "You cancel your HoloCom call.");
-                    }
-                    else
+                    if (!HoloCom.EndCall(user))
                     {
                         SendMessageToPC(user, "You don't have any active calls or outgoing call attempts to end.");
                     }
+                });
+        }
+
+        private void AnswerCall()
+        {
+            _builder.Create("answer")
+                .Description("Answers your incoming HoloCom call.")
+                .Permissions(AuthorizationLevel.Player)
+                .Action((user, target, location, args) =>
+                {
+                    if (!HoloCom.IsCallReceiver(user) || HoloCom.IsInCall(user))
+                    {
+                        SendMessageToPC(user, "You don't have an incoming HoloCom call.");
+                        return;
+                    }
+
+                    HoloCom.AnswerCall(user);
+                });
+        }
+
+        private void DeclineCall()
+        {
+            _builder.Create("decline")
+                .Description("Declines your incoming HoloCom call.")
+                .Permissions(AuthorizationLevel.Player)
+                .Action((user, target, location, args) =>
+                {
+                    if (!HoloCom.IsCallReceiver(user) || HoloCom.IsInCall(user))
+                    {
+                        SendMessageToPC(user, "You don't have an incoming HoloCom call.");
+                        return;
+                    }
+
+                    HoloCom.DeclineCall(user);
                 });
         }
 
@@ -192,6 +210,20 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
                 .Action((user, target, location, args) =>
                 {
                     Gui.TogglePlayerWindow(user, GuiWindowType.Techniques, new TechniquesPayload());
+                });
+        }
+
+        private void Hotbars()
+        {
+            _builder.Create("hotbars")
+                .Description("Toggles the Hotbars window, where extra hotbars are turned on, sized and moved.")
+                .Permissions(AuthorizationLevel.All)
+                .Validate((user, args) => GetIsPC(user) && !GetIsDM(user) && !GetIsDMPossessed(user)
+                    ? string.Empty
+                    : ColorToken.Red("Only player characters have extra hotbars."))
+                .Action((user, target, location, args) =>
+                {
+                    Gui.TogglePlayerWindow(user, GuiWindowType.ExtraHotbarSetup);
                 });
         }
 
@@ -357,6 +389,31 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
                 });
         }
 
+
+        private void ArmorVisibility()
+        {
+            _builder.Create("helm", "helmet")
+                .Description("Shows or hides your helmet.")
+                .Permissions(AuthorizationLevel.All)
+                .Action((user, target, location, args) => ToggleArmorVisibility(user, true));
+
+            _builder.Create("cloak")
+                .Description("Shows or hides your cloak.")
+                .Permissions(AuthorizationLevel.All)
+                .Action((user, target, location, args) => ToggleArmorVisibility(user, false));
+        }
+
+        private static void ToggleArmorVisibility(uint user, bool helmet)
+        {
+            var item = helmet ? "helmet" : "cloak";
+            if (!ArmorDisplay.Toggle(user, helmet, out var shown))
+            {
+                SendMessageToPC(user, ColorToken.Red($"Your {item} setting could not be saved."));
+                return;
+            }
+
+            SendMessageToPC(user, shown ? $"Your {item} is now shown." : $"Your {item} is now hidden.");
+        }
 
         private void Customize()
         {
@@ -731,6 +788,24 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
                 });
         }
 
+        private void Overflow()
+        {
+            _builder.Create("overflow")
+                .Description("Moves items that did not fit in your inventory during a character update back into your inventory.")
+                .Permissions(AuthorizationLevel.All)
+                .Validate((user, args) =>
+                {
+                    if (!GetIsPC(user) || GetIsDM(user) || GetIsDMPossessed(user))
+                        return "Only player characters can claim overflow items.";
+
+                    return string.Empty;
+                })
+                .Action((user, target, location, args) =>
+                {
+                    OverflowStorage.Claim(user);
+                });
+        }
+
         private void ResetWindows()
         {
             _builder.Create("resetwindows")
@@ -787,6 +862,9 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
                             continue;
                         }
                     }
+
+                    // Extra hotbars are part of the HUD, so the ones the player turned on come back at their default spots.
+                    ExtraHotbars.ApplyVisibility(owner);
 
                     SendMessageToPC(user, ColorToken.Green("All window positions and sizes have been reset to their default values."));
                 });

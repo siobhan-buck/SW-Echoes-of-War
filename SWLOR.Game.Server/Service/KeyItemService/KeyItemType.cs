@@ -258,13 +258,13 @@ namespace SWLOR.Game.Server.Service.KeyItemService
         CapstoneInvincibleScoredChallengeBadge = 122,
         [KeyItem(KeyItemCategoryType.QuestItems, "Invincible Captain's Challenge Chit", true, "A captain's encrypted challenge chit recovered in the Veles Militia Annex during the Invincible trial.")]
         CapstoneInvincibleCaptainsChallengeChit = 123,
-        [KeyItem(KeyItemCategoryType.QuestItems, "Vital Rupture Veles Drill Ledger", true, "A militia drill ledger recovered in the Veles Militia Annex during the Vital Rupture trial.")]
+        [KeyItem(KeyItemCategoryType.QuestItems, "Viral Cascade Veles Drill Ledger", true, "A militia drill ledger recovered in the Veles Militia Annex during the Viral Cascade trial.")]
         CapstoneVitalRuptureVelesDrillLedger = 124,
-        [KeyItem(KeyItemCategoryType.QuestItems, "Vital Rupture Militia Range Relay", true, "A battered range-control relay recovered in the Veles Militia Annex during the Vital Rupture trial.")]
+        [KeyItem(KeyItemCategoryType.QuestItems, "Viral Cascade Militia Range Relay", true, "A battered range-control relay recovered in the Veles Militia Annex during the Viral Cascade trial.")]
         CapstoneVitalRuptureMilitiaRangeRelay = 125,
-        [KeyItem(KeyItemCategoryType.QuestItems, "Vital Rupture Scored Challenge Badge", true, "A scarred militia challenge badge recovered in the Veles Militia Annex during the Vital Rupture trial.")]
+        [KeyItem(KeyItemCategoryType.QuestItems, "Viral Cascade Scored Challenge Badge", true, "A scarred militia challenge badge recovered in the Veles Militia Annex during the Viral Cascade trial.")]
         CapstoneVitalRuptureScoredChallengeBadge = 126,
-        [KeyItem(KeyItemCategoryType.QuestItems, "Vital Rupture Captain's Challenge Chit", true, "A captain's encrypted challenge chit recovered in the Veles Militia Annex during the Vital Rupture trial.")]
+        [KeyItem(KeyItemCategoryType.QuestItems, "Viral Cascade Captain's Challenge Chit", true, "A captain's encrypted challenge chit recovered in the Veles Militia Annex during the Viral Cascade trial.")]
         CapstoneVitalRuptureCaptainsChallengeChit = 127,
         [KeyItem(KeyItemCategoryType.QuestItems, "Systemic Shutdown Veles Drill Ledger", true, "A militia drill ledger recovered in the Veles Militia Annex during the Systemic Shutdown trial.")]
         CapstoneSystemicShutdownVelesDrillLedger = 128,
@@ -566,6 +566,8 @@ namespace SWLOR.Game.Server.Service.KeyItemService
         HutlarDroidFoundryMap = 276,
         [KeyItem(KeyItemCategoryType.Maps, "Viscara - Abandoned Station Map", true, "Map of the Abandoned Station in orbit over Viscara.")]
         ViscaraAbandonedStationMap = 277,
+        [KeyItem(KeyItemCategoryType.Keys, "Smuggler's Moon Starlane Pass", true, "Nera Venn's permanent flight clearance for the starlane between Mon Cala and Smuggler's Moon. The beacons recognize its holder in either direction.")]
+        SmugglersMoonStarlanePass = 278,
 
         // Incubation field notes — one per mutation target beast. The declared Name is a
         // readable fallback; IncubationFieldNote injects the canonical Name and the full
@@ -849,6 +851,49 @@ namespace SWLOR.Game.Server.Service.KeyItemService
         [KeyItem(KeyItemCategoryType.FieldNotes, "Wraithweb Nythrax", true, "")]
         IncubationFieldNoteWraithwebNythrax = 2138,
 
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan Orbit Map", true, "Map of the space surrounding Eshan.")]
+        EshanOrbitMap = 2139,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Keshan Heights Map", true, "Map of Keshan Heights on Eshan.")]
+        EshanKeshanHeightsMap = 2140,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Silverwood Expanse Map", true, "Map of the Silverwood Expanse on Eshan.")]
+        EshanSilverwoodExpanseMap = 2141,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Silver Gate District Map", true, "Map of Eshan City's Silver Gate District.")]
+        EshanSilverGateDistrictMap = 2142,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Keshan Peaks Map", true, "Map of the Keshan Peaks on Eshan.")]
+        EshanKeshanPeaksMap = 2143,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Highcrest Quarter Map", true, "Map of Eshan City's Highcrest Quarter.")]
+        EshanHighcrestQuarterMap = 2144,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - The Shimmerdeep Map", true, "Map of the Shimmerdeep on Eshan.")]
+        EshanShimmerdeepMap = 2145,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Farmlands Map", true, "Map of the farmlands on Eshan.")]
+        EshanFarmlandsMap = 2146,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Battlegrounds Map", true, "Map of the battlegrounds on Eshan.")]
+        EshanBattlegroundsMap = 2147,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Hearth Ward Map", true, "Map of Eshan City's Hearth Ward.")]
+        EshanHearthWardMap = 2148,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Starport Map", true, "Map of the starport on Eshan.")]
+        EshanStarportMap = 2149,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Verdant Crown Map", true, "Map of Eshan City's Verdant Crown.")]
+        EshanVerdantCrownMap = 2150,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - The Riverway Map", true, "Map of Eshan City's Riverway.")]
+        EshanRiverwayMap = 2151,
+
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Winter Marches Map", true, "Map of the Winter Marches on Eshan.")]
+        EshanWinterMarchesMap = 2152,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - The Old Quarter Map", true, "Map of Eshan City's Old Quarter.")]
+        EshanOldQuarterMap = 2153,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Veylan Groves Map", true, "Map of the Veylan Groves on Eshan.")]
+        EshanVeylanGrovesMap = 2154,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Grand Proving Grounds Map", true, "Map of the Grand Proving Grounds on Eshan.")]
+        EshanGrandProvingGroundsMap = 2155,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Scraplands Map", true, "Map of the Scraplands on Eshan.")]
+        EshanScraplandsMap = 2156,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Tunnels Map", true, "Map of the tunnels beneath Eshan City.")]
+        EshanCityTunnelsMap = 2157,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Shattervein Map", true, "Map of the Shattervein on Eshan.")]
+        EshanShatterveinMap = 2158,
+        [KeyItem(KeyItemCategoryType.Maps, "Eshan - Scraplands - Caves Map", true, "Map of the caves beneath Eshan's Scraplands.")]
+        EshanScraplandsCavesMap = 2159,
         [KeyItem(KeyItemCategoryType.Music, "Rural Day 1", true, "A recording of \"Rural Day 1\" in your music collection.")]
         SongRuralDay1 = 3001,
         [KeyItem(KeyItemCategoryType.Music, "Rural Day 2", true, "A recording of \"Rural Day 2\" in your music collection.")]
@@ -1605,6 +1650,11 @@ namespace SWLOR.Game.Server.Service.KeyItemService
         SongBackForBeskar = 3642,
         [KeyItem(KeyItemCategoryType.Music, "Noctilium", true, "A recording of \"Noctilium\" in your music collection.")]
         SongNoctilium = 3643,
+
+        [KeyItem(KeyItemCategoryType.QuestItems, "Twin Suns Canyon Firing Trace", true, "A recording of sustained two-hand fire against one enemy at the Anchorhead Canyon Range, ready for Jek Talin's inspection.")]
+        TwinSunsCanyonFiringTrace = 3644,
+        [KeyItem(KeyItemCategoryType.QuestItems, "Final Salvo Canyon Route Trace", true, "A recording of a Tempo Shot, Lead Shot and Cadence-spending Closing Shot at the Anchorhead Canyon Range, ready for Pavo Orrel's inspection.")]
+        FinalSalvoCanyonRouteTrace = 3645,
 
 	}
 

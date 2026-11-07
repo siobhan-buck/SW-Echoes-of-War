@@ -31,7 +31,7 @@
       },
       "MusicDay": {
         "type": "int",
-        "value": 0
+        "value": 390
       },
       "MusicDelay": {
         "type": "int",
@@ -24061,7 +24061,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — czs220_hangar"
+            "0": "Stuck - czs220_hangar"
           }
         },
         "MapNote": {

@@ -183,31 +183,44 @@ public class TintMapReviewTests
         definition.Should().Contain("row.AddColorPicker()");
         definition.Should().Contain(".BindSelectedColor(model => model.SelectedTintColor)");
         definitionMethods["BuildColorPalette"].ToString().Should().Contain("model => model.ColorSheetResref");
-        definitionMethods["BuildMainEditor"].ToString().Should().Contain("BuildColorPalette(",
+        definitionMethods["BuildColours"].ToString().Should().Contain("row.AddGroup(BuildColorPalette)",
             "appearance and equipment presets must share the same individual-button palette construction");
+        definitionMethods["BuildAppearanceEditor"].ToString().Should().Contain("BuildColours(colours, BuildBodySwatches)");
+        definitionMethods["BuildEquipmentEditor"].ToString().Should().Contain("BuildColours(colours, BuildItemSwatches, ItemSwatchesHeight)");
         definition.Should().Contain("model => model.OnClickColorPalette(paletteIndex)");
         definition.Should().NotContain(".SetText(\"Custom Color\")");
         definition.Should().NotContain("CustomTintSelectionText");
         viewModel.Should().NotContain("CustomTintSelectionText");
-        definition.Should().Contain(".BindValue(model => model.CustomTintRed)");
-        definition.Should().Contain(".BindValue(model => model.CustomTintGreen)");
-        definition.Should().Contain(".BindValue(model => model.CustomTintBlue)");
+        definition.Should().Contain("model => model.CustomTintRed");
+        definition.Should().Contain("model => model.CustomTintGreen");
+        definition.Should().Contain("model => model.CustomTintBlue");
         definition.Should().NotContain("Use Preset Color");
         definition.Should().NotContain("OnResetTintColor");
         viewModel.Should().NotContain("OnResetTintColor");
         definition.Should().NotContain("IsCustomTintPickerVisible");
-        definitionMethods["BuildEquipmentSelection"].ToString().Should().NotContain("BuildCustomTintEditor");
-        definitionMethods["BuildMainEditor"].ToString().Should().Contain("BuildCustomTintEditor(col2)");
-        definitionMethods["BuildArmorEditor"].ToString().Should().Contain("BuildCustomTintEditor(col)",
-            "the armor picker must live in the full-width controls column below the compact palette row");
+        definitionMethods["BuildEquipmentEditor"].ToString().Should().NotContain("BuildCustomTintEditor",
+            "the picker is built once, by BuildColours, so equipment must not add a duplicate");
+        definitionMethods["BuildAppearanceEditor"].ToString().Should().NotContain("BuildCustomTintEditor");
+        definitionMethods["BuildWeaponEditor"].ToString().Should().NotContain("BuildColours",
+            "weapons have no colour channels");
+        var colours = definitionMethods["BuildColours"].ToString();
+        colours.Should().Contain("BuildCustomTintEditor(col)",
+            "the picker lives in the colour column below the fixed-size palette group");
+        colours.IndexOf("BuildColorPalette", StringComparison.Ordinal).Should()
+            .BeLessThan(colours.IndexOf("BuildCustomTintEditor(col)", StringComparison.Ordinal));
         definitionMethods["BuildColorPalette"].ToString().Should().NotContain("BuildCustomTintEditor",
-            "placing the picker below the palette partial clips it at the parent row boundary");
+            "placing the picker inside the palette group clips it at the group boundary");
         var customTintEditor = definitionMethods["BuildCustomTintEditor"].ToString();
         customTintEditor.Should().Contain("BindIsVisible(model => model.IsCustomTintAvailable)",
             "unavailable custom controls must collapse instead of reserving dead space");
-        customTintEditor.Should().Contain("SetHeight(128f)",
-            "the picker should leave room for the armor part grid in the same window");
-        customTintEditor.Should().NotContain("SetHeight(176f)");
+        customTintEditor.Should().Contain(".SetWidth(PickerWidth)");
+        customTintEditor.Should().Contain(".SetHeight(PickerHeight)");
+        definition.Should().Contain("private const float PickerWidth = 196f;");
+        definition.Should().Contain("private const float PickerHeight = 100f;",
+            "the picker should leave room for the palette in the colour column");
+        foreach (var channel in new[] { "R", "G", "B" })
+            customTintEditor.Should().Contain($"AddRgbField(fields, \"{channel}\", model => model.CustomTint");
+        definitionMethods["AddRgbField"].ToString().Should().Contain(".BindValue(binding)");
         definition.Should().NotContain(".SetText(\"Tints\")");
         definition.Should().NotContain("TintColorSheetResref");
         viewModel.Should().Contain("new TintMapColor(value.R, value.G, value.B)");
@@ -1034,7 +1047,8 @@ public class TintMapReviewTests
         var droidSource = ReadSource("SWLOR.Game.Server", "Service", "Droid.cs");
         var saveOverrideMethod = FindMethod(tintSource, "SaveDroidOverride");
         var updateSnapshotMethod = FindMethod(droidSource, "UpdateEquippedItemSnapshot");
-        var unequipMethod = FindMethod(droidSource, "OnUnequipItem");
+        var equipmentChangedMethod = FindMethod(droidSource, "OnEquipmentChanged");
+        var saveSnapshotMethod = FindMethod(droidSource, "SaveItemSnapshot");
 
         saveOverrideMethod.DescendantNodes()
             .OfType<InvocationExpressionSyntax>()
@@ -1045,10 +1059,20 @@ public class TintMapReviewTests
             .OfType<AssignmentExpressionSyntax>()
             .Should()
             .ContainSingle(assignment => IsSerializedDictionaryAssignment(assignment, "EquippedItems"));
-        unequipMethod.DescendantNodes()
+        // After an unequip the droid's whole item snapshot is rebuilt, re-serializing the item with its current tint.
+        equipmentChangedMethod.AttributeLists
+            .SelectMany(list => list.Attributes)
+            .Select(attribute => attribute.ToString())
+            .Should()
+            .Contain(text => text.Contains("OnItemUnequipAfter"));
+        equipmentChangedMethod.DescendantNodes()
+            .OfType<InvocationExpressionSyntax>()
+            .Should()
+            .ContainSingle(invocation => GetInvokedMethodName(invocation) == "SaveItemSnapshot");
+        saveSnapshotMethod.DescendantNodes()
             .OfType<AssignmentExpressionSyntax>()
             .Should()
-            .ContainSingle(assignment => IsSerializedDictionaryAssignment(assignment, "Inventory"));
+            .Contain(assignment => IsSerializedDictionaryAssignment(assignment, "inventory"));
     }
 
     [Test]
@@ -1975,6 +1999,42 @@ public class TintMapReviewTests
     }
 
     [Test]
+    public void FemaleThighSixteenVariantsExposeTheirOwnMetalAndLeatherChannels()
+    {
+        var rows = ReadSource("SWLOR_Haks", "sw_2da", "tintmap.2da")
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.Split((char[])null!, StringSplitOptions.RemoveEmptyEntries))
+            .Where(columns => columns.Length == 4)
+            .ToArray();
+        var entries = JArray.Parse(ReadSource("SWLOR_Haks", "tools", "TintMapSources.json"));
+
+        foreach (var side in new[] { 'l', 'r' })
+        {
+            var material = $"pfh0_leg{side}016";
+            var entry = entries.Single(value => (string)value["model"]! == material);
+            ((int)entry["width"]!).Should().Be(128);
+            ((int)entry["height"]!).Should().Be(128);
+            entry["layers"]!.Values<int>().Should().Equal(2, 3, 6, 7);
+
+            foreach (var race in new[] { 'a', 'd', 'e', 'g', 'h', 'o' })
+            foreach (var phenotype in new[] { 0, 2 })
+            {
+                var model = $"pf{race}{phenotype}_leg{side}016";
+                var row = rows.Single(columns => columns[1] == model);
+                row[2].Should().Be(material, "thigh 15 uses a different palette and must not supply this part");
+                row[3].Should().Be("2,3,6,7");
+                var modelPath = Path.Combine(FindRepositoryRoot().FullName, "SWLOR_Haks",
+                    side == 'l' ? "sw_pt_lthigh" : "sw_pt_rthigh", model + ".mdl");
+                var modelBytes = File.ReadAllBytes(modelPath);
+                // These retained stock single-mesh models store the 64-byte material name
+                // at byte 784, separately from their model name and legacy thigh-15 bitmap.
+                System.Text.Encoding.ASCII.GetString(modelBytes, 784, 64).TrimEnd('\0')
+                    .Should().Be(material, $"{model} must render through its own converted palette");
+            }
+        }
+    }
+
+    [Test]
     public void RodianMusicianPartsBindTheConvertedHumanFallbackMaterials()
     {
         var repositoryRoot = FindRepositoryRoot();
@@ -2697,8 +2757,13 @@ public class TintMapReviewTests
     [TestCase("fs_plt_tinter")]
     [TestCase("fs_plt_tinter_nm")]
     [TestCase("fs_plt_hair_nm")]
+    [TestCase("fs_hav_emit")]
     public void TintShadersRebuildSpecularityFromFinalPaletteInputs(string shaderName)
     {
+        // The Havoc armor shaders finish with the same lighting as ApplyStandardShader plus an emissive term.
+        var finalLighting = shaderName.StartsWith("fs_hav_", StringComparison.Ordinal)
+            ? "ApplyHavocShader("
+            : "ApplyStandardShader();";
         var shader = ReadSource("SWLOR_Haks", "sw_shader", $"{shaderName}.shd");
         var code = Regex.Replace(shader, @"/\*[\s\S]*?\*/|//[^\r\n]*", string.Empty);
         var setup = code.IndexOf("SetupStandardShaderInputs();", StringComparison.Ordinal);
@@ -2707,7 +2772,7 @@ public class TintMapReviewTests
         var specularity = code.IndexOf(
             "SetupSpecularity(FragmentColor.rgb * materialFrontDiffuse.rgb);",
             StringComparison.Ordinal);
-        var lighting = code.IndexOf("ApplyStandardShader();", StringComparison.Ordinal);
+        var lighting = code.LastIndexOf(finalLighting, StringComparison.Ordinal);
 
         setup.Should().BeGreaterThanOrEqualTo(0);
         environment.Should().BeGreaterThan(setup,
@@ -2782,7 +2847,7 @@ public class TintMapReviewTests
         var materialRoot = Path.Combine(FindRepositoryRoot().FullName, "SWLOR_Haks", "sw_tint_mtr");
         var shaderNames = new HashSet<string>(StringComparer.Ordinal)
         {
-            "fs_plt_tinter", "fs_plt_tinter_nm", "fs_plt_hair_nm"
+            "fs_plt_tinter", "fs_plt_tinter_nm", "fs_plt_hair_nm", "fs_hav_emit"
         };
         var materialPaths = Directory.GetFiles(materialRoot, "*.mtr");
         materialPaths.Should().NotBeEmpty();
@@ -2944,27 +3009,25 @@ public class TintMapReviewTests
                     "ArmorColorIndexCalculator",
                     "IsPerPartOverrideVariableName"),
                 "saved palette-zero markers must replace stale markers on the currently equipped armor");
-        var outfitSource = ReadSource(
-            "SWLOR.Game.Server",
-            "Feature",
-            "GuiDefinition",
-            "ViewModel",
-            "OutfitViewModel.cs");
-        var loadMethod = FindMethod(outfitSource, "LoadOutfit");
+        var outfitSource = ReadSource("SWLOR.Game.Server", "Service", "Wardrobe.cs");
+        var loadMethod = FindMethod(outfitSource, "Wear");
         var loadInvocations = loadMethod.DescendantNodes()
             .OfType<InvocationExpressionSyntax>()
             .ToList();
         loadInvocations.Should().Contain(invocation =>
             IsMemberInvocation(invocation, "EquippedItemAppearance", "ApplyOutfit"));
+        loadInvocations.Should().Contain(invocation =>
+            IsMemberInvocation(invocation, "EquippedItemAppearance", "ApplyHelmet"));
         loadInvocations.Select(GetInvokedMethodName).Should().NotContain(new[]
         {
             "CopyItemAndModify", "CopyItem", "ActionEquipItem", "ActionUnequipItem"
         }, "loading an outfit must retain the actual equipped item and its gameplay state");
         var appearanceSource = ReadSource("SWLOR.Game.Server", "Feature", "AppearanceDefinition",
             "ItemAppearance", "EquippedItemAppearance.cs");
-        FindMethod(appearanceSource, "ApplyOutfit").DescendantNodes()
-            .OfType<InvocationExpressionSyntax>().Should().Contain(invocation =>
-                IsMemberInvocation(invocation, "TintMapService", "ReplaceItemTintOverrides"));
+        foreach (var method in new[] { "ApplyOutfit", "ApplyHelmet" })
+            FindMethod(appearanceSource, method).DescendantNodes()
+                .OfType<InvocationExpressionSyntax>().Should().Contain(invocation =>
+                    IsMemberInvocation(invocation, "TintMapService", "ReplaceItemTintOverrides"));
 
     }
 
@@ -3005,14 +3068,15 @@ public class TintMapReviewTests
         AssignmentExpressionSyntax assignment,
         string dictionaryName)
     {
-        return assignment.Left is ElementAccessExpressionSyntax
-               {
-                   Expression: MemberAccessExpressionSyntax
-                   {
-                       Name.Identifier.ValueText: var assignedDictionary
-                   }
-               } &&
-               assignedDictionary == dictionaryName &&
+        var assignedDictionary = assignment.Left is ElementAccessExpressionSyntax access
+            ? access.Expression switch
+            {
+                MemberAccessExpressionSyntax member => member.Name.Identifier.ValueText,
+                IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
+                _ => null
+            }
+            : null;
+        return assignedDictionary == dictionaryName &&
                assignment.Right is InvocationExpressionSyntax serialization &&
                IsMemberInvocation(serialization, "ObjectPlugin", "Serialize");
     }

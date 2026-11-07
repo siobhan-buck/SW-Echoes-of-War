@@ -221,6 +221,14 @@ maps to literal `xbowr` so that removal reaches the previously active layer;
 refreshes from overwriting the pose. All mappings share playback ownership and
 are restored on completion, interruption cleanup, death, or native handoff.
 
+Two-handed, polearm, and double weapons (greatswords, staffs, saberstaffs, halberds,
+twin electro blades: the `TwoHanded` and `Polearm` grips) keep the equivalent
+`plpause1` holding layer, which held the weapon upright over the shoulder through
+the clip. They use the same Dodge Side carrier with the mirrored mappings:
+`xbowr` maps to literal `plpause1` so that removal reaches the existing layer, and
+`plpause1` maps to `sw_nohold`. The rifle mappings do not clear this layer.
+Offline client captures (ticket 1565512326117986450) verified both genders.
+
 `sw_nohold` is a single shared support clip, not an ability or tester entry.
 Run `python tools/EnsureWeaponCarryOverlay.py --apply` in the HAK repository after
 replacing `a_ba_casts.mdl`. The installer compiles only the tiny support clip and
@@ -540,9 +548,9 @@ family, while other styles can reuse that rig. Check entry/loading time with a
 single wearer and with mixed robe styles on the actual client before deployment;
 compiled byte counts and offline pose checks do not measure runtime memory or
 loading performance.
-Publish generated robe updates in a separate HAK PR from the humanoid animation banks.
-Stack the robe PR on the body-animation branch, and keep the parent game's submodule pointer
-on the complete body-and-robe result. Merge both HAK changes before deploying either set.
+Publish generated robe updates in the same HAK PR as the humanoid animation banks that
+caused them, as a separate commit after the body banks, and point the parent game's submodule
+at the complete body-and-robe result. Deploy the body and robe HAKs together.
 After changing animations inherited from a body rig, regenerate those bridges from the HAK
 repository before packaging; otherwise a robe can continue using its older movement tracks:
 

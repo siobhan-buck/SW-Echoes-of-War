@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using SWLOR.Game.Server.EngineTests.Framework;
 using SWLOR.Game.Server.Service.PerkService;
 using SWLOR.Game.Server.Service.StatService;
 using SWLOR.NWN.API.NWScript.Enum;
@@ -26,6 +28,9 @@ namespace SWLOR.Game.Server.EngineTests.Definitions.AbilityBehaviors
         /// for abilities whose validation requires a specific weapon family.
         /// </summary>
         public string EquipMainHandResref { get; set; }
+
+        /// <summary>Optional left-hand item, equipped before the main hand.</summary>
+        public string EquipOffHandResref { get; set; }
 
         /// <summary>
         /// Status effect classes expected on the ACTIVATOR after impact.
@@ -150,6 +155,24 @@ namespace SWLOR.Game.Server.EngineTests.Definitions.AbilityBehaviors
         /// </summary>
         public float? MaximumActivatorDistanceToTargetAfterImpact { get; set; }
 
+        /// <summary>Minimum separation after a disengage; the target must start closer.</summary>
+        public float? MinimumActivatorDistanceToTargetAfterImpact { get; set; }
+
+        /// <summary>Minimum displacement from the caster's position at activation.</summary>
+        public float? MinimumActivatorTravelDistanceAfterImpact { get; set; }
+
+        /// <summary>Ground cursor offset, in forward and sideways meters relative to the target.</summary>
+        public System.Numerics.Vector2? GroundTargetOffsetMeters { get; set; }
+
+        /// <summary>Maximum distance from the selected ground location after impact.</summary>
+        public float? MaximumActivatorDistanceToGroundTargetAfterImpact { get; set; }
+
+        /// <summary>Immobilizes the dummy so movement assertions use a stationary reference.</summary>
+        public bool TargetIsStationary { get; set; }
+
+        /// <summary>Selects a clear lane using the ability's real validation in the caster's context.</summary>
+        public bool SearchForSafeMovementLane { get; set; }
+
         /// <summary>
         /// Perk levels seeded onto the caster before activation, for abilities whose impact
         /// scales off or requires OTHER perks (e.g. Leadership orders that emit the aura the
@@ -190,6 +213,13 @@ namespace SWLOR.Game.Server.EngineTests.Definitions.AbilityBehaviors
         /// entry must also appear in <see cref="TargetSetupStatusEffects"/>.
         /// </summary>
         public Type[] ExpectedRemovedTargetStatusEffects { get; set; } = Array.Empty<Type>();
+
+        /// <summary>
+        /// Runs after the fixtures and equipment, immediately before the pre-activation snapshot,
+        /// with (context, caster, target) - for abilities whose validation requires state earned
+        /// through other real activations (e.g. Perfect Form requires a Finish from Jab and Palm Strike).
+        /// </summary>
+        public Func<EngineTestContext, uint, uint, Task> PrepareActivationAsync { get; set; }
 
         /// <summary>
         /// Documents why a definition-declared resource cost cannot be observed by this case.

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SWLOR.Game.Server.Core;
 using SWLOR.Game.Server.Core.Bioware;
 using SWLOR.Game.Server.Entity;
 using SWLOR.Game.Server.Service;
+using SWLOR.Game.Server.Service.CombatService;
 using SWLOR.NWN.API.Engine;
 using SWLOR.NWN.API.NWNX;
 using SWLOR.NWN.API.NWScript.Enum;
@@ -16,7 +18,8 @@ namespace SWLOR.Game.Server.Feature.MigrationDefinition;
 /// property shifts by the blueprint difference, so crafted enhancements merged into it are kept.
 /// Revised blueprints carry the revision local, which also marks every migrated item. Droids are covered
 /// both as saved controller data and as summoned creatures, whose items are saved back onto the controller.
-/// The same item visit repairs legacy headgear slots before the unreleased migration is checkpointed.
+/// The same item visit repairs legacy headgear slots before the unreleased migration is checkpointed, and release
+/// migrations (which also update artwork) add the droid weapon skills (<see cref="DroidWeaponSkillMigration"/>).
 /// </summary>
 public static class LootStatRevisionMigration
 {
@@ -29,6 +32,11 @@ public static class LootStatRevisionMigration
     {
         var item = GetModuleItemAcquired();
         var owner = GetItemPossessor(item);
+        // Items loading with a character at login are not revised here: the boot-time character upgrade
+        // already revised the saved items, and a revision marker set during that load does not persist,
+        // so revising them here would repeat at every login.
+        if (!GetIsObjectValid(GetArea(owner)))
+            return;
         if (GetIsPC(owner) && !GetIsDM(owner) && !GetIsDMPossessed(owner))
             MigrateObject(item);
         else if (Droid.IsDroid(owner) && MigrateObject(item))
@@ -40,6 +48,8 @@ public static class LootStatRevisionMigration
     /// an item, or a container and its contents.
     /// </summary>
     public static bool MigrateObject(uint obj) => MigrateObject(obj, new HashSet<uint>(), true, true);
+
+    public static bool MigratePlayerItems(uint player) => MigrateObject(player, new HashSet<uint>(), true, true, true);
 
     internal static bool MigrateHeadgear(uint obj) => MigrateObject(obj, new HashSet<uint>(), false, true);
 
@@ -70,9 +80,17 @@ public static class LootStatRevisionMigration
         {
             // Direct acquisition follows the same ordering: storage failure must
             // precede any property revision or persisted wearer-stat difference.
+            if (repairHeadgear)
+            {
+                changed |= HeadgearSlotMigration.ConvertItem(obj);
+                changed |= EquipmentTypeMigration.ConvertItem(obj);
+            }
             if (updateArtwork) changed |= ItemIconMigration.MigrateItem(obj);
-            if (repairHeadgear) changed |= HeadgearSlotMigration.ConvertItem(obj);
             if (reviseStats) changed |= MigrateItem(obj);
+            // Release migrations only: on acquisition it would copy boosts onto parts made after the release.
+            if (updateArtwork) changed |= DroidWeaponSkillMigration.MigrateItem(obj);
+            // Also on acquisition, for copies restored or imported after the release migrations ran.
+            changed |= FurnitureRenameMigration.RenameItem(obj);
             changed |= MigrateObject(GetSummonedDroid(obj), visited, reviseStats, repairHeadgear, updateArtwork);
             var original = GetLocalString(obj, ConstructedDroidVariable);
             var migrated = HeadgearSlotMigration.MigrateDroid(original, data =>
@@ -134,10 +152,10 @@ public static class LootStatRevisionMigration
     public static bool MigrateSerializedObject(string original, out string migrated)
         => MigrateSerializedObject(original, out migrated, true, true);
 
-    internal static bool MigrateStoredObjectData(string original, out string migrated, bool repairHeadgear = true, Action<uint> convertedHeadgear = null)
-        => MigrateSerializedObject(original, out migrated, true, repairHeadgear, true, convertedHeadgear);
+    internal static bool MigrateStoredObjectData(string original, out string migrated, bool repairHeadgear = true, Action<uint> rootChanged = null)
+        => MigrateSerializedObject(original, out migrated, true, repairHeadgear, true, rootChanged);
 
-    private static bool MigrateSerializedObject(string original, out string migrated, bool reviseStats, bool repairHeadgear, bool updateArtwork = false, Action<uint> convertedHeadgear = null)
+    private static bool MigrateSerializedObject(string original, out string migrated, bool reviseStats, bool repairHeadgear, bool updateArtwork = false, Action<uint> rootChanged = null)
     {
         migrated = original;
         if (string.IsNullOrWhiteSpace(original))
@@ -148,11 +166,15 @@ public static class LootStatRevisionMigration
         var obj = MigrationObject.Deserialize(inventory?.PrepareForNativeLoad(null) ?? original);
         try
         {
-            var legacyRoot = repairHeadgear && GetObjectType(obj) == ObjectType.Item &&
-                HeadgearSlotMigration.IsLegacyHeadgear(GetResRef(obj), GetBaseItemType(obj));
+            var refreshRootMetadata = repairHeadgear && GetObjectType(obj) == ObjectType.Item &&
+                (HeadgearSlotMigration.IsLegacyHeadgear(GetResRef(obj), GetBaseItemType(obj)) ||
+                 HeadgearSlotMigration.GetCorrectedModel(GetResRef(obj), GetBaseItemType(obj),
+                     GetItemAppearance(obj, ItemAppearanceType.SimpleModel, 0)) != GetItemAppearance(obj, ItemAppearanceType.SimpleModel, 0) ||
+                 EquipmentTypeMigration.IsLegacyEquipment(GetResRef(obj), GetBaseItemType(obj))) ||
+                updateArtwork && ItemAppearanceCatalogMigration.IsLegacyAppearance(obj);
             if (!MigrateObject(obj, new HashSet<uint>(), reviseStats, repairHeadgear, updateArtwork))
                 return false;
-            if (legacyRoot) convertedHeadgear?.Invoke(obj);
+            if (refreshRootMetadata) rootChanged?.Invoke(obj);
             migrated = MigrationObject.Serialize(obj, original);
             if (inventory != null)
                 migrated = inventory.CopyMigratedInventory(migrated);
@@ -166,18 +188,42 @@ public static class LootStatRevisionMigration
 
     private static bool MigrateItem(uint item)
     {
+        var alreadyRevisedRare = GetLocalInt(item, RareLootStatRevisionCatalog.RevisionVariable) >= RareLootStatRevisionCatalog.CurrentRevision;
         var changed = ApplyRevision(item, LootStatRevisionCatalog.Changes, RevisionVariable, CurrentRevision);
         changed |= ApplyRevision(item, RareLootStatRevisionCatalog.Changes,
             RareLootStatRevisionCatalog.RevisionVariable, RareLootStatRevisionCatalog.CurrentRevision);
+        if (alreadyRevisedRare)
+            changed |= ApplyRevision(item, EquipmentTypeStatRevisionCatalog.Changes,
+                EquipmentTypeStatRevisionCatalog.RevisionVariable, EquipmentTypeStatRevisionCatalog.CurrentRevision);
+        else if (EquipmentTypeStatRevisionCatalog.Changes.ContainsKey(GetResRef(item)) &&
+                 GetLocalInt(item, EquipmentTypeStatRevisionCatalog.RevisionVariable) < EquipmentTypeStatRevisionCatalog.CurrentRevision)
+        {
+            // The revised rare catalog already applied the final cloak value.
+            SetLocalInt(item, EquipmentTypeStatRevisionCatalog.RevisionVariable, EquipmentTypeStatRevisionCatalog.CurrentRevision);
+            changed = true;
+        }
+        changed |= ApplyRevision(item, FoundryLootStatRevisionCatalog.Changes,
+            FoundryLootStatRevisionCatalog.RevisionVariable, FoundryLootStatRevisionCatalog.CurrentRevision);
+        changed |= ApplyRevision(item, ArkanianArmorStatRevisionCatalog.Changes,
+            ArkanianArmorStatRevisionCatalog.RevisionVariable, ArkanianArmorStatRevisionCatalog.CurrentRevision,
+            current => ReviseIceProtection(current, ArkanianArmorStatRevisionCatalog.IceResistance));
+        changed |= ApplyRevision(item, RetiredDefenseStatRevisionCatalog.Changes,
+            RetiredDefenseStatRevisionCatalog.RevisionVariable, RetiredDefenseStatRevisionCatalog.CurrentRevision,
+            ReviseRetiredDefense);
         return changed;
     }
 
+    private static IEnumerable<LootStatChange> ReviseRetiredDefense(uint item) =>
+        RetiredDefenseStatRevisionCatalog.ConvertedResistanceChanges(GetResRef(item),
+            subtype => ReadTotal(item, ItemPropertyType.Resistance, subtype).Total).ToArray();
+
     private static bool ApplyRevision(uint item, IReadOnlyDictionary<string, LootStatChange[]> catalog,
-        string revisionVariable, int revision)
+        string revisionVariable, int revision, Func<uint, IEnumerable<LootStatChange>> itemChanges = null)
     {
-        if (!catalog.TryGetValue(GetResRef(item), out var changes) ||
+        if (!catalog.TryGetValue(GetResRef(item), out var catalogChanges) ||
             GetLocalInt(item, revisionVariable) >= revision)
             return false;
+        var changes = itemChanges == null ? catalogChanges : catalogChanges.Concat(itemChanges(item)).ToArray();
 
         // An equipped item's stats are already counted on its wearer (a player's record or a droid's
         // skin). Apply only each stat's difference there: removing every old stat first would clamp
@@ -186,7 +232,7 @@ public static class LootStatRevisionMigration
         foreach (var change in changes)
         {
             var difference = ApplyChange(item, change);
-            if (difference != 0 && GetIsObjectValid(wearer))
+            if (difference != 0 && GetIsObjectValid(wearer) && CountsOnWearer(change))
                 EquipmentStats.ApplyStatAmount(wearer, item, change.Type, PropertySubtype(change),
                     Math.Abs(difference), difference > 0);
         }
@@ -197,22 +243,25 @@ public static class LootStatRevisionMigration
         return true;
     }
 
+    /// <summary>
+    /// The combat replacement already turned older copies' Ice Defense into at least the base Ice Resistance.
+    /// Later copies carry the old blueprint's retired Ice Defense, or have lost it, so their Ice Resistance
+    /// holds only enhancements; the base adds to it as on a new copy.
+    /// </summary>
+    private static IEnumerable<LootStatChange> ReviseIceProtection(uint item, int baseResistance)
+    {
+        var defense = ReadTotal(item, ItemPropertyType.Defense, (int)CombatDamageType.Ice).Total;
+        var resistance = ReadTotal(item, ItemPropertyType.Resistance, (int)ResistanceType.Ice).Total;
+        if (defense > 0)
+            yield return new LootStatChange(ItemPropertyType.Defense, (int)CombatDamageType.Ice, defense, 0);
+        var missingBase = defense > 0 ? defense : resistance < baseResistance ? baseResistance : 0;
+        yield return new LootStatChange(ItemPropertyType.Resistance, (int)ResistanceType.Ice, resistance, resistance + missingBase);
+    }
+
     /// <summary>Shifts one property by the blueprint difference and returns how much the item's total changed.</summary>
     private static int ApplyChange(uint item, LootStatChange change)
     {
-        // Collect first: removing a property mid-iteration skips the next one.
-        var matches = new List<ItemProperty>();
-        var total = 0;
-        for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
-        {
-            if (GetItemPropertyType(ip) != change.Type ||
-                GetItemPropertyDurationType(ip) != DurationType.Permanent ||
-                change.Type == ItemPropertyType.Defense && GetItemPropertySubType(ip) != change.Subtype)
-                continue;
-            total += GetItemPropertyCostTableValue(ip);
-            matches.Add(ip);
-        }
-
+        var (total, matches) = ReadTotal(item, change.Type, change.Subtype);
         var revised = total - change.Previous + change.Current;
         if (revised < 0)
             revised = 0;
@@ -221,13 +270,39 @@ public static class LootStatRevisionMigration
 
         foreach (var ip in matches)
             MigrationObject.RemoveProperty(item, ip);
+        var costTableValue = change.Type == ItemPropertyType.Resistance ? Resistance.EncodeItemPropertyCostTableValue(revised) : revised;
         if (revised > 0)
-            MigrationObject.AddProperty(item, ItemPropertyCustom(change.Type, PropertySubtype(change), revised), AddItemPropertyPolicy.IgnoreExisting);
+            MigrationObject.AddProperty(item, ItemPropertyCustom(change.Type, PropertySubtype(change), costTableValue), AddItemPropertyPolicy.IgnoreExisting);
         return revised - total;
     }
 
-    private static int PropertySubtype(LootStatChange change) =>
-        change.Type == ItemPropertyType.Defense ? change.Subtype : -1;
+    private static (int Total, List<ItemProperty> Matches) ReadTotal(uint item, ItemPropertyType type, int subtype)
+    {
+        // Collect first: removing a property mid-iteration skips the next one.
+        var matches = new List<ItemProperty>();
+        var total = 0;
+        for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
+        {
+            if (GetItemPropertyType(ip) != type ||
+                GetItemPropertyDurationType(ip) != DurationType.Permanent ||
+                HasSubtype(type) && GetItemPropertySubType(ip) != subtype)
+                continue;
+            total += type == ItemPropertyType.Resistance
+                ? Resistance.DecodeItemPropertyCostTableValue(GetItemPropertyCostTableValue(ip))
+                : GetItemPropertyCostTableValue(ip);
+            matches.Add(ip);
+        }
+        return (total, matches);
+    }
+
+    // Retired elemental Defense never counted on the wearer, and its property cannot be rebuilt.
+    private static bool CountsOnWearer(LootStatChange change) =>
+        change.Type != ItemPropertyType.Defense || ((CombatDamageType)change.Subtype).IsDefenseDamageType();
+
+    private static bool HasSubtype(ItemPropertyType type) =>
+        type is ItemPropertyType.Defense or ItemPropertyType.Resistance or ItemPropertyType.RequiresSkill;
+
+    private static int PropertySubtype(LootStatChange change) => HasSubtype(change.Type) ? change.Subtype : -1;
 
     private static uint GetWearer(uint item)
     {

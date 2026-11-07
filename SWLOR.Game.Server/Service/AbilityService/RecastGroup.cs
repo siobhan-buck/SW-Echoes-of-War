@@ -668,6 +668,8 @@ namespace SWLOR.Game.Server.Service.AbilityService
         ChainLightning = 574,
         [RecastGroup("Blood Siphon", "Blood Siphon", true)]
         BloodSiphon = 575,
+        [RecastGroup("Unnerving Roar", "Unnerving Roar", true)]
+        UnnervingRoar = 576,
         [RecastGroup("Force Sheath", "Force Sheath", true)]
         ForceSheath = 474,
         [RecastGroup("Shattering Strike", "Shatter Str.", true)]
@@ -908,6 +910,30 @@ namespace SWLOR.Game.Server.Service.AbilityService
 
         [RecastGroup("Low Slot 10", "Low Slot 10", true)]
         ShipModule20 = 573,
+
+        [RecastGroup("Unarmed Opener", "Fist Opener", true)]
+        UnarmedOpener = 579,
+
+        [RecastGroup("Unarmed Response", "Fist Response", true)]
+        UnarmedResponse = 580,
+
+        [RecastGroup("Unarmed Technique", "Fist Technique", true)]
+        UnarmedTechnique = 581,
+
+        [RecastGroup("Flow Stance", "Flow Stance", true)]
+        FlowStance = 582,
+
+        [RecastGroup("Bruiser Stance", "Bruiser Stance", true)]
+        BruiserStance = 583,
+
+        [RecastGroup("Twin Volley", "Twin Volley", true)]
+        TwinVolley = 584,
+
+        [RecastGroup("Akimbo Stance", "Akimbo Stance", true)]
+        AkimboStance = 577,
+
+        [RecastGroup("Crossfire Stance", "Crossfire St.", true)]
+        CrossfireStance = 578,
 
     }
 

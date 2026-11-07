@@ -1,5 +1,5 @@
 # Star Wars: Echoes of War
-Server-side C# code used in the Neverwinter Nights Star Wars: Echoes of War module, forked from Zunath's SWLOR https://github.com/zunath/SWLOR_NWN
+Server-side C# code used in the Neverwinter Nights Star Wars: Echoes of War module, forked from Zunath's SWLOR https://github.com/zunath/SWLOR_NWN . This repository holds its C# server, module content, and desktop toolset.
 
 Game: Neverwinter Nights: Enhanced Edition
 
@@ -31,15 +31,22 @@ Neverwinter Nights: https://store.steampowered.com/app/704450/Neverwinter_Nights
 
 2. At command line: ``git clone --recursive https://github.com/<your_username>/SWLOR_NWN.git``
 
-3. Run SWLOR_NWN/Module/PackModule.cmd to generate the Star Wars EOW.mod file.
+3. Run the Setup script from the top level folder.
   
-4. Open SWLOR.Game.Server.sln with Visual Studio
-  
-5. Right click on SWLOR.Runner within Visual Studio and select "Set as Startup Project"
-  
-6. Click the green run button at the top of Visual Studio. Note that this will take a while the first time you do it.
+Setup initializes the pinned `SWLOR_Haks` submodule, prepares the native NWN tools, and builds the toolset. On Linux it downloads checksum-verified tools into `~/.local/share/SWLOR.Toolset/NativeTools`. It needs no Python and no IDE.
+
+| Windows | Linux | What it does |
+|---|---|---|
+| `Setup.cmd` | `./Setup.sh` | Prepares the checkout and builds the toolset |
+| `CheckSetup.cmd` | `./CheckSetup.sh` | Lists missing prerequisites without changing submodules, native tools, or containers (builds the small checker on first run) |
+| `StartToolset.cmd` | `./StartToolset.sh` | Builds and opens the toolset |
+| `StartServer.cmd` | `./StartServer.sh` | Packs the module, deploys it, and runs a local server (slow the first time; Ctrl+C stops it) |
+
+To run a local server, also install Docker Desktop (Linux containers) on Windows, or Docker Engine with the Compose plugin on Linux. Check it with `CheckSetup.cmd -Profile Server` or `./CheckSetup.sh --profile Server`. To join the server, you need NWN:EE.
 
 # Troubleshooting
+
+**"Install a stable .NET 10 SDK" or "compatible SDK not found":** `global.json` accepts only stable .NET 10 SDKs. Install one, reopen your terminal, and run `dotnet --version` in the checkout. It must print `10.x.x` without a `-rc` or `-preview` suffix.
 
 **'TLK does not exist' error:**
 
@@ -49,17 +56,11 @@ This happens because you didn't clone with the --recursive command. Redo step 2.
 
 You need to install docker.
 
-**'Missing required HAK file' error on login**
+**Missing assets or TLK:** run `Setup.cmd` or `./Setup.sh`.
 
-Copy the files in the hak directory to your NWN play directory. Alternatively, edit nwn.ini to point to the debugserver/hak folder.
+**"The native tool cache is incomplete":** close the toolset, delete the folder named in the message, and rerun setup.
 
-**'Missing required TLK file' error on login**
-
-Copy the sw_tlk.tlk file in the tlk directory to your NWN play directory. Alternatively, edit nwn.ini to point to the debugserver/tlk folder.
-
-**'Unable to load module' error**
-
-Delete all docker containers and images, then delete all files in the debugserver/modules, debugserver/tlk, and debugserver/hak folders. Then rerun the application.
+**Docker unavailable:** start Docker, then rerun the server check above.
 
 # Getting Help
 

@@ -14,6 +14,7 @@ using SWLOR.Game.Server.Service.GuiService.Component;
 using SWLOR.Game.Server.Service.KeyItemService;
 using SWLOR.Game.Server.Service.NPCService;
 using SWLOR.Game.Server.Service.PerkService;
+using SWLOR.Game.Server.Service.PlayerListService;
 using SWLOR.Game.Server.Service.SkillService;
 using SWLOR.Game.Server.Service.TaxiService;
 using SWLOR.NWN.API.NWScript.Enum;
@@ -108,11 +109,19 @@ namespace SWLOR.Game.Server.Entity
             UndisguisedSoundSetId = -1;
             UndisguisedDescription = string.Empty;
             HasUndisguisedDescriptionSnapshot = false;
+            PlayerListFlags = new List<PlayerListFlagType>();
         }
 
 
         [Indexed]
         public int Version { get; set; }
+        /// <summary>
+        /// The newest character-file migration whose changes to this record are saved. A character file still
+        /// behind it is upgraded again without changing the record a second time.
+        /// </summary>
+        public int CharacterFileVersion { get; set; }
+        /// <summary>Messages from a character upgrade, shown to the player at their next login.</summary>
+        public List<string> UpgradeNotices { get; set; } = new();
         public bool CharacterInitializationPending { get; set; }
         [Indexed]
         public string Name { get; set; }
@@ -193,6 +202,8 @@ namespace SWLOR.Game.Server.Entity
         public int UndisguisedSoundSetId { get; set; }
         public string UndisguisedDescription { get; set; }
         public bool HasUndisguisedDescriptionSnapshot { get; set; }
+        // Player list flags for the undisguised identity; each disguise keeps its own.
+        public List<PlayerListFlagType> PlayerListFlags { get; set; }
 
         public PlayerSettings Settings { get; set; }
         public Dictionary<SkillType, int> Control { get; set; }
@@ -210,13 +221,14 @@ namespace SWLOR.Game.Server.Entity
         public Dictionary<string, DateTime> EncounterCooldowns { get; set; }
         public Dictionary<string, PlayerQuest> Quests { get; set; }
         public Dictionary<PerkType, DateTime> UnlockedPerks { get; set; }
+        [JsonConverter(typeof(RenamedRecipesJsonConverter))]
         public Dictionary<RecipeType, DateTime> UnlockedRecipes { get; set; }
+        [JsonConverter(typeof(RenamedRecipesJsonConverter))]
         public Dictionary<RecipeType, DateTime> CraftedRecipes { get; set; }
         public Dictionary<FeatType, DateTime> LearnedTechniques { get; set; }
         public List<FeatType> EquippedTechniques { get; set; }
         public List<MimicryLoadout> MimicryLoadouts { get; set; }
         public string ActiveMimicryLoadoutId { get; set; } = string.Empty;
-        [JsonConverter(typeof(RelocatedKeyItemsJsonConverter))]
         public Dictionary<KeyItemType, DateTime> KeyItems{ get; set; }
         public Dictionary<GuildType, PlayerGuild> Guilds { get; set; }
         public Dictionary<FactionType, PlayerFactionStanding> Factions { get; set; }
@@ -225,6 +237,7 @@ namespace SWLOR.Game.Server.Entity
         public Dictionary<CombatDamageType, int> Defenses { get; set; }
         public Dictionary<ResistanceType, int> Resistances { get; set; }
         public Dictionary<GuiWindowType, GuiRectangle> WindowGeometries { get; set; }
+        public List<ExtraHotbar> ExtraHotbars { get; set; } = new();
         public Dictionary<CurrencyType, int> Currencies { get; set; }
         public float AppearanceScale { get; set; }
         public float HeadAppearanceScale { get; set; }
@@ -259,6 +272,11 @@ namespace SWLOR.Game.Server.Entity
         public int Rank { get; set; }
         public int XP { get; set; }
         public bool IsLocked { get; set; }
+
+        /// <summary>
+        /// The rank this skill stops gaining at, and never decays below. Null means no limit.
+        /// </summary>
+        public int? RankLimit { get; set; }
     }
 
     public class PlayerQuest
@@ -267,9 +285,10 @@ namespace SWLOR.Game.Server.Entity
         public int TimesCompleted { get; set; }
         public DateTime? DateLastCompleted { get; set; }
 
-        [JsonConverter(typeof(RelocatedKillProgressesJsonConverter))]
+        [JsonConverter(typeof(RenamedNpcGroupsJsonConverter))]
         public Dictionary<NPCGroupType, int> KillProgresses { get; set; } = new Dictionary<NPCGroupType, int>();
         public Dictionary<string, int> ItemProgresses { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> CombatProgresses { get; set; } = new();
     }
 
     public class PlayerSettings

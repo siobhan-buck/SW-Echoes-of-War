@@ -1188,6 +1188,13 @@ namespace SWLOR.Game.Server.Service.StatService
         NextSkillAbilityDamageBonus = 224,
 
         /// <summary>
+        /// Internal temporary StatusEffectCategory flags the next matching skill ability must apply
+        /// to consume the stored next-skill-ability bonuses. 0 means any ability of the skill.
+        /// </summary>
+        [StatType(StatTypeCategory.NonBeneficial)]
+        NextSkillAbilityRequiredCategory = 1323,
+
+        /// <summary>
         /// Internal temporary critical chance bonus consumed by the next matching skill ability.
         /// </summary>
         [StatType(StatTypeCategory.BeneficialWhenPositive)]
@@ -4022,9 +4029,8 @@ namespace SWLOR.Game.Server.Service.StatService
         StatusAppliedSelfEnmityPercentAdjustment = 711,
 
         /// <summary>
-        /// Duration in seconds for status-applied self stat riders. Guard Training and
-        /// Redirecting Guard each author 30 seconds, so the longest authored window applies
-        /// instead of the sum.
+        /// Duration in seconds for status-applied self stat riders. When several perks author it,
+        /// the longest authored window applies instead of the sum.
         /// </summary>
         [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
         StatusAppliedSelfDurationSeconds = 712,
@@ -4404,6 +4410,26 @@ namespace SWLOR.Game.Server.Service.StatService
         /// </summary>
         [StatType(StatTypeCategory.NonBeneficial)]
         DamageTakenNextSkillAbilityWindowSeconds = 775,
+
+        /// <summary>
+        /// StatusEffectCategory flags the next ability must apply to receive DamageTakenNextSkillAbilityDamageBonus.
+        /// 0 lets any ability of the matching skill take it.
+        /// </summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.BitwiseOr)]
+        DamageTakenNextSkillAbilityRequiredCategory = 1322,
+
+        /// <summary>
+        /// Enmity percent the target generates toward the activator after the activator applies a
+        /// StatusAppliedRequiredCategory status to it while it was attacking one of the activator's allies.
+        /// </summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        StatusAppliedTargetAttackingAllyEnmityToSourcePercentAdjustment = 1324,
+
+        /// <summary>
+        /// Duration in seconds of StatusAppliedTargetAttackingAllyEnmityToSourcePercentAdjustment.
+        /// </summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        StatusAppliedTargetAttackingAllyEnmityDurationSeconds = 1325,
 
         /// <summary>
         /// Flat damage bonus granted to the next matching ability after avoiding an attack.
@@ -5853,6 +5879,18 @@ namespace SWLOR.Game.Server.Service.StatService
         NonCriticalAbilityNextSkillAbilityCriticalRateTrackerEffectIconType = 1022,
 
         /// <summary>
+        /// Lets any hostile ranged weapon ability build, and spend, the noncritical-ability Critical Rate stacks.
+        /// </summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        NonCriticalAbilityNextSkillAbilityCriticalRateRangedOnly = 1320,
+
+        /// <summary>
+        /// Lets the stored persistent next-ability Critical Rate apply to any ranged weapon ability.
+        /// </summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        PersistentNextSkillAbilityCriticalRateRangedOnly = 1321,
+
+        /// <summary>
         /// Effect icon used by the generic auto-attack critical-rate cycle tracker.
         /// </summary>
         [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
@@ -6197,6 +6235,210 @@ namespace SWLOR.Game.Server.Service.StatService
         /// </summary>
         [StatType(StatTypeCategory.NonBeneficial)]
         HealingReceivedStaminaRestoreCooldownSeconds = 1099,
+
+        /// <summary>Percent bonus to equipped Mimicry trait stats and resistances.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        MimicryTraitPotencyPercent = 1100,
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueWindowExtensionSeconds = 1165,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueWeavePower = 1101,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        TechniqueWeaveEnabled = 1102,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueConditionalPower = 1103,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueRefundStamina = 1105,
+
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        TechniqueRefundCooldownSeconds = 1106,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueDebuffTargetOrdinaryAccuracy = 1107,
+
+        /// <summary>Positive ordinary attack ACC penalty; multiple sources use the strongest.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenNegative, StatTypeAggregation.Maximum)]
+        OrdinaryWeaponAccuracyPenalty = 1108,
+
+        /// <summary>Positive ordinary Physical damage penalty; multiple sources use the strongest.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenNegative, StatTypeAggregation.Maximum)]
+        OrdinaryPhysicalDamagePenaltyPercent = 1109,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueOpeningFinisherEvasionPercent = 1115,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueOpeningFinisherMovementSpeedPercent = 1116,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueFinishFinisherHastePercent = 1117,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        TechniqueFinisherWindowDurationSeconds = 1118,
+
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        TechniqueFinisherWindowCooldownSeconds = 1119,
+
+        /// <summary>Ability ACC against the owner's current Opening or Finish target, with any skill.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueSetupAbilityAccuracy = 1155,
+
+        /// <summary>One stamina discount earned from direct hostile HP damage, usable by any ability.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        DirectHostileDamageNextAbilityStaminaDiscount = 1156,
+
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        DirectHostileDamageNextAbilityDiscountDurationSeconds = 1157,
+
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        DirectHostileDamageNextAbilityDiscountCooldownSeconds = 1158,
+
+        /// <summary>Registered content profile supplying reaction presentation, independent of equipped weapons.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        TechniquePresentationSkillType = 1159,
+
+        /// <summary>Sequence line selector belonging to the same source as its technique payload.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        TechniqueLine = 1160,
+
+        /// <summary>Source-scoped power for abilities which opt into an independent technique bonus.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueAbilityPower = 1161,
+
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        TechniqueRetaliationPower = 1162,
+
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        TechniqueRetaliationDurationSeconds = 1163,
+
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        TechniqueRetaliationCooldownSeconds = 1164,
+
+
+
+        /// <summary>Landed ordinary shots required for one resource recovery attempt.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        PairedRangedOrdinaryHitRestoreCount = 1133,
+
+        /// <summary>Stamina restored by a completed ordinary-hit sequence.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        PairedRangedOrdinaryHitStaminaRestore = 1134,
+
+        /// <summary>Minimum interval between ordinary-hit resource recoveries.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        PairedRangedOrdinaryHitRestoreCooldownSeconds = 1135,
+
+        /// <summary>Ordinary hits on one target required for its damage bonus.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        PairedRangedRepeatedTargetRequiredHits = 1136,
+
+        /// <summary>Ordinary damage bonus against the repeated target.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        PairedRangedRepeatedTargetDamagePercent = 1137,
+
+        /// <summary>Duration refreshed by landed ordinary shots at the repeated target.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        PairedRangedRepeatedTargetDurationSeconds = 1138,
+
+        /// <summary>Next paired-ranged ability cost reduction after direct hostile damage.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        PairedRangedDirectDamageNextAbilityStaminaReduction = 1139,
+
+        /// <summary>Duration of the one-charge ability cost reduction.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        PairedRangedDirectDamageCostWindowSeconds = 1140,
+
+        /// <summary>Minimum interval between direct-damage cost reduction grants.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        PairedRangedDirectDamageCostCooldownSeconds = 1141,
+
+        /// <summary>Maximum Cadence charges.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceMaximum = 1142,
+
+        /// <summary>Duration refreshed by each Cadence gain.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceDurationSeconds = 1143,
+
+        /// <summary>Ordinary-shot accuracy per Cadence charge.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceAccuracyPerCharge = 1144,
+
+        /// <summary>Stamina restored per charge spent when the activation lands a hit.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceStaminaRestorePerCharge = 1145,
+
+        /// <summary>Maximum stamina restored by one charge spender.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceStaminaRestoreMaximum = 1146,
+
+        /// <summary>Minimum interval between successful charge-spender refunds.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        CadenceRestoreCooldownSeconds = 1147,
+
+        /// <summary>Minimum interval between accuracy-versus-evasion misses granting Cadence.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        EvasionCadenceCooldownSeconds = 1148,
+
+        /// <summary>Flat accuracy for the next hostile weapon ability after gaining Cadence.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceNextAbilityAccuracy = 1149,
+
+        /// <summary>Duration of the one-charge Cadence accuracy bonus.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceAccuracyDurationSeconds = 1150,
+
+        /// <summary>Minimum interval between Cadence accuracy grants.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        CadenceAccuracyCooldownSeconds = 1151,
+
+        /// <summary>Stance Cadence duration; applied only on a new charge grant or refresh.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceExtendedDurationSeconds = 1153,
+
+        /// <summary>Multiplicative adjustment to ordinary weapon damage after outgoing bonuses; excludes activated abilities.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        OrdinaryAttackDamagePercentAdjustment = 1126,
+
+        /// <summary>Haste granted per landed same-target ordinary weapon hit stack.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        OrdinaryAttackHasteRampPerStack = 1127,
+
+        /// <summary>Maximum same-target ordinary weapon hit haste stacks.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        OrdinaryAttackHasteRampMaximumStacks = 1128,
+
+        /// <summary>Minimum interval between ordinary weapon hit haste grants; preserved across resets.</summary>
+        [StatType(StatTypeCategory.NonBeneficial, StatTypeAggregation.Maximum)]
+        OrdinaryAttackHasteRampGrantCooldownSeconds = 1129,
+
+        /// <summary>Ordinary-hit haste duration refreshed by each landed hostile weapon hit.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        OrdinaryAttackHasteRampDurationSeconds = 1130,
+
+        /// <summary>Captured Cadence damage budget per charge for one hostile weapon ability activation.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceDamagePerCharge = 1166,
+
+        /// <summary>Haste that applies only while wielding two weapons (Twin Pistols or any dual wield).</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        DualWieldAttackDelayReductionPercent = 1167,
+        /// <summary>Seconds after a paid weapon ability in which a different one continues the Cadence chain.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceChainWindowSeconds = 1168,
+        /// <summary>Extra damage per Cadence charge spent, added to the ability's per-charge bonus.</summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive, StatTypeAggregation.Maximum)]
+        CadenceBonusDamagePerCharge = 1169,
+        /// <summary>
+        /// Percent damage adjustment applied to grenade, Remote Charge, and Overload Barrage blasts.
+        /// </summary>
+        [StatType(StatTypeCategory.BeneficialWhenPositive)]
+        BlastDamagePercentAdjustment = 1170,
+
 
     }
 

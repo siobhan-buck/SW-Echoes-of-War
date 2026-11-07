@@ -63,7 +63,7 @@
   "Description": {
     "type": "cexolocstring",
     "value": {
-      "0": "The den’s dominant beast, all muscle and ridged bone; nothing challenges it twice."
+      "0": "The den's dominant beast, all muscle and ridged bone; nothing challenges it twice."
     }
   },
   "Dex": {
@@ -572,6 +572,21 @@
         "Value": {
           "type": "cexostring",
           "value": "MUSIC_DISCS,1,1"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "LOOT_TABLE_5"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 3
+        },
+        "Value": {
+          "type": "cexostring",
+          "value": "DATHGROTTO_ALPHA_WARDROBE,100,1"
         }
       }
     ]

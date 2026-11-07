@@ -72,6 +72,7 @@ namespace SWLOR.Game.Server.Service
             BaseItem.Gloves,
             BaseItem.QuarterStaff,
             BaseItem.Katar,
+            BaseItem.PowerGlove,
             BaseItem.CreatureBludgeonWeapon,
             BaseItem.CreaturePierceWeapon,
             BaseItem.CreatureSlashPierceWeapon,
@@ -88,6 +89,7 @@ namespace SWLOR.Game.Server.Service
             BaseItem.Bolt,
             BaseItem.Bullet,
             BaseItem.Sling,
+            BaseItem.CompanionPistol,
             BaseItem.Grenade,
             BaseItem.Shuriken,
             BaseItem.ThrowingAxe,
@@ -455,10 +457,13 @@ namespace SWLOR.Game.Server.Service
         /// </summary>
         public static bool CanCreatureUseItem(uint creature, uint item)
         {
-            return string.IsNullOrWhiteSpace(GetCreatureItemUseError(creature, item));
+            var skill = item == GetItemInSlot(InventorySlot.RightHand, creature) &&
+                        TwinPistolEquipment.IsActivePair(creature) ? SkillType.TwinPistol : SkillType.Invalid;
+            return string.IsNullOrWhiteSpace(GetCreatureItemUseError(creature, item, skill));
         }
 
-        public static string GetCreatureItemUseError(uint creature, uint item)
+        public static string GetCreatureItemUseError(uint creature, uint item,
+            SkillType weaponSkillRequirementOverride = SkillType.Invalid)
         {
             for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
             {
@@ -481,6 +486,8 @@ namespace SWLOR.Game.Server.Service
                 else if (type == ItemPropertyType.RequiresSkill)
                 {
                     var skillType = (SkillType)GetItemPropertySubType(ip);
+                    skillType = TwinPistolEquipment.ResolveRequirementSkill(GetBaseItemType(item), skillType,
+                        weaponSkillRequirementOverride == SkillType.TwinPistol);
                     var rankRequired = GetItemPropertyCostTableValue(ip);
 
                     if (Skill.GetCreatureSkillRank(creature, skillType) < rankRequired)
@@ -509,11 +516,20 @@ namespace SWLOR.Game.Server.Service
             return string.Empty;
         }
 
-        public static string CanEquip(uint creature, uint item)
+        public static string CanEquip(uint creature, uint item, InventorySlot? prospectiveSlot = null)
         {
             var isPlayer = GetIsPC(creature);
             var isDroid = Droid.IsDroid(creature);
             var itemType = GetBaseItemType(item);
+            var hands = prospectiveSlot.HasValue
+                ? TwinPistolEquipment.GetProspectiveHands(creature, item, prospectiveSlot.Value)
+                : (MainHand: GetItemInSlot(InventorySlot.RightHand, creature),
+                   OffHand: GetItemInSlot(InventorySlot.LeftHand, creature));
+            var pairError = TwinPistolEquipment.GetPairCompatibilityError(
+                GetIsObjectValid(hands.MainHand) ? GetBaseItemType(hands.MainHand) : null,
+                GetIsObjectValid(hands.OffHand) ? GetBaseItemType(hands.OffHand) : null);
+            if ((prospectiveSlot == null || prospectiveSlot is InventorySlot.RightHand or InventorySlot.LeftHand) &&
+                !string.IsNullOrEmpty(pairError)) return pairError;
 
             if (ForceSensitiveWeaponBaseItemTypes.Contains(itemType) &&
                 !CanEquipForceSensitiveWeapon(creature))
@@ -527,13 +543,50 @@ namespace SWLOR.Game.Server.Service
             if (Gui.IsWindowOpen(creature, GuiWindowType.Craft))
                 return "Items cannot be equipped while crafting.";
 
-            var itemUseError = GetCreatureItemUseError(creature, item);
+            if (itemType == BaseItem.CompanionPistol)
+            {
+                if (!TwinPistolEquipment.IsLinkedPair(creature, hands.MainHand, item))
+                    return "The off-hand pistol is created automatically by equipping a Twin Pistols item.";
+                var propertyError = TwinPistolEquipment.GetCompanionPropertyError(item);
+                if (!string.IsNullOrEmpty(propertyError)) return propertyError;
+            }
+
+            if (TwinPistolEquipment.IsPairItem(item))
+            {
+                if (GetIsObjectValid(hands.OffHand) &&
+                    !TwinPistolEquipment.IsLinkedPair(creature, item, hands.OffHand))
+                    return "Twin Pistols require both hands. Unequip your off-hand item first.";
+            }
+
+            var paired = GetIsObjectValid(hands.MainHand) && GetIsObjectValid(hands.OffHand) &&
+                TwinPistolEquipment.IsPair(GetBaseItemType(hands.MainHand), GetBaseItemType(hands.OffHand));
+            var requirementSkill = paired && item == hands.MainHand ? SkillType.TwinPistol : SkillType.Invalid;
+            var itemUseError = GetCreatureItemUseError(creature, item, requirementSkill);
             if (!string.IsNullOrWhiteSpace(itemUseError))
                 return itemUseError;
 
+            // Pair requirements must pass for both items, whichever hand is equipped first.
+            if (paired)
+            {
+                var companionError = TwinPistolEquipment.GetCompanionPropertyError(hands.OffHand);
+                if (!string.IsNullOrEmpty(companionError)) return companionError;
+                var mainError = GetCreatureItemUseError(creature, hands.MainHand, SkillType.TwinPistol);
+                if (!string.IsNullOrEmpty(mainError)) return mainError;
+                var offError = GetCreatureItemUseError(creature, hands.OffHand);
+                if (!string.IsNullOrEmpty(offError)) return offError;
+            }
+
+            return GetRacialEquipError(creature, item);
+        }
+
+        /// <summary>
+        /// Checks the Droid-only and no-Droid equip limits of an item.
+        /// </summary>
+        public static string GetRacialEquipError(uint creature, uint item)
+        {
             var race = GetRacialType(creature);
 
-            var needsDroidLimitation = race == RacialType.Droid && DroidBaseItemTypes.Contains(itemType);
+            var needsDroidLimitation = race == RacialType.Droid && DroidBaseItemTypes.Contains(GetBaseItemType(item));
             var itemHasDroidIP = false;
 
             for (var ip = GetFirstItemProperty(item); GetIsItemPropertyValid(ip); ip = GetNextItemProperty(item))
@@ -558,7 +611,7 @@ namespace SWLOR.Game.Server.Service
             return string.Empty;
         }
 
-        private static bool CanEquipForceSensitiveWeapon(uint creature)
+        public static bool CanEquipForceSensitiveWeapon(uint creature)
         {
             if (GetIsDM(creature) || GetIsDMPossessed(creature))
                 return true;
@@ -622,6 +675,47 @@ namespace SWLOR.Game.Server.Service
         }
 
         /// <summary>
+        /// True when the engine finds room for the item in the creature's own inventory grid. Acquiring an item that
+        /// has no room can remove items the creature already carries, so check this before ObjectPlugin.AcquireItem.
+        /// A matching carried stack does not count as room: with no free cell the engine removes that stack instead of
+        /// merging into it.
+        /// </summary>
+        public static unsafe bool FitsInInventory(uint creature, uint item)
+        {
+            var server = global::NWN.Native.API.NWNXLib.g_pAppManager.m_pServerExoApp;
+            var repository = server.GetGameObject(creature)?.AsNWSCreature()?.m_pcItemRepository;
+            var nativeItem = server.GetItemByGameObjectID(item);
+            if (repository == null || nativeItem == null)
+                return false;
+
+            byte x = 0, y = 0;
+            return repository.FindPosition(nativeItem, &x, &y) != 0;
+        }
+
+        /// <summary>The message shown when an item cannot be returned because the player's inventory is full.</summary>
+        public const string InventoryFullMessage = "Your inventory is full. Make room and try again.";
+
+        /// <summary>The inventory-full message for window labels too narrow for the full one.</summary>
+        public const string InventoryFullShortMessage = "Your inventory is full.";
+
+        /// <summary>The message shown when a closing window keeps the items that did not fit until it is opened again.</summary>
+        public const string ItemsHeldMessage = "Your inventory is full. Items that did not fit stay at the station; open it again after making room.";
+
+        /// <summary>
+        /// Moves an item that nothing holds, such as a deserialized copy, into the creature's inventory when it has room.
+        /// Otherwise destroys the item and returns false, so the caller keeps the record it came from.
+        /// </summary>
+        public static bool TryAcquireItem(uint creature, uint item)
+        {
+            if (GetIsObjectValid(item) && FitsInInventory(creature, item) && ObjectPlugin.AcquireItem(creature, item))
+                return true;
+
+            if (GetIsObjectValid(item))
+                DestroyObject(item);
+            return false;
+        }
+
+        /// <summary>
         /// Retrieves the list of weapon base item types.
         /// </summary>
         public static List<BaseItem> WeaponBaseItemTypes { get; } = new List<BaseItem>
@@ -652,11 +746,13 @@ namespace SWLOR.Game.Server.Service
             BaseItem.Saberstaff,
             BaseItem.TwinElectroBlade,
             BaseItem.Katar,
+            BaseItem.PowerGlove,
             BaseItem.QuarterStaff,
             BaseItem.LightMace,
             BaseItem.Pistol,
             BaseItem.LegacyPistol,
             BaseItem.Sling,
+            BaseItem.CompanionPistol,
             BaseItem.ThrowingAxe,
             BaseItem.Shuriken,
             BaseItem.Dart,
@@ -808,6 +904,12 @@ namespace SWLOR.Game.Server.Service
             BaseItem.Katar
         };
 
+        /// <summary>Equipped hand-to-hand weapons. Armor-slot gloves remain armor.</summary>
+        public static List<BaseItem> PowerGloveBaseItemTypes { get; } = new()
+        {
+            BaseItem.PowerGlove
+        };
+
         /// <summary>
         /// Retrieves the list of Staff base item types.
         /// </summary>
@@ -873,6 +975,7 @@ namespace SWLOR.Game.Server.Service
             BaseItem.Electroblade,
             BaseItem.ShortSpear,
             BaseItem.Katar,
+            BaseItem.PowerGlove,
         };
 
         /// <summary>
@@ -956,6 +1059,37 @@ namespace SWLOR.Game.Server.Service
         }
 
         /// <summary>
+        /// Retrieves the icon layers to draw on top of each other, bottom first. Three-part weapons such as
+        /// lightsabers have one icon per model part, and their base icon shows only the bottom part; every other
+        /// item has a single layer, the same as <see cref="GetIconResref"/>.
+        /// </summary>
+        /// <param name="item">The item to retrieve the icon layers for.</param>
+        /// <returns>The bottom, middle and top icons of a three-part weapon, otherwise the single icon.</returns>
+        public static string[] GetIconLayers(uint item)
+        {
+            var baseItem = GetBaseItemType(item);
+            if (Get2DAString("baseitems", "ModelType", (int)baseItem) == "2")
+            {
+                // Part icons follow the engine's i<ItemClass>_<part>_<number> convention, which can differ from
+                // DefaultIcon. A part's number is its model followed by its color digit, e.g. model 2 color 1 is _021.
+                var itemClass = Get2DAString("baseitems", "ItemClass", (int)baseItem);
+                var prefix = string.IsNullOrEmpty(itemClass) ? string.Empty : "i" + itemClass;
+                var layers = new[] { "b", "m", "t" }
+                    .Select((part, index) =>
+                    {
+                        var number = GetItemAppearance(item, ItemAppearanceType.WeaponModel, index) * 10 +
+                                     GetItemAppearance(item, ItemAppearanceType.WeaponColor, index);
+                        return $"{prefix}_{part}_{number:000}".ToLower();
+                    })
+                    .ToArray();
+                if (!string.IsNullOrEmpty(prefix) && layers.All(IconResourceExists))
+                    return layers;
+            }
+
+            return new[] { GetIconResref(item) };
+        }
+
+        /// <summary>
         /// Determines whether an item has a real inventory icon, as opposed to falling back to the
         /// generic placeholder icon. Items with no real icon are almost always internal, prop, or
         /// creature items that should not appear on player-facing economy surfaces.
@@ -975,6 +1109,7 @@ namespace SWLOR.Game.Server.Service
         private static readonly HashSet<BaseItem> EconomyRestrictedBaseItems = new()
         {
             BaseItem.Invalid,
+            BaseItem.CompanionPowerGlove,
             BaseItem.CreatureSlashWeapon,
             BaseItem.CreaturePierceWeapon,
             BaseItem.CreatureBludgeonWeapon,
@@ -1368,15 +1503,6 @@ namespace SWLOR.Game.Server.Service
         public static bool IsLegacyItem(uint item)
         {
             return GetTag(item) == "LEGACY_ITEM";
-        }
-
-        /// <summary>
-        /// Marks an item as a legacy item.
-        /// </summary>
-        /// <param name="item">The item to mark as legacy.</param>
-        public static void MarkLegacyItem(uint item)
-        {
-            SetTag(item, "LEGACY_ITEM");
         }
 
         /// <summary>

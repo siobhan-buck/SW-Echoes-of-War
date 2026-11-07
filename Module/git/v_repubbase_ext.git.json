@@ -3649,7 +3649,7 @@
         "Description": {
           "type": "cexolocstring",
           "value": {
-            "0": "The grease-stained technicians work diligently on the Walker’s legs. Both of them, however, secretly wonder how they’re going to fix the upper part of it with no ladder. However, this one is getting paid hourly and seems quite happy about this dilemma."
+            "0": "The grease-stained technicians work diligently on the Walker's legs. Both of them, however, secretly wonder how they're going to fix the upper part of it with no ladder. However, this one is getting paid hourly and seems quite happy about this dilemma."
           }
         },
         "Dex": {
@@ -4994,7 +4994,7 @@
         "Description": {
           "type": "cexolocstring",
           "value": {
-            "0": "The grease-stained technicians work diligently on the Walker’s legs. Both of them, however, secretly wonder how they’re going to fix the upper part of it with no ladder."
+            "0": "The grease-stained technicians work diligently on the Walker's legs. Both of them, however, secretly wonder how they're going to fix the upper part of it with no ladder."
           }
         },
         "Dex": {
@@ -9247,7 +9247,7 @@
         "Description": {
           "type": "cexolocstring",
           "value": {
-            "0": "A loud and brash drill-sergeant barking orders to his troopers. It sounds like they’re in for some sugar cookies in the near future."
+            "0": "A loud and brash drill-sergeant barking orders to his troopers. It sounds like they're in for some sugar cookies in the near future."
           }
         },
         "Dex": {
@@ -31576,7 +31576,7 @@
         "Description": {
           "type": "cexolocstring",
           "value": {
-            "0": "The Crewman is wolfing down their food like they’re about to be late for something, but they seem too awkward to disengage from the conversation at hand."
+            "0": "The Crewman is wolfing down their food like they're about to be late for something, but they seem too awkward to disengage from the conversation at hand."
           }
         },
         "Dex": {
@@ -34397,7 +34397,7 @@
         "Description": {
           "type": "cexolocstring",
           "value": {
-            "0": "<cÛ µ>Challenge Rating: Impossible</c>\nThis Crewman stands above all others. The Republic’s finest. As long as you ignore the legions of higher ranking, more veteran Republic soldiers. Still, probably the best Crewman you’ll find within a five meter radius."
+            "0": "<c� �>Challenge Rating: Impossible</c>\nThis Crewman stands above all others. The Republic's finest. As long as you ignore the legions of higher ranking, more veteran Republic soldiers. Still, probably the best Crewman you'll find within a five meter radius."
           }
         },
         "Dex": {
@@ -120473,7 +120473,7 @@
         },
         "Bearing": {
           "type": "float",
-          "value": -1.570796251296997
+          "value": 1.546252489089966
         },
         "BodyBag": {
           "type": "byte",
@@ -172341,7 +172341,7 @@
         },
         "LinkedTo": {
           "type": "cexostring",
-          "value": "WP_V_RepHanger_to_RepBaseExt"
+          "value": "WP_pubbie_inter"
         },
         "LinkedToFlags": {
           "type": "byte",
@@ -172454,6 +172454,21 @@
   "VarTable": {
     "type": "list",
     "value": [
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "WEATHER_HAZARD_SAFE"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
+        }
+      },
       {
         "__struct_id": 0,
         "Name": {
@@ -172592,68 +172607,6 @@
         "MapNote": {
           "type": "cexolocstring",
           "value": {
-            "0": "Hanger Entrance"
-          }
-        },
-        "MapNoteEnabled": {
-          "type": "byte",
-          "value": 1
-        },
-        "Tag": {
-          "type": "cexostring",
-          "value": "WP_V_RepBaseExt_to_RepHanger"
-        },
-        "TemplateResRef": {
-          "type": "resref",
-          "value": "nw_waypoint001"
-        },
-        "XOrientation": {
-          "type": "float",
-          "value": 1.0
-        },
-        "XPosition": {
-          "type": "float",
-          "value": 33.26587677001953
-        },
-        "YOrientation": {
-          "type": "float",
-          "value": 7.549790126404332e-008
-        },
-        "YPosition": {
-          "type": "float",
-          "value": 115.8796997070313
-        },
-        "ZPosition": {
-          "type": "float",
-          "value": -0.03221511840820313
-        }
-      },
-      {
-        "__struct_id": 5,
-        "Appearance": {
-          "type": "byte",
-          "value": 1
-        },
-        "Description": {
-          "type": "cexolocstring",
-          "value": {}
-        },
-        "HasMapNote": {
-          "type": "byte",
-          "value": 1
-        },
-        "LinkedTo": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "LocalizedName": {
-          "id": 14817,
-          "type": "cexolocstring",
-          "value": {}
-        },
-        "MapNote": {
-          "type": "cexolocstring",
-          "value": {
             "0": "Outpost Hope Entrance"
           }
         },
@@ -172663,7 +172616,7 @@
         },
         "Tag": {
           "type": "cexostring",
-          "value": "WP_V_RepBaseExt_to_RepBaseInt"
+          "value": "RepBase_Exit"
         },
         "TemplateResRef": {
           "type": "resref",
@@ -172773,7 +172726,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — v_repubbase_ext"
+            "0": "Stuck - v_repubbase_ext"
           }
         },
         "MapNote": {
@@ -172807,6 +172760,127 @@
         "YPosition": {
           "type": "float",
           "value": 59.0
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 5,
+        "Appearance": {
+          "type": "byte",
+          "value": 1
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "HasMapNote": {
+          "type": "byte",
+          "value": 0
+        },
+        "LinkedTo": {
+          "type": "cexostring",
+          "value": ""
+        },
+        "LocalizedName": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "MapNote": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "MapNoteEnabled": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "WP_V_RepBaseExt_to_RepHanger"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": ""
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 32.57379913330078
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 116.2108306884766
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.1185356378555298
+        }
+      },
+      {
+        "__struct_id": 5,
+        "Appearance": {
+          "type": "byte",
+          "value": 1
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "HasMapNote": {
+          "type": "byte",
+          "value": 1
+        },
+        "LinkedTo": {
+          "type": "cexostring",
+          "value": ""
+        },
+        "LocalizedName": {
+          "id": 14817,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "MapNote": {
+          "type": "cexolocstring",
+          "value": {
+            "0": "Outpost Hope Entrance"
+          }
+        },
+        "MapNoteEnabled": {
+          "type": "byte",
+          "value": 1
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "WP_V_RepBaseExt_to_RepBaseInt"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_waypoint001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 44.0
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 4.203895392974451e-45
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 60.0
         },
         "ZPosition": {
           "type": "float",

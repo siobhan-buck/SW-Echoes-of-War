@@ -29,6 +29,7 @@ public class AbilityAnimationEquipmentTests
     [TestCase(BaseItem.Dart, 11, 2, 2, 3, Grip.Throwing)]
     [TestCase(BaseItem.SmallShield, 7, null, null, 3, Grip.Shield)]
     [TestCase(BaseItem.Katar, null, 2, 2, 3, Grip.Unarmed)]
+    [TestCase(BaseItem.PowerGlove, null, 1, 1, 3, Grip.Unarmed)]
     [TestCase(BaseItem.Invalid, null, null, null, 3, Grip.Empty)]
     [TestCase(BaseItem.Longsword, null, null, null, 3, Grip.Unknown)]
     [TestCase(BaseItem.Longsword, 99, 3, 3, 3, Grip.Unknown)]
@@ -37,9 +38,37 @@ public class AbilityAnimationEquipmentTests
         int? weaponType, int creatureSize, Grip expected) =>
         AbilityAnimationEquipment.ResolveGrip(item, wield, size, weaponType, creatureSize).Should().Be(expected);
 
+    // Every weapon whose idle grip keeps a native holding layer, read from the shipped baseitems rows.
+    [TestCase(BaseItem.Rifle, AnimationWeaponHold.Rifle)]
+    [TestCase(BaseItem.Cannon, AnimationWeaponHold.Rifle)]
+    [TestCase(BaseItem.GreatSword, AnimationWeaponHold.Shoulder)]
+    [TestCase(BaseItem.QuarterStaff, AnimationWeaponHold.Shoulder)]
+    [TestCase(BaseItem.Saberstaff, AnimationWeaponHold.Shoulder)]
+    [TestCase(BaseItem.Halberd, AnimationWeaponHold.Shoulder)]
+    [TestCase(BaseItem.TwinElectroBlade, AnimationWeaponHold.Shoulder)]
+    [TestCase(BaseItem.Longsword, AnimationWeaponHold.None)]
+    [TestCase(BaseItem.Pistol, AnimationWeaponHold.None)]
+    [TestCase(BaseItem.Katar, AnimationWeaponHold.None)]
+    public void MainHandWeaponDeterminesTheNativeHoldLayer(BaseItem item, AnimationWeaponHold expected)
+    {
+        var rows = Test2daHelper.Read2da(new FileInfo(Path.Combine(RepositoryRoot(), "SWLOR_Haks/sw_2da/baseitems.2da")));
+        var row = rows[(int)item];
+        int? Read(string column) => int.TryParse(row[column], out var value) ? value : null;
+        var grip = AbilityAnimationEquipment.ResolveGrip(item, Read("WeaponWield"), Read("WeaponSize"), Read("WeaponType"), 3);
+        AbilityAnimationEquipment.ResolveHold(item, grip).Should().Be(expected);
+    }
+
     [TestCase(Requirement.OneHanded, Grip.OneHanded, Grip.Empty, true)]
     [TestCase(Requirement.OneHanded, Grip.OneHanded, Grip.OneHanded, false)]
     [TestCase(Requirement.OneHanded, Grip.OneHanded, Grip.Shield, false)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.OneHanded, Grip.Empty, true)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.OneHanded, Grip.OneHanded, true)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.OneHanded, Grip.Shield, true)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.TwoHanded, Grip.Empty, false)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.Empty, Grip.OneHanded, false)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.Pistol, Grip.Shield, false)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.OneHanded, Grip.CompanionPistol, false)]
+    [TestCase(Requirement.OneHandedWithOffHand, Grip.OneHanded, Grip.Unknown, false)]
     [TestCase(Requirement.OneHanded, Grip.TwoHanded, Grip.Empty, false)]
     [TestCase(Requirement.WeaponAndShield, Grip.OneHanded, Grip.Shield, true)]
     [TestCase(Requirement.WeaponAndShield, Grip.OneHanded, Grip.OneHanded, false)]
@@ -62,6 +91,13 @@ public class AbilityAnimationEquipmentTests
     [TestCase(Requirement.Pistol, Grip.Pistol, Grip.Empty, true)]
     [TestCase(Requirement.Pistol, Grip.Pistol, Grip.Shield, false)]
     [TestCase(Requirement.Pistol, Grip.Rifle, Grip.Empty, false)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Pistol, Grip.Empty, true)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Pistol, Grip.Shield, true)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Pistol, Grip.CompanionPistol, true)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Pistol, Grip.OneHanded, false)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Pistol, Grip.Unknown, false)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Rifle, Grip.Empty, false)]
+    [TestCase(Requirement.PistolWithOffHand, Grip.Empty, Grip.CompanionPistol, false)]
     [TestCase(Requirement.Rifle, Grip.Rifle, Grip.Empty, true)]
     [TestCase(Requirement.Rifle, Grip.Pistol, Grip.Empty, false)]
     [TestCase(Requirement.Throwing, Grip.Throwing, Grip.Empty, true)]
@@ -71,6 +107,45 @@ public class AbilityAnimationEquipmentTests
     [TestCase(Requirement.Unrestricted, Grip.Unknown, Grip.Unknown, true)]
     public void AuthoredMotionRequiresTheCorrectGripAndOffHand(Requirement requirement, Grip mainHand, Grip offHand, bool expected) =>
         AbilityAnimationEquipment.IsCompatible(requirement, mainHand, offHand).Should().Be(expected);
+
+    [TestCase(1)]
+    [TestCase(2)]
+    [TestCase(3)]
+    [TestCase(4)]
+    [TestCase(5)]
+    public void PowerGlovePairRetainsEveryAuthoredUnarmedClip(int creatureSize)
+    {
+        var rows = Test2daHelper.Read2da(new FileInfo(Path.Combine(RepositoryRoot(), "SWLOR_Haks/sw_2da/baseitems.2da")));
+        Grip ReadGrip(BaseItem item)
+        {
+            var row = rows[(int)item];
+            int? Read(string column) => int.TryParse(row[column], out var value) ? value : null;
+            return AbilityAnimationEquipment.ResolveGrip(item, Read("WeaponWield"), Read("WeaponSize"), Read("WeaponType"), creatureSize);
+        }
+
+        var mainHand = ReadGrip(BaseItem.PowerGlove);
+        var offHand = ReadGrip(BaseItem.CompanionPowerGlove);
+        var entries = ActiveAbilityAnimationCatalog.Entries.Where(entry => entry.Category == "Unarmed").ToArray();
+        var abilities = typeof(IAbilityListDefinition).Assembly.GetTypes()
+            .Where(type => !type.IsAbstract && typeof(IAbilityListDefinition).IsAssignableFrom(type) &&
+                type.Namespace == "SWLOR.Game.Server.Feature.AbilityDefinition.Unarmed")
+            .SelectMany(type => ((IAbilityListDefinition)Activator.CreateInstance(type)!).BuildAbilities())
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+        AbilityAnimationBinding.Apply(abilities, entries);
+
+        entries.Should().NotBeEmpty();
+        foreach (var entry in entries)
+        foreach (var feat in entry.Feats)
+        {
+            var ability = abilities[feat];
+            var compatible = AbilityAnimationEquipment.IsCompatible(ability.AnimationEquipmentRequirement, mainHand, offHand);
+            compatible.Should().BeTrue($"{feat} must accept the real glove and its nonweapon cosmetic companion");
+            var clip = ability.UsesAuthoredImpactAnimation
+                ? AbilityAnimationBinding.ImpactClip(ability, true, compatible)
+                : AbilityAnimationBinding.ActivationClip(ability, true, 0f, compatible);
+            clip.Should().BeSameAs(entry.Clip, feat.ToString());
+        }
+    }
 
     [Test]
     public void ManifestAndCatalogExplicitlyAgreeOnEveryEquipmentRequirement()
@@ -104,13 +179,65 @@ public class AbilityAnimationEquipmentTests
                 var expected = sources.Contains("plreadyr") ? Requirement.Polearm :
                     sources.Any(source => source!.StartsWith("2h")) ? Requirement.TwoHanded :
                     sources.Contains("1hreadyr") ? Requirement.OneHanded : (Requirement?)null;
-                if (expected.HasValue) catalog[id].EquipmentRequirement.Should().Be(expected.Value, id);
+                if (expected == Requirement.OneHanded)
+                    catalog[id].EquipmentRequirement.Should().BeOneOf(Requirement.OneHanded, Requirement.OneHandedWithOffHand);
+                else if (expected.HasValue)
+                    catalog[id].EquipmentRequirement.Should().Be(expected.Value, id);
             }
         }
         using var recipe = JsonDocument.Parse(File.ReadAllText(Path.Combine(RepositoryRoot(), "design/animations/vibroblade/recipe.json")));
         foreach (var motion in recipe.RootElement.GetProperty("motions").EnumerateArray())
-            catalog[motion.GetProperty("id").GetString()!].EquipmentRequirement.Should().Be(
-                motion.GetProperty("shield").GetBoolean() ? Requirement.WeaponAndShield : Requirement.OneHanded);
+        {
+            var requirement = catalog[motion.GetProperty("id").GetString()!].EquipmentRequirement;
+            if (motion.GetProperty("shield").GetBoolean()) requirement.Should().Be(Requirement.WeaponAndShield);
+            else requirement.Should().BeOneOf(Requirement.OneHanded, Requirement.OneHandedWithOffHand);
+        }
+    }
+
+    [Test]
+    public void SupportedOffHandsRetainTheBoundCustomAnimationForEveryAbilityRank()
+    {
+        var abilities = typeof(IAbilityListDefinition).Assembly.GetTypes()
+            .Where(type => !type.IsAbstract && typeof(IAbilityListDefinition).IsAssignableFrom(type))
+            .SelectMany(type => ((IAbilityListDefinition)Activator.CreateInstance(type)!).BuildAbilities())
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+        AbilityAnimationBinding.Apply(abilities, ActiveAbilityAnimationCatalog.Entries);
+
+        var expanded = ActiveAbilityAnimationCatalog.Entries.Where(entry => entry.EquipmentRequirement is
+            Requirement.OneHandedWithOffHand or Requirement.PistolWithOffHand).ToArray();
+        expanded.Should().NotBeEmpty();
+        foreach (var entry in expanded)
+        {
+            var mainHand = entry.EquipmentRequirement == Requirement.OneHandedWithOffHand ? Grip.OneHanded : Grip.Pistol;
+            var secondWeapon = mainHand == Grip.OneHanded ? Grip.OneHanded : Grip.CompanionPistol;
+            foreach (var offHand in new[] { Grip.Empty, secondWeapon, Grip.Shield })
+            foreach (var feat in entry.Feats)
+            {
+                var ability = abilities[feat];
+                var compatible = AbilityAnimationEquipment.IsCompatible(ability.AnimationEquipmentRequirement, mainHand, offHand);
+                compatible.Should().BeTrue($"{feat} supports {mainHand}/{offHand}");
+                var selected = ability.UsesAuthoredImpactAnimation
+                    ? AbilityAnimationBinding.ImpactClip(ability, true, compatible)
+                    : ability.ActivationType == AbilityActivationType.Weapon
+                        ? AbilityAnimationBinding.QueuedClip(ability, true, compatible)
+                        : AbilityAnimationBinding.ActivationClip(ability, true, equipmentCompatible: compatible);
+                selected.Should().BeSameAs(entry.Clip, $"{feat} retains its custom motion with {offHand}");
+            }
+        }
+    }
+
+    [TestCase("ImbuementStance")]
+    [TestCase("AssassinsStance")]
+    [TestCase("GamblerStance")]
+    [TestCase("DeadMansHand")]
+    public void FreeHandWeaponPreparationKeepsItsEmptyOffHandRequirement(string id)
+    {
+        var entry = ActiveAbilityAnimationCatalog.Entries.Single(entry => entry.Id == id);
+        var mainHand = entry.Category == "Pistol" ? Grip.Pistol : Grip.OneHanded;
+        var secondWeapon = mainHand == Grip.Pistol ? Grip.CompanionPistol : Grip.OneHanded;
+        AbilityAnimationEquipment.IsCompatible(entry.EquipmentRequirement, mainHand, Grip.Empty).Should().BeTrue();
+        AbilityAnimationEquipment.IsCompatible(entry.EquipmentRequirement, mainHand, secondWeapon).Should().BeFalse();
+        AbilityAnimationEquipment.IsCompatible(entry.EquipmentRequirement, mainHand, Grip.Shield).Should().BeFalse();
     }
 
     [Test]
@@ -138,7 +265,9 @@ public class AbilityAnimationEquipmentTests
                 AbilityAnimationBinding.QueuedClip(ability, true, compatible).Should().BeNull(entry.Id);
                 if (ability.AuthoredAnimation != null)
                     AbilityAnimationBinding.ActivationType(ability, true, 0, compatible).Should().Be(
-                        ability.HasGeneratedAnimationBinding ? ability.NativeAnimationType : Animation.Invalid, entry.Id);
+                        !ability.HasGeneratedAnimationBinding ? Animation.Invalid
+                        : ability.UsesImmediateAuthoredAnimation && ability.NativeAnimationType == Animation.Invalid ? Animation.CastOutAnimation
+                        : ability.NativeAnimationType, entry.Id);
                 (ability.ActivationAction, ability.ImpactAction, ability.ActivationDelay, ability.ActivationType,
                     ability.ImpactDelay, ability.IsChanneled).Should().Be(original[feat]);
                 ability.PreviewAnimation.Should().BeSameAs(entry.Clip);

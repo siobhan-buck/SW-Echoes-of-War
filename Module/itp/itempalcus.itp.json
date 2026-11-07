@@ -2139,6 +2139,83 @@
                       "type": "resref",
                       "value": "engi_armor_2"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Firedancer Ceremonial Garb (Female)"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_fire_f"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Firedancer Ceremonial Garb (Male)"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_fire_m"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Cerin Tal's Work Clothes"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_oq_cerinwear"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Toren Senn's Practice Coat"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_oq_torenwear"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Spa Reception Coat"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_spa_uniform"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Spa Visitor Coat"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_spa_visitor"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Highcrest Trade Coat"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "hc_tradecoat"
+                    }
                   }
                 ]
               },
@@ -3816,6 +3893,17 @@
                       "type": "resref",
                       "value": "thermdet_w1"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Highcrest Guard Armor"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "hc_guard_plate"
+                    }
                   }
                 ]
               },
@@ -4326,6 +4414,17 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "ch_helmet"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Arkanian Dragon Helm"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "ark_helm"
                     }
                   },
                   {
@@ -6417,6 +6516,17 @@
                       "type": "resref",
                       "value": "oneshot_l7"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Highcrest Guard Helm"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "hc_guard_helm"
+                    }
                   }
                 ]
               },
@@ -8176,6 +8286,61 @@
                       "type": "resref",
                       "value": "yshrobes002"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Ilya Venn's Work Clothes"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_oq_ilyawear"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Sera Vey's Work Clothes"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_oq_serawear"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Spa Linen Uniform"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_spa_linen"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Spa Recovery Clothes"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "es_spa_wraps"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Highcrest Work Clothes"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "hc_workwear"
+                    }
                   }
                 ]
               },
@@ -9112,6 +9277,16 @@
                       "type": "resref",
                       "value": "abs_rakalpha_wp"
                     }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Alpha Attack"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colalpha_wp"
+                    }
                   },
                   {
                     "__struct_id": 0,
@@ -9122,6 +9297,16 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "abs_rakghoul_wp"
+                    }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Attack"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colicoid_wp"
                     }
                   },
                   {
@@ -9134,6 +9319,16 @@
                       "type": "resref",
                       "value": "abs_rakbrute_wp"
                     }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Brute Attack"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colbrute_wp"
+                    }
                   },
                   {
                     "__struct_id": 0,
@@ -9144,6 +9339,16 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "abs_rakstalk_wp"
+                    }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Stalker Attack"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colstalk_wp"
                     }
                   },
                   {
@@ -9420,6 +9625,16 @@
                       "type": "resref",
                       "value": "abs_subzero_wp"
                     }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Subject Zero Attack"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colzero_wp"
+                    }
                   },
                   {
                     "__struct_id": 0,
@@ -9595,6 +9810,83 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "zombieworker_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Dire Wolf Natural Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_direwolf_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echa'olm Bite"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_echaolm_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Frost Dire Wolf Natural Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_frostwolf_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Gorak Vesh Creature Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_gorak_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "The Thornbound Warden Bite"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_veinboss_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Shattervein Wolf Bite"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_veinwolf_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Dire Wolf Alpha Natural Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_wolfalpha_wp"
                     }
                   }
                 ]
@@ -13879,6 +14171,83 @@
                       "type": "resref",
                       "value": "vtdrakegruntmele"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Captain Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nccapt_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Heavy Gunner Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_heavy_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Hunter Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_hunter_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Field Medic Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_medic_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Scout Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_scout_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Thyrsian Force Pike"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_sung_wp"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Scrapyard Smuggler Weapon"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_scrap_wp"
+                    }
                   }
                 ]
               },
@@ -17833,6 +18202,16 @@
                       "type": "resref",
                       "value": "abs_rakalpha_sk"
                     }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Alpha Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colalpha_sk"
+                    }
                   },
                   {
                     "__struct_id": 0,
@@ -17843,6 +18222,16 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "abs_rakbrute_sk"
+                    }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Brute Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colbrute_sk"
                     }
                   },
                   {
@@ -17855,6 +18244,16 @@
                       "type": "resref",
                       "value": "abs_rakstalk_sk"
                     }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Stalker Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colstalk_sk"
+                    }
                   },
                   {
                     "__struct_id": 0,
@@ -17865,6 +18264,16 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "abs_rakghoul_sk"
+                    }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Colicoid Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colicoid_sk"
                     }
                   },
                   {
@@ -18988,6 +19397,16 @@
                       "type": "resref",
                       "value": "abs_subzero_sk"
                     }
+                  },                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Subject Zero Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "abs_colzero_sk"
+                    }
                   },
                   {
                     "__struct_id": 0,
@@ -19758,6 +20177,171 @@
                       "type": "resref",
                       "value": "zombieworker_sk"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Dire Wolf Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_direwolf_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echa'olm Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_echaolm_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Frost Dire Wolf Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_frostwolf_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Gorak Vesh Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_gorak_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Captain Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nccapt_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Vanguard Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_ncvang_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Heavy Gunner Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_heavy_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Hunter Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_hunter_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Field Medic Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_medic_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Neo-Crusader Scout Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_nc_scout_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Scrapyard Smuggler Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_scrap_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Thyrsian Exile Boss Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_sung_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "The Thornbound Warden Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_veinboss_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Shattervein Wolf Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_veinwolf_sk"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Dire Wolf Alpha Stat Skin"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_wolfalpha_sk"
+                    }
                   }
                 ]
               },
@@ -20434,6 +21018,17 @@
                       "type": "resref",
                       "value": "vtdrakegunnerarm"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Thyrsian Gilded Armor"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_sung_armor"
+                    }
                   }
                 ]
               },
@@ -20518,7 +21113,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Aegisline Display Plinth"
+                "value": "Aegisline Sword Pedestal"
               },
               "RESREF": {
                 "type": "resref",
@@ -20672,7 +21267,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Ashmark Display Plinth"
+                "value": "Ashmark Altar"
               },
               "RESREF": {
                 "type": "resref",
@@ -21706,7 +22301,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Commandline Display Plinth"
+                "value": "Commandline Bust"
               },
               "RESREF": {
                 "type": "resref",
@@ -22278,7 +22873,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Fieldline Display Plinth"
+                "value": "Fieldline Display Case"
               },
               "RESREF": {
                 "type": "resref",
@@ -22553,7 +23148,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Guttermark Display Plinth"
+                "value": "Guttermark Easel"
               },
               "RESREF": {
                 "type": "resref",
@@ -23862,7 +24457,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Resonant Display Plinth"
+                "value": "Resonant Crystal"
               },
               "RESREF": {
                 "type": "resref",
@@ -24379,7 +24974,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Stonewake Display Plinth"
+                "value": "Stonewake Stone Altar"
               },
               "RESREF": {
                 "type": "resref",
@@ -24555,7 +25150,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Surgewake Display Plinth"
+                "value": "Surgewake Holo Projector"
               },
               "RESREF": {
                 "type": "resref",
@@ -25028,7 +25623,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Trailmark Display Plinth"
+                "value": "Trailmark Waystone"
               },
               "RESREF": {
                 "type": "resref",
@@ -25204,7 +25799,7 @@
               "__struct_id": 0,
               "NAME": {
                 "type": "cexostring",
-                "value": "Veilcarved Display Plinth"
+                "value": "Veilcarved Rune Pillar"
               },
               "RESREF": {
                 "type": "resref",
@@ -54065,6 +54660,28 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Twin Pistol Boost I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "de_twinpist_b1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Twin Pistol Boost II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "de_twinpist_b2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Ultranio"
                     },
                     "RESREF": {
@@ -54092,6 +54709,28 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "ultraynno"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Unarmed Boost I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "de_unarmed_b1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Unarmed Boost II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "de_unarmed_b2"
                     }
                   },
                   {
@@ -55819,6 +56458,171 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "zondeyn"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Red Chili Oil"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_chili_oil"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Farm Eggs"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_egg"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan River-Fish Fillets"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_fish"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Frost Fang"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_frost_fang"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Icebound Chiro Hide"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_gorak_hide"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Silverwood Greens"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_greens"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Neo-Crusader Salvage"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_mando_salv"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Pickled Greens"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_pickles"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Farm Poultry"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_poultry"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan White Rice"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_rice"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Scallions"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_scallion"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Silverwood Seeds"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_seeds"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Thyrsian Exile Insignia"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_sun_insignia"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Dire Wolf Meat"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_wolf_meat"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Dire Wolf Pelt"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_wolf_pelt"
                     }
                   }
                 ]
@@ -58012,6 +58816,17 @@
                           "__struct_id": 0,
                           "NAME": {
                             "type": "cexostring",
+                            "value": "Arkanian Dragon Ward Ring"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "ark_ward_ring"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
                             "value": "Cold Trigger Band"
                           },
                           "RESREF": {
@@ -58903,6 +59718,17 @@
                           "__struct_id": 0,
                           "NAME": {
                             "type": "cexostring",
+                            "value": "Arkanian Dragon Force Ring"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "ark_force_ring"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
                             "value": "Majestic Ring"
                           },
                           "RESREF": {
@@ -59586,17 +60412,6 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Lightsaber Upgrade Kit I"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "saber_upg1"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
                       "value": "Lightsaber Upgrade Kit II"
                     },
                     "RESREF": {
@@ -59679,17 +60494,6 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "pet_treat50"
-                    }
-                  },
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Saberstaff Upgrade Kit I"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "saberstaff_upg1"
                     }
                   },
                   {
@@ -62479,6 +63283,138 @@
                       "type": "resref",
                       "value": "zoni_broth"
                     }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Hand-Pulled Broth Noodles"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_broth_noodle"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Chili-Oil Noodles"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_chili_noodle"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Crispy Claypot Rice"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_clayrice"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Steamed Dumplings"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_dumplings"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Scallion Flatbread"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_flatbread"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Ginger-Steamed Fish"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_ginger_fish"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Sticky Glazed Poultry"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_glaze_fowl"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Shared Hotpot Portion"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_hotpot"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Marbled Eggs"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_marble_egg"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Savory Rice Porridge"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_porridge"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Sweet Seed-Paste Cakes"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_seed_cake"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Echani Stuffed Steamed Buns"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_steam_bun"
+                    }
                   }
                 ]
               },
@@ -62560,7 +63496,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Aegisline Display Plinth"
+                      "value": "Blueprint: Aegisline Sword Pedestal"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -62692,7 +63628,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Ashmark Display Plinth"
+                      "value": "Blueprint: Ashmark Altar"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -63110,6 +64046,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Blueprint: Arkanian Dragon Helm"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bp_arkhelm"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Blueprint: Chaos Leggings"
                     },
                     "RESREF": {
@@ -63137,6 +64084,17 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "recipe_chring"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Blueprint: Arkanian Dragon Ward Ring"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bp_arkward"
                     }
                   },
                   {
@@ -63319,7 +64277,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Commandline Display Plinth"
+                      "value": "Blueprint: Commandline Bust"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -63924,7 +64882,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Fieldline Display Plinth"
+                      "value": "Blueprint: Fieldline Display Case"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -64221,7 +65179,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Guttermark Display Plinth"
+                      "value": "Blueprint: Guttermark Easel"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -64716,6 +65674,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Blueprint: Arkanian Dragon Force Ring"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bp_arkforce"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Blueprint: Magus Tunic"
                     },
                     "RESREF": {
@@ -65200,7 +66169,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Resonant Display Plinth"
+                      "value": "Blueprint: Resonant Crystal"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -66091,7 +67060,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Stonewake Display Plinth"
+                      "value": "Blueprint: Stonewake Stone Altar"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -66267,7 +67236,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Surgewake Display Plinth"
+                      "value": "Blueprint: Surgewake Holo Projector"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -66531,7 +67500,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Trailmark Display Plinth"
+                      "value": "Blueprint: Trailmark Waystone"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -66685,6 +67654,50 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Blueprint: Twin Pistol Boost I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "recipe_dtwinpst1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Blueprint: Twin Pistol Boost II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "recipe_dtwinpst2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Blueprint: Unarmed Boost I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "recipe_dunarmed1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Blueprint: Unarmed Boost II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "recipe_dunarmed2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Blueprint: Veilcarved Data Console"
                     },
                     "RESREF": {
@@ -66696,7 +67709,7 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
-                      "value": "Blueprint: Veilcarved Display Plinth"
+                      "value": "Blueprint: Veilcarved Rune Pillar"
                     },
                     "RESREF": {
                       "type": "resref",
@@ -68951,6 +69964,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Akimbo Stance"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_akimbostance"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Assassin's Stance"
                     },
                     "RESREF": {
@@ -69028,11 +70052,66 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Lead Shot I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_blastslide1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Lead Shot II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_blastslide2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Lead Shot III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_blastslide3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Lead Shot IV"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_blastslide4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Blazing Spikes"
                     },
                     "RESREF": {
                       "type": "resref",
                       "value": "id_blazspik"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Bruiser Stance"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_bruiserstance"
                     }
                   },
                   {
@@ -69055,6 +70134,28 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "id_conctoss2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Controlled Burst I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_ctrlburst1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Controlled Burst II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_ctrlburst2"
                     }
                   },
                   {
@@ -69204,6 +70305,17 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Crossfire Stance"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_crossfirestan"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Crusher Stance"
                     },
                     "RESREF": {
@@ -69231,6 +70343,50 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "id_defestan"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Dirty Jab I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_dirtyjab1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Dirty Jab II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_dirtyjab2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Dirty Jab III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_dirtyjab3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Dirty Jab IV"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_dirtyjab4"
                     }
                   },
                   {
@@ -69468,6 +70624,28 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Finishing Combination I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_fincombo1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Finishing Combination II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_fincombo2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Flash"
                     },
                     "RESREF": {
@@ -69512,11 +70690,55 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Flow Stance"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_flowstance"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Flurry Stance"
                     },
                     "RESREF": {
                       "type": "resref",
                       "value": "id_flurrystance"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Focused Burst I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_focburst1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Focused Burst II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_focburst2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Focused Burst III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_focburst3"
                     }
                   },
                   {
@@ -69561,6 +70783,39 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "id_gambstan"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Closing Shot I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_grappshot1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Closing Shot II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_grappshot2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Closing Shot III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_grappshot3"
                     }
                   },
                   {
@@ -69809,6 +71064,50 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Jab I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_jab1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Jab II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_jab2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Jab III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_jab3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Jab IV"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_jab4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Joint Lock I"
                     },
                     "RESREF": {
@@ -69974,11 +71273,110 @@
                     "__struct_id": 0,
                     "NAME": {
                       "type": "cexostring",
+                      "value": "Instruction Disc: Low Kick I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_lowkick1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Low Kick II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_lowkick2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
                       "value": "Instruction Disc: Ordnance Stance"
                     },
                     "RESREF": {
                       "type": "resref",
                       "value": "id_ordnstan"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Paired Volley I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_pairvolley1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Paired Volley II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_pairvolley2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Paired Volley III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_pairvolley3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Paired Volley IV"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_pairvolley4"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Palm Strike I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_palmstrike1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Palm Strike II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_palmstrike2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Palm Strike III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_palmstrike3"
                     }
                   },
                   {
@@ -70144,6 +71542,28 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "id_pinningtoss3"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Tempo Shot I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_pistolrush1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Tempo Shot II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_pistolrush2"
                     }
                   },
                   {
@@ -70859,6 +72279,39 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "id_twinrupture2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Uppercut I"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_uppercut1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Uppercut II"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_uppercut2"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Instruction Disc: Uppercut III"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "id_uppercut3"
                     }
                   },
                   {
@@ -71915,6 +73368,237 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "map_034"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Battlegrounds Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_battle"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Farmlands Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_farms"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - Silver Gate District Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_gate"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - The Veylan Groves Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_groves"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - Hearth Ward Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_hearth"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Keshan Heights Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_height"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - Highcrest Quarter Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_high"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - The Winter Marches Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_marches"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - The Old Quarter Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_oldquart"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan Orbit Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_orbit"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Keshan Peaks Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_peaks"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - The Grand Proving Grounds Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_proving"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - The Riverway Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_river"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Scraplands Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_scrap"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Scraplands - Caves Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_scrcave"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - The Shimmerdeep Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_shimmer"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Silverwood Expanse Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_silver"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - Starport Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_starport"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - Tunnels Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_tunnels"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan - The Shattervein Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_vein"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Eshan City - Verdant Crown Map"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "esh_map_verdant"
                     }
                   }
                 ]
@@ -78948,6 +80632,17 @@
                             "type": "resref",
                             "value": "vet_trnsaber"
                           }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
+                            "value": "Neo-Crusader Vanguard Electroblade"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "esh_ncvang_wp"
+                          }
                         }
                       ]
                     },
@@ -79013,7 +80708,7 @@
                           "__struct_id": 0,
                           "NAME": {
                             "type": "cexostring",
-                            "value": "Brawler’s Wraps"
+                            "value": "Brawler's Wraps"
                           },
                           "RESREF": {
                             "type": "resref",
@@ -80778,6 +82473,61 @@
                           "RESREF": {
                             "type": "resref",
                             "value": "bp_hidecuirass"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
+                            "value": "Blueprint: Sun-Cured Hide Cuirass - Silverpelt Pattern"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "bp_silverpelt"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
+                            "value": "Blueprint: Alpha-Fang Gauntlet - Frost Fang Pattern"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "bp_frostgaunt"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
+                            "value": "Blueprint: Windcaller Mantle - Ridged Hide Pattern"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "bp_ridgemantle"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
+                            "value": "Blueprint: Scopewright Cap - Reclaimed Pattern"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "bp_rec_scope"
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "NAME": {
+                            "type": "cexostring",
+                            "value": "Blueprint: Warband Helm - Reclaimed Pattern"
+                          },
+                          "RESREF": {
+                            "type": "resref",
+                            "value": "bp_rec_warhelm"
                           }
                         },
                         {
@@ -84710,6 +86460,17 @@
                     "RESREF": {
                       "type": "resref",
                       "value": "vet_spear"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "[NPC] Highcrest Guard Spear"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "hc_guard_spear"
                     }
                   }
                 ]

@@ -57722,6 +57722,21 @@
         "__struct_id": 0,
         "Name": {
           "type": "cexostring",
+          "value": "WEATHER_HAZARD_SAFE"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
           "value": "PLANET_TYPE_ID"
         },
         "Type": {
@@ -57820,7 +57835,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — dath_cz_baseok"
+            "0": "Stuck - dath_cz_baseok"
           }
         },
         "MapNote": {

@@ -39,7 +39,7 @@
       },
       "MusicNight": {
         "type": "int",
-        "value": 0
+        "value": 364
       },
       "VarTable": {
         "type": "list",
@@ -92518,7 +92518,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — moncaladaccitysu"
+            "0": "Stuck - moncaladaccitysu"
           }
         },
         "MapNote": {

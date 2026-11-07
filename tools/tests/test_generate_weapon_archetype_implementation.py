@@ -38,10 +38,38 @@ class GeneratedWeaponTargetingTests(unittest.TestCase):
             for root in (output_root, ROOT):
                 ability = (root / "SWLOR.Game.Server/Feature/AbilityDefinition/Vibroknife/ShadowflowAbilityDefinition.cs").read_text()
                 self.assertIn('.Name("Shadowflow")', ability)
-                self.assertRegex(ability, r"SkillType\.Vibroknife,\s+8,\s+18,\s+typeof\(ShadowflowStatusEffect\)")
+                # The stance stays on until toggled off; only the Hamstring it inflicts lasts 18 seconds.
+                self.assertRegex(ability, r"SkillType\.Vibroknife,\s+8,\s+0,\s+typeof\(ShadowflowStatusEffect\)")
                 status = (root / "SWLOR.Game.Server/Feature/StatusEffectDefinition/ShadowflowStatusEffect.cs").read_text()
                 self.assertIn('Name => "Shadowflow"', status)
                 self.assertIn("AutoAttackHamstringDurationSeconds] = 18", status)
+
+    def test_stance_rider_durations_do_not_time_the_stance(self):
+        rows = [row for row in GENERATOR.read_manifest()
+                if row["PerkName"] in {"Tempest Stance", "Vigor Stance"}]
+        self.assertEqual(2, len(rows))
+        _, feats = GENERATOR.parse_enum_values(ROOT / "SWLOR.NWN.API/NWScript/Enum/FeatType.cs")
+        targeting = GENERATOR.read_spell_targeting()
+        status_types = GENERATOR.known_status_effect_types()
+        with tempfile.TemporaryDirectory() as folder:
+            output_root = Path(folder)
+            (output_root / "SWLOR.Game.Server/Feature/StatusEffectDefinition").mkdir(parents=True)
+            with (patch.object(GENERATOR, "ROOT", output_root),
+                  patch.object(GENERATOR, "read_spell_targeting", return_value=targeting),
+                  patch.object(GENERATOR, "known_status_effect_types", return_value=status_types)):
+                GENERATOR.generate_ability_definitions(rows, feats, {})
+                GENERATOR.generate_stance_status_effects(rows)
+            for root in (output_root, ROOT):
+                for path, skill, status, rider in [
+                        ("Saberstaff/TempestStanceAbilityDefinition.cs", "Saberstaff", "TempestStanceStatusEffect",
+                         "AreaAbilityUsedAttackDeflectionDurationSeconds] = 30"),
+                        ("Spear/VigorStanceAbilityDefinition.cs", "Spear", "VigorStanceStatusEffect",
+                         "HostileAbilityUsedEvasionDurationSeconds] = 30")]:
+                    with self.subTest(root=str(root), stance=status):
+                        ability = (root / "SWLOR.Game.Server/Feature/AbilityDefinition" / path).read_text()
+                        self.assertRegex(ability, rf"SkillType\.{skill},\s+8,\s+0,\s+typeof\({status}\)")
+                        effect = (root / f"SWLOR.Game.Server/Feature/StatusEffectDefinition/{status}.cs").read_text()
+                        self.assertIn(rider, effect)
 
     def test_regeneration_preserves_weapon_independent_attack_triggers(self):
         expected = {
@@ -69,6 +97,51 @@ class GeneratedWeaponTargetingTests(unittest.TestCase):
             base, _ = GENERATOR.base_and_level(name)
             stats = dict(GENERATOR.description_stat_entries(rows[name], base))
             self.assertEqual(magnitude, stats[stat])
+
+    def test_regeneration_makes_guard_counter_daze_the_impact_status(self):
+        rows = [row for row in GENERATOR.read_manifest()
+                if row["Tab"] == "Katar" and row["PerkName"].startswith("Guard Counter ")]
+        self.assertEqual(3, len(rows))
+        _, feats = GENERATOR.parse_enum_values(ROOT / "SWLOR.NWN.API/NWScript/Enum/FeatType.cs")
+        targeting = GENERATOR.read_spell_targeting()
+        status_types = GENERATOR.known_status_effect_types()
+        with tempfile.TemporaryDirectory() as folder:
+            output_root = Path(folder)
+            with (patch.object(GENERATOR, "ROOT", output_root),
+                  patch.object(GENERATOR, "read_spell_targeting", return_value=targeting),
+                  patch.object(GENERATOR, "known_status_effect_types", return_value=status_types)):
+                GENERATOR.generate_ability_definitions(rows, feats, {})
+            path = "SWLOR.Game.Server/Feature/AbilityDefinition/Katar/GuardCounterAbilityDefinition.cs"
+            # The guarded Daze must stay the impact's own status so Control perks count it.
+            for root in (output_root, ROOT):
+                with self.subTest(root=str(root)):
+                    ability = (root / path).read_text()
+                    self.assertEqual(1, ability.count("RecentGuardedHitStatusEffect = typeof(DazedStatusEffect)"))
+                    self.assertEqual(1, ability.count("RecentGuardedHitStatusDurationSeconds = 15"))
+                    self.assertNotIn("ConditionalTargetStatus", ability)
+                    self.assertNotIn("RequireRecentGuardedHit", ability)
+
+    def test_breaker_reversal_bonus_requires_a_control_ability(self):
+        row = next(row for row in GENERATOR.read_manifest()
+                   if row["Tab"] == "Katar" and row["PerkName"] == "Breaker Reversal")
+        self.assertIn("next control ability", row["Description"].lower())
+        stats = dict(GENERATOR.description_stat_entries(row, row["PerkName"]))
+        self.assertEqual("(int)StatusEffectCategory.Control", stats["DamageTakenNextSkillAbilityRequiredCategory"])
+        committed = (ROOT / "SWLOR.Game.Server/Feature/PerkDefinition/KatarPerkDefinition.cs").read_text()
+        self.assertEqual(1, committed.count(
+            ".IncreasesStat(StatType.DamageTakenNextSkillAbilityRequiredCategory, (int)StatusEffectCategory.Control)"))
+
+    def test_redirecting_guard_enmity_targets_a_controlled_enemy_attacking_an_ally(self):
+        row = next(row for row in GENERATOR.read_manifest()
+                   if row["Tab"] == "Katar" and row["PerkName"] == "Redirecting Guard")
+        self.assertIn("control a target attacking an ally", row["Description"].lower())
+        self.assertIn("enmity toward that target", row["Description"].lower())
+        stats = dict(GENERATOR.description_stat_entries(row, row["PerkName"]))
+        self.assertEqual("(int)StatusEffectCategory.Control", stats["StatusAppliedRequiredCategory"])
+        self.assertEqual("15", stats["StatusAppliedTargetAttackingAllyEnmityToSourcePercentAdjustment"])
+        self.assertEqual("30", stats["StatusAppliedTargetAttackingAllyEnmityDurationSeconds"])
+        self.assertNotIn("StatusAppliedSelfEnmityPercentAdjustment", stats)
+        self.assertNotIn("StatusAppliedSelfDurationSeconds", stats)
 
     def test_regeneration_preserves_steel_shoulder_ally_only_target_selection(self):
         rows = [row for row in GENERATOR.read_manifest()

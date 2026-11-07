@@ -126,7 +126,7 @@
   },
   "Comment": {
     "type": "cexostring",
-    "value": "Soul Ascension warden in Tatooine - Forge Caverns."
+    "value": "Forge Warden Dael Karrow (Soul Ascension line) in Tatooine - Forge Caverns."
   },
   "Con": {
     "type": "byte",
@@ -155,7 +155,7 @@
   "Description": {
     "type": "cexolocstring",
     "value": {
-      "0": "A broad human anvil-keeper in honor-guard plate, a shard of cracked anvil hung at his throat and old burn scars across both palms. He greets every challenger with quiet courtesy, then lets his heavy vibroblade drink."
+      "0": "A broad human forge warden in honor-guard plate, a shard of cracked anvil hung at his throat and old burn scars across both palms. He greets every challenger with quiet courtesy, then lets his heavy vibroblade drink."
     }
   },
   "Dex": {
@@ -379,7 +379,7 @@
   "FirstName": {
     "type": "cexolocstring",
     "value": {
-      "0": "Soul Ascension Warden"
+      "0": "Forge Warden Dael Karrow"
     }
   },
   "fortbonus": {
@@ -803,6 +803,21 @@
         "Value": {
           "type": "cexostring",
           "value": "CAPSTONE_SOULASC_WD_RARES,5,1"
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "IS_BOSS"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
         }
       }
     ]

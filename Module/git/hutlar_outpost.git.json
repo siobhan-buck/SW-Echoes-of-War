@@ -17599,7 +17599,7 @@
               },
               "ArmorPart_LFoot": {
                 "type": "byte",
-                "value": 10
+                "value": 160
               },
               "ArmorPart_LHand": {
                 "type": "byte",
@@ -17607,7 +17607,7 @@
               },
               "ArmorPart_LShin": {
                 "type": "byte",
-                "value": 80
+                "value": 244
               },
               "ArmorPart_LShoul": {
                 "type": "byte",
@@ -17615,7 +17615,7 @@
               },
               "ArmorPart_LThigh": {
                 "type": "byte",
-                "value": 81
+                "value": 243
               },
               "ArmorPart_Neck": {
                 "type": "byte",
@@ -17623,7 +17623,7 @@
               },
               "ArmorPart_Pelvis": {
                 "type": "byte",
-                "value": 3
+                "value": 103
               },
               "ArmorPart_RBicep": {
                 "type": "byte",
@@ -17635,7 +17635,7 @@
               },
               "ArmorPart_RFoot": {
                 "type": "byte",
-                "value": 10
+                "value": 160
               },
               "ArmorPart_RHand": {
                 "type": "byte",
@@ -17647,7 +17647,7 @@
               },
               "ArmorPart_RShin": {
                 "type": "byte",
-                "value": 80
+                "value": 244
               },
               "ArmorPart_RShoul": {
                 "type": "byte",
@@ -17655,7 +17655,7 @@
               },
               "ArmorPart_RThigh": {
                 "type": "byte",
-                "value": 81
+                "value": 243
               },
               "ArmorPart_Torso": {
                 "type": "byte",
@@ -17712,7 +17712,7 @@
               "LocalizedName": {
                 "type": "cexolocstring",
                 "value": {
-                  "0": "Gambler Blue"
+                  "0": "Sharene's Outfit"
                 }
               },
               "Metal1Color": {
@@ -17741,11 +17741,31 @@
               },
               "Tag": {
                 "type": "cexostring",
-                "value": "Gambler_blue"
+                "value": "sharene_outfit"
               },
               "TemplateResRef": {
                 "type": "resref",
-                "value": "gambler_blue"
+                "value": "sharene_outfit"
+              },
+              "VarTable": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "Name": {
+                      "type": "cexostring",
+                      "value": "NO_ECONOMY"
+                    },
+                    "Type": {
+                      "type": "dword",
+                      "value": 1
+                    },
+                    "Value": {
+                      "type": "int",
+                      "value": 1
+                    }
+                  }
+                ]
               },
               "xArmorPart_Belt": {
                 "type": "word",
@@ -17761,7 +17781,7 @@
               },
               "xArmorPart_LFoot": {
                 "type": "word",
-                "value": 10
+                "value": 160
               },
               "xArmorPart_LHand": {
                 "type": "word",
@@ -17769,7 +17789,7 @@
               },
               "xArmorPart_LShin": {
                 "type": "word",
-                "value": 80
+                "value": 244
               },
               "xArmorPart_LShou": {
                 "type": "word",
@@ -17777,7 +17797,7 @@
               },
               "xArmorPart_LThig": {
                 "type": "word",
-                "value": 81
+                "value": 243
               },
               "xArmorPart_Neck": {
                 "type": "word",
@@ -17785,7 +17805,7 @@
               },
               "xArmorPart_Pelvi": {
                 "type": "word",
-                "value": 3
+                "value": 103
               },
               "xArmorPart_RBice": {
                 "type": "word",
@@ -17797,7 +17817,7 @@
               },
               "xArmorPart_RFoot": {
                 "type": "word",
-                "value": 10
+                "value": 160
               },
               "xArmorPart_RHand": {
                 "type": "word",
@@ -17809,7 +17829,7 @@
               },
               "xArmorPart_RShin": {
                 "type": "word",
-                "value": 80
+                "value": 244
               },
               "xArmorPart_RShou": {
                 "type": "word",
@@ -17817,7 +17837,7 @@
               },
               "xArmorPart_RThig": {
                 "type": "word",
-                "value": 81
+                "value": 243
               },
               "xArmorPart_Torso": {
                 "type": "word",
@@ -30806,7 +30826,7 @@
                     },
                     "ArmorPart_Torso": {
                       "type": "byte",
-                      "value": 170
+                      "value": 167
                     },
                     "BaseItem": {
                       "type": "int",
@@ -31168,7 +31188,7 @@
                     },
                     "xArmorPart_Torso": {
                       "type": "word",
-                      "value": 170
+                      "value": 167
                     },
                     "XOrientation": {
                       "type": "float",
@@ -31271,7 +31291,7 @@
                     },
                     "ArmorPart_Torso": {
                       "type": "byte",
-                      "value": 170
+                      "value": 171
                     },
                     "BaseItem": {
                       "type": "int",
@@ -31633,7 +31653,7 @@
                     },
                     "xArmorPart_Torso": {
                       "type": "word",
-                      "value": 170
+                      "value": 171
                     },
                     "XOrientation": {
                       "type": "float",
@@ -62020,7 +62040,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 14
+                      "value": 21
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -62028,7 +62048,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 14
+                      "value": 21
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -62236,7 +62256,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 14
+                      "value": 24
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -62244,7 +62264,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 14
+                      "value": 24
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -63762,7 +63782,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 191
+                      "value": 182
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -63770,7 +63790,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 191
+                      "value": 182
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -63980,7 +64000,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 191
+                      "value": 181
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -63988,7 +64008,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 191
+                      "value": 181
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -82194,6 +82214,3902 @@
                       "type": "float",
                       "value": 0.0
                     }
+                  },
+                  {
+                    "__struct_id": 96,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 56
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 58
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Basic Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 201
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 5
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 0
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 41
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "b_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "b_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 201
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 97,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 102
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 104
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Field Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 201
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 7
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 5
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 2
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 41
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "fld_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "fld_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 201
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 98,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 146
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 148
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Titan Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 211
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 9
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 10
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 4
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 41
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "tit_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "tit_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 211
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 99,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 260
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 262
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Veteran Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 211
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 11
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 15
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 6
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 41
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "vet_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "vet_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 211
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 100,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 372
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 374
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Delta Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 81
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 13
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 20
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 8
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 41
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "del_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "del_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 81
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 101,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 654
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 656
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Prime Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 81
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 15
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 43
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "prm_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "prm_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 81
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 102,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 934
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 936
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Proto Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 61
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 16
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 30
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 2
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 43
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "proto_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "proto_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 61
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 103,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 1638
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 61
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 1640
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "One item equips both Twin Pistols. Equipping this pair automatically equips its temporary off-hand gun. Removing either gun unequips the pair and destroys the temporary gun. Both guns use this item's weapon profile. Weapon profile enhancements apply to both guns; equipment bonuses apply once."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {}
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Ascendant Twin Pistols"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 61
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 14
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 1
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 61
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 35
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 52
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 4
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 43
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "asc_twinpistol"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "asc_twinpistol"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 61
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "VarTable": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "Name": {
+                            "type": "cexostring",
+                            "value": "TWIN_PISTOL_PAIR"
+                          },
+                          "Type": {
+                            "type": "dword",
+                            "value": 1
+                          },
+                          "Value": {
+                            "type": "int",
+                            "value": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "__struct_id": 104,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 28
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 29
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Basic Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 7
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 0
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 45
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "b_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "b_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 105,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 51
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 52
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Field Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 8
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 5
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 50
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "fld_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "fld_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 106,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 73
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 74
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Titan Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 9
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 10
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 55
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "tit_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "tit_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 107,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 130
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 131
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Veteran Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 10
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 15
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 60
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "vet_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "vet_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 108,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 186
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 187
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Delta Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 11
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 20
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 65
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "del_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "del_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 109,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 327
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 328
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Prime Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 12
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 25
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 70
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "prm_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "prm_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 110,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 467
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 468
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Proto Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 13
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 30
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 75
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "proto_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "proto_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
+                  },
+                  {
+                    "__struct_id": 111,
+                    "AddCost": {
+                      "type": "dword",
+                      "value": 819
+                    },
+                    "BaseItem": {
+                      "type": "int",
+                      "value": 541
+                    },
+                    "Charges": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Cost": {
+                      "type": "dword",
+                      "value": 820
+                    },
+                    "Cursed": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "DescIdentified": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Description": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "An equipped hand-to-hand weapon. Uses the Unarmed skill; armor-slot gloves remain separate. Its powered glove, vibroknuckler, blastknuckle, shock glove, power fist and bare-fist appearances are cosmetic."
+                      }
+                    },
+                    "Identified": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "Infinite": {
+                      "type": "byte",
+                      "value": 1
+                    },
+                    "LocalizedName": {
+                      "type": "cexolocstring",
+                      "value": {
+                        "0": "Ascendant Power Glove"
+                      }
+                    },
+                    "ModelPart1": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart2": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "ModelPart3": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "Plot": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "PropertiesList": {
+                      "type": "list",
+                      "value": [
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 34
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 15
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 93
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 48
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 35
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 131
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 51
+                          }
+                        },
+                        {
+                          "__struct_id": 0,
+                          "ChanceAppear": {
+                            "type": "byte",
+                            "value": 100
+                          },
+                          "CostTable": {
+                            "type": "byte",
+                            "value": 52
+                          },
+                          "CostValue": {
+                            "type": "word",
+                            "value": 22
+                          },
+                          "Param1": {
+                            "type": "byte",
+                            "value": 255
+                          },
+                          "Param1Value": {
+                            "type": "byte",
+                            "value": 0
+                          },
+                          "PropertyName": {
+                            "type": "word",
+                            "value": 98
+                          },
+                          "Subtype": {
+                            "type": "word",
+                            "value": 0
+                          }
+                        }
+                      ]
+                    },
+                    "Repos_PosX": {
+                      "type": "word",
+                      "value": 0
+                    },
+                    "Repos_Posy": {
+                      "type": "word",
+                      "value": 80
+                    },
+                    "StackSize": {
+                      "type": "word",
+                      "value": 1
+                    },
+                    "Stolen": {
+                      "type": "byte",
+                      "value": 0
+                    },
+                    "Tag": {
+                      "type": "cexostring",
+                      "value": "asc_pglove"
+                    },
+                    "TemplateResRef": {
+                      "type": "resref",
+                      "value": "asc_pglove"
+                    },
+                    "xModelPart1": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart2": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "xModelPart3": {
+                      "type": "word",
+                      "value": 11
+                    },
+                    "XOrientation": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "XPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "YOrientation": {
+                      "type": "float",
+                      "value": 1.0
+                    },
+                    "YPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    },
+                    "ZPosition": {
+                      "type": "float",
+                      "value": -1.0
+                    }
                   }
                 ]
               }
@@ -100037,7 +103953,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 13
+                      "value": 23
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -100237,7 +104153,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 13
+                      "value": 23
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -102267,7 +106183,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 204
+                      "value": 203
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -102498,7 +106414,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 204
+                      "value": 203
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -110921,7 +114837,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 14
+                      "value": 22
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -111121,7 +115037,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 14
+                      "value": 22
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -111201,7 +115117,7 @@
                     },
                     "ModelPart2": {
                       "type": "byte",
-                      "value": 191
+                      "value": 201
                     },
                     "ModelPart3": {
                       "type": "byte",
@@ -111370,7 +115286,7 @@
                     },
                     "xModelPart2": {
                       "type": "word",
-                      "value": 191
+                      "value": 201
                     },
                     "xModelPart3": {
                       "type": "word",
@@ -111756,7 +115672,7 @@
                     },
                     "ModelPart1": {
                       "type": "byte",
-                      "value": 91
+                      "value": 92
                     },
                     "ModelPart2": {
                       "type": "byte",
@@ -111956,7 +115872,7 @@
                     },
                     "xModelPart1": {
                       "type": "word",
-                      "value": 91
+                      "value": 92
                     },
                     "xModelPart2": {
                       "type": "word",
@@ -129740,7 +133656,7 @@
                     },
                     "ModelPart1": {
                       "type": "byte",
-                      "value": 96
+                      "value": 268
                     },
                     "Plot": {
                       "type": "byte",
@@ -129870,7 +133786,7 @@
                     },
                     "xModelPart1": {
                       "type": "word",
-                      "value": 96
+                      "value": 268
                     },
                     "XOrientation": {
                       "type": "float",
@@ -277157,7 +281073,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — hutlar_outpost"
+            "0": "Stuck - hutlar_outpost"
           }
         },
         "MapNote": {

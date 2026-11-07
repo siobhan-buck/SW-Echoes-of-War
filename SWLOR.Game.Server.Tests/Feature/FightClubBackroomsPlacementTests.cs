@@ -32,8 +32,10 @@ public class FightClubBackroomsPlacementTests
     {
         using var backrooms = LoadModuleJson("git", BackroomsAreaFile);
 
-        GetLocalString(backrooms.RootElement, "CREATURE_SPAWN_TABLE_ID")
-            .Should().Be("CAPSTONE_SMUGGLERS_MOON_FIGHT_CLUB_BACKROOMS");
+        GetOptionalLocalString(backrooms.RootElement, "CREATURE_SPAWN_TABLE_ID").Should().BeEmpty();
+        backrooms.RootElement.GetProperty("WaypointList").GetProperty("value").EnumerateArray()
+            .Count(waypoint => GetString(waypoint, "Tag") is "CAPSTONE_SMUGGLERS_MOON_FIGHT_CLUB_BACKROOMS" or "CAPSTONE_SMUGGLERS_MOON_FIGHT_CLUB_BACKROOMS_DEEP")
+            .Should().Be(20);
         GetLocalInt(backrooms.RootElement, "IS_DUNGEON").Should().Be(1);
 
         backrooms.RootElement
@@ -61,8 +63,8 @@ public class FightClubBackroomsPlacementTests
     [Test]
     public void FightClubFloor_HoldsNoQuestGivers()
     {
-        // Quest giver placement is owned by CapstoneQuestGiverPlacementTests; the Fight Club floor
-        // has arena-fighter spawn waypoints, so no trainer may stand on it.
+        // Quest giver placement is owned by CapstoneQuestGiverPlacementTests; arena fighters
+        // now spawn in the Shipping District, while the Fight Club retains its backrooms access.
         using var club = LoadModuleJson("git", FightClubAreaFile);
         club.RootElement
             .GetProperty("Creature List")

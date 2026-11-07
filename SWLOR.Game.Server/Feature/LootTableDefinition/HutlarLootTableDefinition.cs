@@ -48,8 +48,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("lockbox_t5", 25, 1, true)
                 .AddItem("diamond", 10, 1, true)
                 .AddItem("zinsiam", 10, 1, true)
-                .AddItem("map_276", 10, 1, true)
-                .AddItem("chiro_shard", 5, 1, true);
+                .AddItem("map_276", 10, 1, true);
 
             // Tier 5 droid plating and Carapace armor salvaged from the Assembly Line and Core.
             _builder.Create("HUTLAR_FOUNDRY_GEAR")
@@ -92,6 +91,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("recipe_chistaff", 10)
                 .AddItem("recipe_chilngswd", 10)
                 .AddItem("recipe_chikatar", 10)
+                .AddItem("recipe_chipglove", 10)
                 .AddItem("recipe_chishuri", 10)
                 .AddItem("recipe_chirifle", 10)
                 .AddItem("recipe_chitwinbl", 10)
@@ -134,9 +134,6 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("diamond", 40, 1, true)
                 .AddItem("zinsiam", 40, 1, true)
                 .AddItem("emerald", 20, 1, true);
-
-            _builder.Create("HUTLAR_FOUNDRY_OVERSEER_SHARD")
-                .AddItem("chiro_shard", 1);
 
             _builder.Create("HUTLAR_FOUNDRY_OVERSEER_SALVAGE")
                 .AddItem("ref_arkoxit", 1, 1, true)
@@ -262,8 +259,10 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("byysk_gswd", 5)
                 .AddItem("byysk_spear", 5)
                 .AddItem("byysk_katar", 5)
+                .AddItem("byysk_pglove", 5)
                 .AddItem("byysk_staff", 5)
                 .AddItem("byysk_pistol", 5)
+                .AddItem("byysk_twinpistol", 5)
                 .AddItem("byysk_shuriken", 5)
                 .AddItem("byysk_twinblade", 5)
                 .AddItem("byysk_rifle", 5)
@@ -304,8 +303,10 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("byysk_gswd", 5)
                 .AddItem("byysk_spear", 5)
                 .AddItem("byysk_katar", 5)
+                .AddItem("byysk_pglove", 5)
                 .AddItem("byysk_staff", 5)
                 .AddItem("byysk_pistol", 5)
+                .AddItem("byysk_twinpistol", 5)
                 .AddItem("byysk_shuriken", 5)
                 .AddItem("byysk_twinblade", 5)
                 .AddItem("byysk_rifle", 5)
@@ -433,6 +434,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("recipe_chistaff", 10)
                 .AddItem("recipe_chilngswd", 10)
                 .AddItem("recipe_chikatar", 10)
+                .AddItem("recipe_chipglove", 10)
                 .AddItem("recipe_chishuri", 10)
                 .AddItem("recipe_chirifle", 10)
                 .AddItem("recipe_chitwinbl", 10)

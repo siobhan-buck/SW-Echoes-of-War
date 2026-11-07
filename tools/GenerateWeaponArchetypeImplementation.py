@@ -75,8 +75,10 @@ WEAPON_TABS = {
     "Katar",
     "Staff",
     "Pistol",
+    "Twin Pistol",
     "Rifle",
     "Throwing",
+    "Unarmed",
 }
 
 BESPOKE_WEAPON_TABS = {
@@ -87,6 +89,12 @@ BESPOKE_WEAPON_TABS = {
     # reflection) that this description-driven generator cannot express. Do not
     # regenerate it here or the hand-written mechanics are lost.
     "Lightsaber",
+    # Enemy-bound technique metadata, captured setup and optional ordinary-attack
+    # weaving are hand-authored; this description-driven generator must preserve them.
+    "Unarmed",
+    # Paired gun profiles, movement, Flow and activation-level accounting are
+    # authored explicitly; description parsing cannot reproduce those contracts.
+    "Twin Pistol",
 }
 
 GENERATED_WEAPON_TABS = WEAPON_TABS - BESPOKE_WEAPON_TABS
@@ -107,8 +115,10 @@ SKILL_BY_TAB = {
     "Katar": "Katar",
     "Staff": "Staff",
     "Pistol": "Pistol",
+    "Twin Pistol": "TwinPistol",
     "Rifle": "Rifle",
     "Throwing": "Throwing",
+    "Unarmed": "Unarmed",
 }
 
 CATEGORY_BY_STYLE = {
@@ -133,6 +143,8 @@ CATEGORY_BY_STYLE = {
     ("Staff", "Sentinel"): "StaffSentinel",
     ("Pistol", "Gambler"): "PistolGunslinger",
     ("Pistol", "Skirmisher"): "PistolSkirmisher",
+    ("Twin Pistol", "Barrage"): "TwinPistolBarrage",
+    ("Twin Pistol", "Crossfire"): "TwinPistolCrossfire",
     ("Rifle", "Marksman"): "RifleMarksman",
     ("Rifle", "Suppression"): "RiflePacification",
     ("Throwing", "Ordnance"): "ThrowingBombardier",
@@ -150,6 +162,7 @@ PERK_DEFINITION_BY_TAB = {
     "Katar": "KatarPerkDefinition",
     "Staff": "StaffPerkDefinition",
     "Pistol": "PistolPerkDefinition",
+    "Twin Pistol": "TwinPistolPerkDefinition",
     "Rifle": "RiflePerkDefinition",
     "Throwing": "ThrowingPerkDefinition",
 }
@@ -171,6 +184,8 @@ CAPSTONE_QUEST_REQUIREMENTS = {
     ("Staff", "Worldbreaker"): ("StaffCapstoneQuestDefinition", "WorldbreakerMasteryQuestId"),
     ("Pistol", "Last Word"): ("PistolCapstoneQuestDefinition", "LastWordMasteryQuestId"),
     ("Pistol", "Dead Man's Hand"): ("PistolCapstoneQuestDefinition", "DeadMansHandMasteryQuestId"),
+    ("Twin Pistol", "Twin Suns"): ("TwinPistolCapstoneQuestDefinition", "TwinSunsMasteryQuestId"),
+    ("Twin Pistol", "Final Salvo"): ("TwinPistolCapstoneQuestDefinition", "FinalSalvoMasteryQuestId"),
     ("Rifle", "Kill Box"): ("RifleCapstoneQuestDefinition", "KillBoxMasteryQuestId"),
     ("Rifle", "One Shot"): ("RifleCapstoneQuestDefinition", "OneShotMasteryQuestId"),
     ("Throwing", "Rain of Steel"): ("ThrowingCapstoneQuestDefinition", "RainOfSteelMasteryQuestId"),
@@ -188,6 +203,7 @@ ABILITY_FOLDER_BY_TAB = {
     "Katar": "Katar",
     "Staff": "Staff",
     "Pistol": "Pistol",
+    "Twin Pistol": "TwinPistol",
     "Rifle": "Rifle",
     "Throwing": "Throwing",
 }
@@ -259,7 +275,7 @@ EXPLICIT_ICON_RESREFS = {
     "VolatileCompound2": "ife_volcomp2",
 }
 
-RANGED_COMBAT_IMPACT_SKILLS = {"Pistol", "Rifle", "Throwing"}
+RANGED_COMBAT_IMPACT_SKILLS = {"Pistol", "TwinPistol", "Rifle", "Throwing"}
 
 # Scripted impacts use individual motions independently of their damage calculation.
 # Queued ranged attacks retain native firing; queued melee uses the swing binding.
@@ -280,6 +296,9 @@ def authored_animation_builder_lines(skill, row, hostile):
 
 
 PERK_BASE_ID_ALIASES = {
+    ("Twin Pistol", "Flow"): "TwinPistolMomentum",
+    ("Twin Pistol", "Follow Through"): "TwinPistolFollowThrough",
+    ("Twin Pistol", "Second Wind"): "TwinPistolSecondWind",
     ("Vibroknife", "Shadowflow"): "ShadowflowStance",
     ("Katar", "Steel Shoulder"): "TwinGuardStance",
     ("Katar", "Tag In"): "TwinIntercept",
@@ -288,6 +307,7 @@ PERK_BASE_ID_ALIASES = {
 
 IMPACT_ANIMATION_BY_SKILL = {
     "Pistol": "PointPistol",
+    "TwinPistol": "DoubleShot",
     "Rifle": "PointPistol",
     "Throwing": "ThrowGrenade",
 }
@@ -299,6 +319,7 @@ IMPACT_ANIMATION_BY_PERK_BASE = {
 
 MAX_RANGE_BY_SKILL = {
     "Pistol": 25.0,
+    "TwinPistol": 25.0,
     "Rifle": 30.0,
     "Throwing": 20.0,
 }
@@ -1457,8 +1478,8 @@ def description_stat_entries(row, base):
         add_stat(stats, "GuardedHitNextAttackWindowSeconds", parse_count(r"within (\d+) seconds", description) or 30)
     elif base == "Redirecting Guard":
         add_stat(stats, "StatusAppliedRequiredCategory", status_category_expression("Control"))
-        add_stat(stats, "StatusAppliedSelfEnmityPercentAdjustment", parse_percent(r"gain \+(\d+)% Enmity", description))
-        add_stat(stats, "StatusAppliedSelfDurationSeconds", parse_duration(description) or 30)
+        add_stat(stats, "StatusAppliedTargetAttackingAllyEnmityToSourcePercentAdjustment", parse_percent(r"gain \+(\d+)% Enmity", description))
+        add_stat(stats, "StatusAppliedTargetAttackingAllyEnmityDurationSeconds", parse_duration(description) or 30)
     if base == "Covering Presence":
         add_stat(stats, "StatusAppliedRequiredCategory", status_category_expression("Control"))
         add_stat(stats, "StatusAppliedSelfEnmityPercentAdjustment", parse_percent(r"gain \+(\d+)% Enmity", description))
@@ -1471,6 +1492,8 @@ def description_stat_entries(row, base):
         add_stat(stats, "DamageTakenNextSkillAbilitySkillType", skill_expr)
         add_stat(stats, "DamageTakenNextSkillAbilityDamageBonus", parse_count(r"deals \+(\d+) DMG", description))
         add_stat(stats, "DamageTakenNextSkillAbilityWindowSeconds", parse_count(r"within (\d+) seconds", description) or 30)
+        if "next control ability" in lowered:
+            add_stat(stats, "DamageTakenNextSkillAbilityRequiredCategory", status_category_expression("Control"))
     if base == "Covering Claws":
         if "ally-protection abilities" in lowered:
             add_stat(stats, "AbilityUsedPerkCategoryTargetEnmityToSourceCategoryId", "(int)PerkCategoryType.KatarIronGuard")
@@ -1545,7 +1568,7 @@ def description_stat_entries(row, base):
         add_stat(stats, "RangedAutoAttackCycleCriticalRatePercentAdjustment", parse_percent(r"gains \+(\d+)% Critical Rate", description))
         add_stat(stats, "RangedAutoAttackCycleCriticalRateTrackerEffectIconType", "(int)EffectIconType.LuckyChamberStatusEffect")
     if base == "Deadeye Reload":
-        add_stat(stats, "NonCriticalAbilityNextSkillAbilityCriticalRateSkillType", skill_expr)
+        add_stat(stats, "NonCriticalAbilityNextSkillAbilityCriticalRateRangedOnly", 1)
         add_stat(stats, "NonCriticalAbilityNextSkillAbilityCriticalRatePercentAdjustment", parse_percent(r"gain \+(\d+)% Critical Rate", description))
         add_stat(stats, "NonCriticalAbilityNextSkillAbilityCriticalRateMax", parse_percent(r"stacking up to \+(\d+)%", description))
         add_stat(stats, "NonCriticalAbilityNextSkillAbilityCriticalRateWindowSeconds", 30)
@@ -2557,10 +2580,9 @@ def profile_property_lines(row, level, primary_status):
         add_profile_property("ExtraDamageIfRecentGuardedHit", str(max(0, guarded_damage - base_damage)))
         add_profile_property("RecentGuardedHitWindowSeconds", recent_guard_counter.group(1))
         if recent_guard_counter.group(3):
-            add_profile_property("ProtectedTargetHitWindowSeconds", recent_guard_counter.group(1))
-            add_profile_property("RequireRecentGuardedHitForConditionalStatus", "true")
-            add_profile_property("ConditionalTargetStatusEffect", "typeof(DazedStatusEffect)")
-            add_profile_property("ConditionalTargetStatusDurationSeconds", recent_guard_counter.group(3))
+            # The impact's own status, so Control perks count the guarded Daze like Joint Lock's.
+            add_profile_property("RecentGuardedHitStatusEffect", "typeof(DazedStatusEffect)")
+            add_profile_property("RecentGuardedHitStatusDurationSeconds", recent_guard_counter.group(3))
 
     ward_daze = re.search(
         r"If the target attacked your ward in the last (\d+) seconds, also inflicts Dazed for (\d+) seconds",
@@ -2726,7 +2748,7 @@ def is_aimed_area(row):
     "in a line" / "in a cone" areas let the player choose a direction, so they present a
     targeting cursor (feat.2da TARGETSELF blank, HostileFeat=1) exactly like Earthshatter.
     Radius areas ("within Nm", "nearby enemies") always originate on the caster and must not
-    prompt. See the Ability Definitions section of AGENTS.md.
+    prompt. See SWLOR.Game.Server/Readmes/AbilityTargeting.md.
     """
     # A sphere can also be aimed when it is placed at a selected point. Keep this explicit so
     # radius-only wording such as "enemies within 5m of you" remains self-centered. Check this
@@ -2897,7 +2919,7 @@ def targeting_arguments_for_row(row, feat, spell_targeting):
             raise SystemExit(
                 f"{feat}: description implies {inferred[0]} but there is no spells.2da row for it. "
                 f"Add a '{feat}' row to SWLOR_Haks/sw_2da/spells.2da and a matching Spell enum "
-                f"value before regenerating. See AGENTS.md > Ability Definitions.")
+                f"value before regenerating. See SWLOR.Game.Server/Readmes/AbilityTargeting.md.")
         return (
             "Spell.Invalid",
             "AbilityTargetingShapeType.None",
@@ -3607,6 +3629,10 @@ def generate_ability_definitions(rows, feat_values, recast_values):
                 status_type = stance_status_type(base, status_effect_types)
                 statuses = [status_type] if status_type else []
                 profile_status = statuses[0] if statuses else None
+            if row["Type"] in {"Stance", "Toggle", "Aura"}:
+                # A stance stays on until toggled off. Any "for N seconds" in its description
+                # belongs to a rider the stance grants, not to the stance itself.
+                duration = 0
             primary = f"typeof({statuses[0]})" if statuses else "null"
             profile = profile_expression(row, level, profile_status)
             additional = (

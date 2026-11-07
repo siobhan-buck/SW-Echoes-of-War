@@ -310,6 +310,9 @@ namespace SWLOR.Game.Server.Service
             if (GetIsPC(enemy))
                 return;
 
+            if (HoloCom.IsHologram(creature) || HoloCom.IsHologram(enemy))
+                return;
+
             if (AI.IsLeashEvading(enemy))
                 return;
 
@@ -574,6 +577,17 @@ namespace SWLOR.Game.Server.Service
                 RemoveProximityEnmityTracking(creature, enemy);
                 AttackHighestEnmityTarget(enemy);
             }
+        }
+
+        /// <summary>
+        /// Removes a creature from one enemy's enmity table without making the enemy pick a new target.
+        /// </summary>
+        /// <param name="creature">The creature to remove.</param>
+        /// <param name="enemy">The enemy whose enmity table is updated.</param>
+        public static void RemoveEnmity(uint creature, uint enemy)
+        {
+            RemoveEnmityTableEntry(creature, enemy);
+            RemoveProximityEnmityTracking(creature, enemy);
         }
 
         /// <summary>

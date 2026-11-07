@@ -3,6 +3,14 @@
 This document describes the in-engine integration test system: how it works, the full
 `EngineTestContext` API, how to write a new test, and how to run the suite locally and in CI.
 
+Read only the sections the task needs:
+
+- Writing a test: "How to Write a New Engine Test" (attribute contract, `EngineTestContext` API, player fixture, timing, worked example).
+- Migration or persistence change: "Persistence and migration coverage".
+- Ability or perk coverage: "The ability behavior coverage program" and "The perk coverage program".
+- Running tests: "How to Run Locally". Concurrent runs collide on one compose project; see `AgentEnvironment.md`.
+- Changing the runner itself: "Project Layout and Isolation", "Architecture Overview", "Environment Variable Reference".
+
 ## What It Is and Why
 
 `SWLOR.Game.Server.Tests` (the NUnit suite) covers pure C# logic and data - calculations, builder
@@ -237,6 +245,12 @@ Three engine rules shape the setup:
   A fixture that kept the flag would never be destroyed, and leftover fixtures would pile up in
   the arena during multi-case sweeps.
 
+The new record seeds strong combat values (Attack, Accuracy and Force Attack 150, Evasion 100, max FP
+and STM 10000) that no worn gear grants. Gear-fed records are rebuilt from the worn gear after every
+equip change and at login (`Readmes/CodingStandards.md`), so equipping an item that feeds one of
+them, or logging the character in, replaces the seeded value with the gear total. A test that counts
+equipment totals calls `fixture.MatchEquipmentRecordsToGear()` first, so its baseline is the gear.
+
 ### Persistence and migration coverage
 
 Converting saved data successfully does not establish that players can keep using it safely.
@@ -439,8 +453,9 @@ level resolution (`PerkEngineTests`) - each is a good reference for a different 
 identical and are kept in sync. Both run against a **server home** directory - the folder mounted
 as `/nwn/home`, holding `modules/`, `hak/`, `tlk/`, `swlor.env` and receiving `dotnet/` and
 `app_logs/`. The home resolves in this order: the `-ServerHome`/`--server-home` argument, the
-`SWLOR_ENGINE_TEST_SERVER_HOME` env var, the repo's `debugserver/` directory when it exists (the
-dev-machine convention used by the normal `SWLOR.Runner` flow), and finally
+`SWLOR_ENGINE_TEST_SERVER_HOME` env var, the repo's `enginetests-home/` directory when it holds
+`swlor.env`, the repo's `debugserver/` directory when it exists (the dev-machine convention used by
+the normal `SWLOR.Runner` flow), and finally
 `SWLOR.Game.Server/Docker/` (the layout the CI workflow stages - that folder is tracked compose
 *configuration*, not inherently a runtime home). Both scripts:
 
@@ -461,6 +476,16 @@ script only - `jq` (used to parse the JSON report; the run fails at the reportin
 **This assumes the server home already has `modules/`, `hak/`, and `tlk/` populated with the
 current module and hak assets** - the normal dev/deploy-machine flow. The script itself only
 builds and stages the compiled .NET assembly; it does not pack the module or build the haks.
+
+**Linux without the Windows deploy flow** (for example Claude Code cloud sessions):
+`scripts/prepare-engine-test-home.sh` fills `enginetests-home/` with `swlor.env`, server-only
+HAKs, the TLK, the packed module, and the Docker images, after which `scripts/run-engine-tests.sh`
+runs as usual. The server-only HAKs keep every resource except models, textures, and sounds,
+which become zero-byte files - Beamdog's dedicated-server data does the same with the base game's
+models and textures, because the server never reads them - so the HAKs take about 0.4 GB instead
+of 11 GB. Never deploy them. It packs with the native tools that `Setup.sh` prepares, about
+4 minutes in all, and later runs skip steps whose inputs are unchanged (`--force` redoes them).
+A full sweep took about 75 minutes in a 4-core cloud session, so pass `--timeout-minutes 120`.
 
 Usage:
 

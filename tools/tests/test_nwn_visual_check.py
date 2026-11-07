@@ -17,6 +17,7 @@ from nwn_visual_check import offline_client, private_desktop, profile, module, f
 from nwn_visual_check.__main__ import parse_captures, log_records, main
 from nwn_visual_check.result import ClientRun
 from nwn_visual_check.process_job import ProcessJob
+from nwn_visual_check.native_frames import NativeFrames
 
 
 def setUpModule():
@@ -145,6 +146,116 @@ class ProfileBoundaryTests(unittest.TestCase):
     def test_generated_profile_is_silent_private_and_background_ready(self):
         self.validate()
 
+    def test_fresh_profile_accepts_its_first_native_screenshot(self):
+        from PIL import Image
+
+        frames = NativeFrames.__new__(NativeFrames)
+        frames.directory = self.owned/'screenshots'
+        frames.window = 1
+        frames.frame = None
+        frames.user = Mock()
+        native = frames.directory/'NWN0000.tga'
+
+        def screenshot(_, message, *_args):
+            if message == 0x101:
+                image = Image.new('RGB', (1280, 720), 'black')
+                image.paste('white', (640, 0, 1280, 720))
+                image.save(native)
+            return True
+
+        frames.user.PostMessageW.side_effect = screenshot
+        output = self.owned/'first.png'
+        frames.save(output)
+        with Image.open(output) as captured:
+            self.assertEqual(captured.size, (1280, 720))
+            self.assertEqual(captured.getpixel((1000, 360)), (255, 255, 255))
+        self.assertFalse(native.exists())
+
+    def test_native_screenshot_propagates_nonsharing_delete_error(self):
+        from PIL import Image
+
+        frames = NativeFrames.__new__(NativeFrames)
+        frames.directory = self.owned/'screenshots'
+        frames.window = 1
+        frames.frame = None
+        frames.user = Mock()
+        native = frames.directory/'NWN0000.tga'
+
+        def screenshot(_, message, *_args):
+            if message == 0x101:
+                Image.new('RGB', (1280, 720), 'green').save(native)
+            return True
+
+        frames.user.PostMessageW.side_effect = screenshot
+        error = PermissionError('Access denied')
+        error.winerror = 5
+        with patch.object(Path, 'unlink', side_effect=error):
+            with self.assertRaises(PermissionError) as caught:
+                frames.wait_for_fresh()
+        self.assertIs(caught.exception, error)
+        self.assertIsNone(frames.frame)
+        self.assertEqual(frames.user.PostMessageW.call_count, 2)
+
+    @unittest.skipUnless(sys.platform=='win32','Windows screenshot writer sharing semantics')
+    def test_native_screenshot_waits_for_writer_delete_lock(self):
+        from PIL import Image
+
+        frames=NativeFrames.__new__(NativeFrames)
+        frames.directory=self.owned/'screenshots'
+        frames.window=1
+        frames.frame=None
+        frames.user=Mock()
+        native=frames.directory/'NWN0000.tga'
+        kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+        kernel.CreateFileW.argtypes=[ctypes.c_wchar_p,ctypes.c_uint32,ctypes.c_uint32,
+                                    ctypes.c_void_p,ctypes.c_uint32,ctypes.c_uint32,ctypes.c_void_p]
+        kernel.CreateFileW.restype=ctypes.c_void_p
+        kernel.CloseHandle.argtypes=[ctypes.c_void_p]
+        handles=[]
+        requests=[]
+
+        def release(handle):
+            if handle[0] is not None:
+                kernel.CloseHandle(handle[0])
+                handle[0]=None
+
+        def screenshot(_,message,*_args):
+            if message==0x101:
+                if requests:
+                    native.touch()
+                target=frames.directory/f'NWN{len(requests):04}.tga'
+                image=Image.new('RGB',(1280,720),'black' if not requests else 'green')
+                image.paste('white',(640,0,1280,720))
+                image.save(target)
+                # Allow reads while the simulated client writer denies deletion.
+                handle=[kernel.CreateFileW(str(target),0x80000000,1,None,3,0,None)]
+                self.assertNotIn(handle[0],(None,ctypes.c_void_p(-1).value))
+                handles.append(handle)
+                requests.append(target)
+            return True
+
+        frames.user.PostMessageW.side_effect=screenshot
+        try:
+            output=self.owned/'writer-lock.png'
+            frames.save(output)
+            with Image.open(output) as captured:
+                self.assertEqual(captured.size,(1280,720))
+                self.assertEqual(captured.getpixel((1000,360)),(255,255,255))
+            self.assertEqual(frames.user.PostMessageW.call_count,2)
+            self.assertTrue(native.exists())
+            # The writer closing can update its mtime after our next request.
+            # This previously consumed raw image must never become a new frame.
+            release(handles[0])
+            second=self.owned/'second-writer-lock.png'
+            frames.save(second)
+            with Image.open(second) as captured:
+                self.assertEqual(captured.getpixel((100,360)),(0,128,0))
+            self.assertEqual(frames.user.PostMessageW.call_count,4)
+        finally:
+            for handle in handles:
+                release(handle)
+
+    @unittest.skipUnless(sys.platform=='win32','run() refuses non-Windows hosts before validating settings')
     def test_native_refusal_happens_before_process_creation(self):
         self.settings('volume=0.0','volume=0.5')
         with patch.object(offline_client.ctypes,'WinDLL',create=True) as native:
@@ -287,6 +398,13 @@ class ProfileCreationTests(unittest.TestCase):
 
 
 class FirewallStateTests(unittest.TestCase):
+    def setUp(self):
+        # The probe itself is Windows-only; supply its Windows constants so the parsing runs anywhere.
+        for patcher in (patch.dict(os.environ,{'SystemRoot':r'C:\Windows'}),
+                        patch.object(firewall.subprocess,'CREATE_NO_WINDOW',0x08000000,create=True)):
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
     def test_structured_booleans_accept_enabled_profiles_without_display_labels(self):
         output=subprocess.CompletedProcess([],0,stdout='[true,true,true]',stderr='')
         with patch.object(firewall.subprocess,'run',return_value=output) as run:
@@ -376,8 +494,41 @@ class FixtureCompilerTests(unittest.TestCase):
                     with self.assertRaises(RuntimeError):module.compile_script(*args)
 
 
+class TilesetPackingTests(unittest.TestCase):
+    def test_invalid_line_endings_fail_before_conversion_or_packing_without_changing_source(self):
+        for payload in (b'[GENERAL]\nName=ZSF01\n', b'[GENERAL]\rName=ZSF01\r', b'[GENERAL]\r\nName=ZSF01\n'):
+            for build in ('hak', 'module'):
+                with self.subTest(payload=payload, build=build), tempfile.TemporaryDirectory() as temporary:
+                    source=Path(temporary)/'source';source.mkdir()
+                    tileset=source/'zsf01.SET';tileset.write_bytes(payload)
+                    with patch.object(module,'find_tool') as find_tool, patch.object(module,'checked') as checked:
+                        with self.assertRaisesRegex(ValueError,'zsf01.SET must use CRLF'):
+                            if build=='hak': module.pack_hak(source,Path(temporary)/'review.hak')
+                            else: module.build_module(source,Path(temporary)/'profile',Path('client/bin/win32/nwmain.exe'))
+                        find_tool.assert_not_called()
+                        checked.assert_not_called()
+                    self.assertEqual(tileset.read_bytes(),payload)
+
+
 @unittest.skipUnless(sys.platform=='win32' and os.environ.get('SWLOR_NATIVE_ISOLATION_TESTS')=='1','Set SWLOR_NATIVE_ISOLATION_TESTS=1 for actual fixture tools')
 class NativeFixtureTests(unittest.TestCase):
+    def test_crlf_tileset_survives_hak_and_module_packing(self):
+        owned=profile.create_profile()
+        with tempfile.TemporaryDirectory() as temporary:
+            source=Path(temporary)/'source';source.mkdir()
+            payload=b'[GENERAL]\r\nName=ZSF01\r\nType=SET\r\n'
+            (source/'zsf01.set').write_bytes(payload)
+            (source/'module.ifo').write_bytes(b'fixture resource')
+            try:
+                hak=Path(temporary)/'review.hak'
+                module.pack_hak(source,hak,os.environ.get('SWLOR_NWN_TOOLS'))
+                packed=module.build_module(source,owned,module.discover_client(),os.environ.get('SWLOR_NWN_TOOLS'))
+                for archive in (hak,packed):
+                    self.assertEqual(archive_resources(archive)[(b'zsf01',2013)],payload)
+                self.assertEqual((source/'zsf01.set').read_bytes(),payload)
+            finally:
+                profile.cleanup(owned)
+
     def test_local_include_is_staged_before_alphabetically_earlier_entry_point(self):
         owned=profile.create_profile()
         with tempfile.TemporaryDirectory() as temporary:

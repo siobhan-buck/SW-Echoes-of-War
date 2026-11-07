@@ -31,7 +31,7 @@
       },
       "MusicDay": {
         "type": "int",
-        "value": 0
+        "value": 371
       },
       "MusicDelay": {
         "type": "int",
@@ -38312,7 +38312,7 @@
         "LocalizedName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Stuck — korr_cavern"
+            "0": "Stuck - korr_cavern"
           }
         },
         "MapNote": {

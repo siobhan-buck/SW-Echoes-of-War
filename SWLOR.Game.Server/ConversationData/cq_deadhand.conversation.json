@@ -3,6 +3,30 @@
   "Title": "cq_deadhand",
   "EntryPoints": [
     {
+      "TargetNodeId": "training-menu",
+      "Conditions": [
+        {
+          "Key": "condition-has-quest",
+          "Arguments": [
+            "final_salvo_mastery"
+          ],
+          "IsNegated": false
+        }
+      ]
+    },
+    {
+      "TargetNodeId": "training-menu",
+      "Conditions": [
+        {
+          "Key": "condition-can-accept-quest",
+          "Arguments": [
+            "final_salvo_mastery"
+          ],
+          "IsNegated": false
+        }
+      ]
+    },
+    {
       "TargetNodeId": "entry-00000",
       "Conditions": [
         {
@@ -260,7 +284,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Here's a card, face-down. Yours the day you earn a look at it. Now the game. Out past town, somebody's dealing my hand in that canyon range: my old table, my marked deck, and six eager adepts learning to shoot like me and cheat like them. Fold all six and bring me the Dead Man's Hand Canyon Range Tally they keep count on. I like an honest pot.",
+          "Text": "Here's a card, face-down. Yours the day you earn a look at it. Now the game. Out past town, somebody's dealing my hand in that canyon range: my old table, my marked deck, and six Canyon Drifters learning to shoot like me and cheat like them, holding the rooms nearest the entrance. Any Canyon Drifter counts, but only if you fold him with Quick Draw, Double Shot or Fan the Hammer; any other kill isn't my game. Fold all six and bring me the Dead Man's Hand Canyon Range Tally they keep count on. I like an honest pot.",
           "Style": 0,
           "Color": null
         }
@@ -375,7 +399,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Six adepts holding low pairs and betting like aces. They'll crowd you, all smiles and spread fingers. Smile back. Then take the pot one hand at a time.",
+          "Text": "Six Canyon Drifters holding low pairs and betting like aces. They'll crowd you, all smiles and spread fingers. Smile back. Then take the pot one hand at a time.",
           "Style": 0,
           "Color": null
         }
@@ -401,7 +425,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Six adepts, one tally, and the pot's still sitting in the canyon. Hands don't fold themselves, friend.",
+          "Text": "Six Canyon Drifters, one tally, and the pot's still sitting in the canyon. Hands don't fold themselves, friend.",
           "Style": 0,
           "Color": null
         }
@@ -469,7 +493,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "The adepts were the ante. Now the sharps: five specialists who turned my sightline calibrator into a stacked deck. Long lanes, patient triggers, every angle pre-dealt. Bust all five and bring me the Dead Man's Hand Sightline Calibrator before they mark the whole canyon.",
+          "Text": "The Drifters were the ante. Now the sharps: five Canyon Sharpshooters, deeper in, who turned my sightline calibrator into a stacked deck. Long lanes, patient triggers, every angle pre-dealt. Any Sharpshooter counts, but bust each one with Quick Draw, Double Shot or Fan the Hammer. Bust five and bring me the Dead Man's Hand Sightline Calibrator before they mark the whole canyon.",
           "Style": 0,
           "Color": null
         }
@@ -678,7 +702,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Now the house man. The warden keeps the trial altar on the east side of the range, wears the house crest, and decides who sits and who pays. Best hand at that table and he knows it, which is his tell. Break him and bring me the Dead Man's Hand Shattered Range Crest. One rule from me, house law: stake two friends and sit down as three. The house folds to a full hand. It eats a lone ace.",
+          "Text": "Now the house man. Warden Silas Crowe keeps the trial altar on the east side of the range, wears the house crest, and decides who sits and who pays. Best hand at that table and he knows it, which is his tell. Break him and bring me the Dead Man's Hand Shattered Range Crest. One rule from me, house law: stake two friends and sit down as three. The house folds to a full hand. It eats a lone ace.",
           "Style": 0,
           "Color": null
         }
@@ -887,7 +911,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Four left at the high table: the inner circle. They bank the whole operation, and they hold a marshal's challenge chit, the old kind, the kind that buys a seat across from the man who runs it all. Clear all four chairs and bring me the Dead Man's Hand Marshal's Challenge Chit. It's the buy-in for the last game.",
+          "Text": "Four left at the high table: the High Table Guns, the inner circle, holding the deepest part of the range. They bank the whole operation, and they hold a marshal's challenge chit, the old kind, the kind that buys a seat across from the man who runs it all. Clear four chairs, any High Table Gun, each one with Quick Draw, Double Shot or Fan the Hammer, and bring me the Dead Man's Hand Marshal's Challenge Chit. It's the buy-in for the last game.",
           "Style": 0,
           "Color": null
         }
@@ -1096,7 +1120,7 @@
       "JournalQuest": "",
       "Text": [
         {
-          "Text": "Challenge posted, challenge answered. Now the truth, friend. The man up there holds the real Dead Man's Hand: the draw that comes after he's beaten. I dealt it to him myself, and he has never lost with it. He'll be in the Canyon Dueling Pit, through the door at the north end of the range. Go take it from him. And hear me plain: nobody plays the master one on one and cashes out. Bring your two. Full hand or no hand.",
+          "Text": "Challenge posted, challenge answered. Now the truth, friend. Jonas Harlan, the master up there, holds the real Dead Man's Hand: the draw that comes after he's beaten. I dealt it to him myself, and he has never lost with it. He'll be in the Canyon Dueling Pit, through the door at the north end of the range. Go take it from him. And hear me plain: nobody plays the master one on one and cashes out. Bring your two. Full hand or no hand.",
           "Style": 0,
           "Color": null
         }
@@ -1291,6 +1315,318 @@
       ],
       "OnEnterActions": [],
       "Choices": []
+    },
+    "twin-offer": {
+      "Id": "twin-offer",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Two guns and nowhere to stand. Now that's an interesting hand. Want to learn how to leave yourself one last open lane? Here's a canyon range key. Against the range enemies, open with Tempo Shot, follow with Lead Shot, then land Closing Shot spending at least two Cadence before eighteen seconds pass.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-accept",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-why",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-advice",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-directions",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-why": {
+      "Id": "twin-why",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "People watch the guns. I watch the rhythm. Tempo sets the beat, Lead keeps it, Closing cashes in. Final Salvo is knowing when the rhythm has paid enough and it's time to finish.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-accept",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-advice",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-directions",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-advice": {
+      "Id": "twin-advice",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "You'll need Tempo Shot, Lead Shot, Closing Shot and Cadence. Each shot has to land. Second Wind can help in a fight, but it can't replace any part of this trial.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-open",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-directions": {
+      "Id": "twin-directions",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "The Canyon Range is behind the sealed cliff door in the Rocky Pass, just south of the trail from Anchorhead's Southern Entrance. Use the key. Pick an open lane; a wall isn't an invitation.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-open",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-accepted": {
+      "Id": "twin-accepted",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Take the key. Set the beat, keep it, then spend what it earned. I'll read the route trace when you get back.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-reminder": {
+      "Id": "twin-reminder",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "No completed route trace yet. Land Tempo Shot, then Lead Shot, then a Closing Shot spending at least two Cadence, all within eighteen seconds.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-advice",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-directions",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-ready": {
+      "Id": "twin-ready",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Two clean moves and a paid-in-full finish. That's a route worth keeping. Shall we settle?",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-turn-in",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-completed": {
+      "Id": "twin-completed",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "You can study Final Salvo now. It still costs training points. One good lesson doesn't make the practice free.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "twin-locked": {
+      "Id": "twin-locked",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "Rank fifty in Twin Pistol is the buy-in. Until then, keep learning what both guns can do.",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "twin-leave",
+          "Conditions": []
+        }
+      ]
+    },
+    "training-menu": {
+      "Id": "training-menu",
+      "SpeakerName": "",
+      "SpeakerTag": "",
+      "PortraitResref": "",
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Text": [
+        {
+          "Text": "One gun or two, you still need a clean way through. Which lesson are you here for?",
+          "Style": 0,
+          "Color": null
+        }
+      ],
+      "OnEnterActions": [],
+      "Choices": [
+        {
+          "ChoiceId": "pistol-open",
+          "Conditions": []
+        },
+        {
+          "ChoiceId": "twin-open",
+          "Conditions": []
+        }
+      ]
     }
   },
   "Choices": {
@@ -1396,7 +1732,7 @@
     "reply-00004": {
       "Id": "reply-00004",
       "Text": {
-        "Text": "What are the adepts holding?",
+        "Text": "What are the Drifters holding?",
         "Style": 4,
         "Color": null
       },
@@ -1566,7 +1902,7 @@
     "reply-00011": {
       "Id": "reply-00011",
       "Text": {
-        "Text": "How do the specialists play?",
+        "Text": "How do the Sharpshooters play?",
         "Style": 4,
         "Color": null
       },
@@ -2138,6 +2474,445 @@
       "Next": [
         {
           "TargetNodeId": "entry-00041",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-open": {
+      "Id": "twin-open",
+      "Text": {
+        "Text": "What can you teach me about Twin Pistol?",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "twin-completed",
+          "Conditions": [
+            {
+              "Key": "condition-completed-quest",
+              "Arguments": [
+                "final_salvo_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "twin-ready",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "final_salvo_mastery",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "twin-reminder",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "final_salvo_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "twin-offer",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "final_salvo_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "twin-locked",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-accept": {
+      "Id": "twin-accept",
+      "Text": {
+        "Text": "Deal me an open lane.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [
+        {
+          "Key": "action-accept-quest",
+          "Arguments": [
+            "final_salvo_mastery"
+          ]
+        }
+      ],
+      "Next": [
+        {
+          "TargetNodeId": "twin-accepted",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-why": {
+      "Id": "twin-why",
+      "Text": {
+        "Text": "Why move before the finish?",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "twin-why",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-advice": {
+      "Id": "twin-advice",
+      "Text": {
+        "Text": "What makes a clean attempt?",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "twin-advice",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-directions": {
+      "Id": "twin-directions",
+      "Text": {
+        "Text": "Where is the range?",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "twin-directions",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-turn-in": {
+      "Id": "twin-turn-in",
+      "Text": {
+        "Text": "Two moves. One finish.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [
+        {
+          "Key": "action-advance-quest",
+          "Arguments": [
+            "final_salvo_mastery"
+          ]
+        }
+      ],
+      "Next": [
+        {
+          "TargetNodeId": "twin-completed",
+          "Conditions": []
+        }
+      ],
+      "EndsConversation": false,
+      "IsAutomatic": false
+    },
+    "twin-leave": {
+      "Id": "twin-leave",
+      "Text": {
+        "Text": "I'll keep practicing.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [],
+      "EndsConversation": true,
+      "IsAutomatic": false
+    },
+    "pistol-open": {
+      "Id": "pistol-open",
+      "Text": {
+        "Text": "I want to work on Dead Man's Hand.",
+        "Style": 4,
+        "Color": null
+      },
+      "SoundResref": "",
+      "Animation": 0,
+      "AnimationLoops": true,
+      "Delay": 4294967295,
+      "Comment": "",
+      "JournalQuest": "",
+      "Actions": [],
+      "Next": [
+        {
+          "TargetNodeId": "entry-00000",
+          "Conditions": [
+            {
+              "Key": "condition-completed-quest",
+              "Arguments": [
+                "dead_mans_hand_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00040",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "dead_mans_hand_mastery",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00039",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "dead_mans_hand_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00034",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "dead_mans_hand_mastery"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00032",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "dead_mans_hand_circle",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00031",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "dead_mans_hand_circle"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00026",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "dead_mans_hand_circle"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00024",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "dead_mans_hand_breach",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00023",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "dead_mans_hand_breach"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00018",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "dead_mans_hand_breach"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00016",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "dead_mans_hand_measure",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00015",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "dead_mans_hand_measure"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00010",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "dead_mans_hand_measure"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00008",
+          "Conditions": [
+            {
+              "Key": "condition-on-quest-state",
+              "Arguments": [
+                "dead_mans_hand_foundation",
+                "2"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00007",
+          "Conditions": [
+            {
+              "Key": "condition-has-quest",
+              "Arguments": [
+                "dead_mans_hand_foundation"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00002",
+          "Conditions": [
+            {
+              "Key": "condition-can-accept-quest",
+              "Arguments": [
+                "dead_mans_hand_foundation"
+              ],
+              "IsNegated": false
+            }
+          ]
+        },
+        {
+          "TargetNodeId": "entry-00001",
           "Conditions": []
         }
       ],

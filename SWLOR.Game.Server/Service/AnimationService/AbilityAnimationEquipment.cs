@@ -18,6 +18,20 @@ public static class AbilityAnimationEquipment
             ReadGrip(GetItemInSlot(InventorySlot.LeftHand, creature), size));
     }
 
+    public static AnimationWeaponHold ReadHold(uint creature)
+    {
+        var weapon = GetItemInSlot(InventorySlot.RightHand, creature);
+        if (!GetIsObjectValid(weapon)) return AnimationWeaponHold.None;
+        return ResolveHold(GetBaseItemType(weapon), ReadGrip(weapon, (int)GetCreatureSize(creature)));
+    }
+
+    public static AnimationWeaponHold ResolveHold(BaseItem type, AnimationWeaponGrip grip)
+    {
+        if (type is BaseItem.Rifle or BaseItem.Cannon) return AnimationWeaponHold.Rifle;
+        return grip is AnimationWeaponGrip.TwoHanded or AnimationWeaponGrip.Polearm
+            ? AnimationWeaponHold.Shoulder : AnimationWeaponHold.None;
+    }
+
     private static AnimationWeaponGrip ReadGrip(uint item, int creatureSize)
     {
         if (!GetIsObjectValid(item)) return AnimationWeaponGrip.Empty;
@@ -34,7 +48,8 @@ public static class AbilityAnimationEquipment
     public static AnimationWeaponGrip ResolveGrip(BaseItem type, int? wield, int? size, int? weaponType, int creatureSize)
     {
         if (type == BaseItem.Invalid) return AnimationWeaponGrip.Empty;
-        if (type == BaseItem.Katar) return AnimationWeaponGrip.Unarmed;
+        if (type is BaseItem.Katar or BaseItem.PowerGlove or BaseItem.CompanionPowerGlove) return AnimationWeaponGrip.Unarmed;
+        if (type == BaseItem.CompanionPistol) return AnimationWeaponGrip.CompanionPistol;
         if (wield == 7) return AnimationWeaponGrip.Shield;
         if (size is not (>= 1 and <= 5) || creatureSize is < 1 or > 5 || size > creatureSize + 1)
             return AnimationWeaponGrip.Unknown;
@@ -56,6 +71,8 @@ public static class AbilityAnimationEquipment
         {
             AnimationEquipmentRequirement.Unrestricted => true,
             AnimationEquipmentRequirement.OneHanded => mainHand == AnimationWeaponGrip.OneHanded && offHand == AnimationWeaponGrip.Empty,
+            AnimationEquipmentRequirement.OneHandedWithOffHand => mainHand == AnimationWeaponGrip.OneHanded &&
+                offHand is AnimationWeaponGrip.Empty or AnimationWeaponGrip.OneHanded or AnimationWeaponGrip.Shield,
             AnimationEquipmentRequirement.WeaponAndShield => mainHand == AnimationWeaponGrip.OneHanded && offHand == AnimationWeaponGrip.Shield,
             AnimationEquipmentRequirement.TwoHanded => mainHand == AnimationWeaponGrip.TwoHanded && offHand == AnimationWeaponGrip.Empty,
             AnimationEquipmentRequirement.Polearm => mainHand == AnimationWeaponGrip.Polearm && offHand == AnimationWeaponGrip.Empty,
@@ -63,8 +80,11 @@ public static class AbilityAnimationEquipment
             AnimationEquipmentRequirement.Unarmed => mainHand is AnimationWeaponGrip.Empty or AnimationWeaponGrip.Unarmed &&
                 offHand is AnimationWeaponGrip.Empty or AnimationWeaponGrip.Unarmed,
             AnimationEquipmentRequirement.Pistol => mainHand == AnimationWeaponGrip.Pistol && offHand == AnimationWeaponGrip.Empty,
+            AnimationEquipmentRequirement.PistolWithOffHand => mainHand == AnimationWeaponGrip.Pistol &&
+                offHand is AnimationWeaponGrip.Empty or AnimationWeaponGrip.Shield or AnimationWeaponGrip.CompanionPistol,
             AnimationEquipmentRequirement.Rifle => mainHand == AnimationWeaponGrip.Rifle && offHand == AnimationWeaponGrip.Empty,
             AnimationEquipmentRequirement.Throwing => mainHand == AnimationWeaponGrip.Throwing && offHand == AnimationWeaponGrip.Empty,
+            AnimationEquipmentRequirement.TwinPistol => mainHand == AnimationWeaponGrip.Pistol && offHand == AnimationWeaponGrip.CompanionPistol,
             _ => false
         };
 }

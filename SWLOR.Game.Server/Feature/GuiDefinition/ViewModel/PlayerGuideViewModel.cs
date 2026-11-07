@@ -293,13 +293,13 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                     new[]
                     {
                         new ArticleBlock("Skills",
-                            "Skills gain XP individually. Skill ranks create Skill Points for perks until you have earned 400 SP from skill ranks. Languages do not count toward this 400-rank limit."),
+                            "Skills gain XP individually. Skill ranks create Skill Points for perks until you have earned 400 SP from skill ranks. Languages do not count toward this 400-rank cap."),
                         new ArticleBlock("Ability Points (AP)",
                             "Every 10 earned SP grants 1 Ability Point, up to 40 AP. Spend AP from the Character Sheet to improve attributes such as Might, Perception, Vitality, Willpower, Agility, and Social."),
                         new ArticleBlock("Perks",
                             "Perk ranks cost SP. Perks can require certain progress before you buy the next rank, and they can grant active abilities, passive bonuses, or other effects."),
                         new ArticleBlock("Skill Decay",
-                            "Once you are at 400 skill ranks, a new rank can randomly lower another eligible unlocked skill by 1 rank and reset that skill's XP to 0. Languages do not count toward this limit."),
+                            "Once you are at 400 skill ranks, a new rank lowers another eligible unlocked skill by 1 rank and resets that skill's XP to 0. Skills above a rank limit you set are picked first. Languages do not count toward this cap."),
                         new ArticleBlock("Perk Refunds",
                             "Manual perk refunds remove the selected perk completely, return all SP paid for its purchased ranks, consume 1 Perk Refund Token, and start a 1 hour real-time wait before another manual refund."),
                         new ArticleBlock("XP Debt",
@@ -315,11 +315,11 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                     },
                     new[]
                     {
-                        new QuestionAnswer("How do skills work?", "Skill XP raises individual skills. Skill ranks create earned SP until 400; languages do not count toward that limit."),
+                        new QuestionAnswer("How do skills work?", "Skill XP raises individual skills. Skill ranks create earned SP until 400; languages do not count toward that cap."),
                         new QuestionAnswer("How do I use AP?", "Earn 1 AP every 10 earned SP, then spend AP from the Character Sheet to improve attributes."),
-                        new QuestionAnswer("What does skill decay mean?", "At 400 skill ranks, gaining another eligible rank can lower another unlocked eligible skill by 1 rank."),
+                        new QuestionAnswer("What does skill decay mean?", "At 400 skill ranks, gaining another eligible rank lowers another unlocked eligible skill by 1 rank. Skills above a rank limit you set are picked first."),
                         new QuestionAnswer("How do perk refunds work?", "Manual refunds return all SP paid for the selected perk, consume a token, and start a 1 hour wait."),
-                        new QuestionAnswer("Why did I get no skill XP?", "XP debt may have used the entire XP reward, or you may be at the 400-rank limit with no available skill that can decay."),
+                        new QuestionAnswer("Why did I get no skill XP?", "XP debt may have used the entire XP reward, the skill may be at the rank limit you set, or you may be at the 400-rank cap with no available skill that can decay."),
                         new QuestionAnswer("Where do I go after death?", "Respawning returns you to your registered medical facility and adds XP debt."),
                         new QuestionAnswer("How do I leave CZ-220?", "Complete the orientation quest to earn the CZ-220 Shuttle Pass, then use a starport flights terminal."),
                         new QuestionAnswer("What should I open first?", "Press B for this guide, C for the Character Sheet, and J for active Quests."),
@@ -341,7 +341,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new ArticleBlock("HoloNet Broadcast Window",
                             "The HoloNet broadcast window sends a longer broadcast, costs 2500 credits, and is limited to 600 characters."),
                         new ArticleBlock("HoloCom Calls",
-                            "Open HoloCom from the Character Sheet to call another available online player. HoloCom cannot be used in space, and both participants are immobilized while a connected call is active. Use HoloCom or /endcall to end it; unanswered call attempts time out."),
+                            "Select a player in the Player List and press Call to call another available online player. Incoming calls are announced in chat; answer or decline them with the Player List buttons or /answer and /decline. HoloCom cannot be used in space, and both participants are immobilized while a connected call is active. Use End Call in the Player List or /endcall to end it; unanswered call attempts time out."),
                         new ArticleBlock("Settings",
                             "Settings controls achievement notifications, subdual mode, reset reminders, Mini-Vitals, chat and emote colors, language colors, character-description access, and identity/privacy options for descriptors and account names."),
                         new ArticleBlock("Notes",
@@ -359,7 +359,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new ArticleBlock("OOC and Speech Restrictions",
                             "Text after // or (( is treated as out-of-character and is not translated through the language system. Dead characters cannot speak, and the Shout channel remains staff-only."),
                         new ArticleBlock("Useful Chat Commands",
-                            "Use /introduce <name> to offer a name or alias to nearby players, and /introductions to review names offered to you. /introduce has a 2-minute cooldown. Use /help to browse commands, /dice to open the dice bag, /bug to report a problem, /resetwindows to restore window positions, and /stuck only as an emergency escape when trapped on a map. /stuck has a 30 minute cooldown.")
+                            "Use /introduce <name> to offer a name or alias to nearby players, and /introductions to review names offered to you. /introduce has a 2-minute cooldown. Use /help to browse commands, /dice to open the dice bag, /helm and /cloak to show or hide your helmet and cloak, /bug to report a problem, /resetwindows to restore window positions, and /stuck only as an emergency escape when trapped on a map. /stuck has a 30 minute cooldown.")
                     },
                     new[]
                     {
@@ -380,16 +380,18 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 new(
                     "Skills",
                     "Core",
-                    "Skill XP, SP, AP, XP debt, Social XP bonuses, and the 400-rank limit.",
+                    "Skill XP, SP, AP, XP debt, Social XP bonuses, rank limits, and the 400-rank cap.",
                     "Skill XP, SP, AP",
                     new[]
                     {
                         new ArticleBlock("Skills Window",
-                            "The Skills window shows available XP, XP debt, each visible skill's rank, title, progress to the next rank, raw XP, description, decay lock state, and whether RP XP can be distributed to that skill."),
-                        new ArticleBlock("Skill Limit",
-                            "A character can earn up to 400 total ranks from skills that count toward the skill limit. Languages do not count toward this limit."),
+                            "The Skills window shows available XP, XP debt, each visible skill's rank, title, progress to the next rank, raw XP, description, decay lock state, rank limit, and whether RP XP can be distributed to that skill. The Limit box beside the Decay Lock button sets an optional rank limit for that skill."),
+                        new ArticleBlock("Skill Cap",
+                            "A character can earn up to 400 total ranks from skills that count toward the skill cap. Languages do not count toward this cap."),
+                        new ArticleBlock("Skill Rank Limits",
+                            "Every skill, languages included, can have a rank limit from 0 to its max rank, set in the Limit box in the Skills window. A skill at or above its limit gains no ranks. Set a language's limit to 0 to stop learning it. Open Skill Decay for details."),
                         new ArticleBlock("SP and AP",
-                            "When a skill that counts toward the limit ranks up, you gain 1 unallocated SP and 1 earned SP until earned SP reaches 400. Every 10 earned SP grants 1 unallocated AP, up to 40 AP. Your displayed total SP also includes the 10 starting SP."),
+                            "When a skill that counts toward the cap ranks up, you gain 1 unallocated SP and 1 earned SP until earned SP reaches 400. Every 10 earned SP grants 1 unallocated AP, up to 40 AP. Your displayed total SP also includes the 10 starting SP."),
                         new ArticleBlock("XP Adjustments",
                             "Skill XP can be adjusted before it is applied. Your Social attribute adds 2.5 percent skill XP per Social point. Some effects, event rewards, or active companions such as beasts and droids can also change the final amount."),
                         new ArticleBlock("XP Debt",
@@ -399,7 +401,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                     },
                     new[]
                     {
-                        new QuestionAnswer("What is the skill limit?", "400 total ranks from skills that count toward the limit. Languages do not count."),
+                        new QuestionAnswer("What is the skill cap?", "400 total ranks from skills that count toward the cap. Languages do not count."),
+                        new QuestionAnswer("What is a skill rank limit?", "An optional rank you set for one skill in the Skills window. The skill gains no ranks at or above it."),
                         new QuestionAnswer("How do I get AP?", "Every 10 earned SP grants 1 unallocated AP, up to 40."),
                         new QuestionAnswer("Why did XP go to debt?", "XP debt is paid down before skill XP is applied.")
                     },
@@ -408,25 +411,37 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 new(
                     "Skill Decay",
                     "Core",
-                    "What can decay, what locking does, and why decay can affect perks.",
-                    "Locks and 400-rank limit",
+                    "What can decay, what locking and rank limits do, and why decay can affect perks.",
+                    "Locks, limits, and 400-rank cap",
                     new[]
                     {
                         new ArticleBlock("When Decay Happens",
-                            "Decay can happen when a skill gains a rank while your total ranks from skills are at the 400 skill limit. Languages do not count toward this limit."),
+                            "Decay can happen when a skill gains a rank while your total ranks from skills are at the 400-rank cap. Languages do not count toward this cap."),
                         new ArticleBlock("Eligible Skills",
-                            "The decay pool contains other skills that count toward the 400-rank limit, are not locked, are not the skill currently gaining XP, and have rank greater than 0."),
+                            "The decay pool contains other skills that count toward the 400-rank cap, are not locked, are not the skill currently gaining XP, and have rank greater than 0. A skill never decays below its limit."),
+                        new ArticleBlock("Which Skill Decays",
+                            "Decay takes a rank from unlocked skills above their limits first. Only when none remain does it pick from unlocked skills with no limit."),
                         new ArticleBlock("Lock States",
-                            "LOCKED excludes a skill from the random decay pool. UNLOCKED means it can be selected if otherwise eligible. N/A means the skill does not count toward the 400-rank limit, so it cannot use the decay lock button."),
+                            "LOCKED means the skill never loses ranks to decay. UNLOCKED means it can be selected if otherwise eligible. N/A means the skill does not count toward the 400-rank cap and never decays, so it has no decay lock. Languages can still have a limit."),
+                        new ArticleBlock("Rank Limits",
+                            "The Limit box beside the Decay Lock button in the Skills window shows None by default, or a rank from 0 to the skill's max rank. A skill at or above its limit gains no ranks. Its XP still pays down XP debt, the rest is discarded, and a warning says the skill is at your limit. Languages discard the XP without a warning. If a limit is reached partway through an award, the leftover XP is discarded. Languages go up to rank 20, so a language limit above 20 is saved as 20."),
+                        new ArticleBlock("Limits and Locks Together",
+                            "A lock means never lose ranks. A limit means settle at this rank. A limit below the skill's current rank is allowed: the skill keeps its ranks and gains nothing, and only moves down through decay. A lock plus a limit at the same rank freezes the skill."),
                         new ArticleBlock("No Available Decay",
-                            "If you are already at the limit and no other eligible skill can decay, that skill cannot gain XP from normal skill XP rewards in this circumstance."),
+                            "If you are already at the 400-rank cap and every other skill is locked, at its limit, or at rank 0, that skill cannot gain XP from normal skill XP rewards."),
+                        new ArticleBlock("RP XP and Limits",
+                            "The RP XP window refuses a skill at its limit, or one the cap blocks, and never sends more RP XP than the skill can use to reach its limit. RP XP is not lost when an award is blocked."),
+                        new ArticleBlock("Rebuilds",
+                            "Skill limits survive full rebuilds and Rebuild Tokens. A rebuild still clears decay locks."),
                         new ArticleBlock("Perk Requirement Effects",
                             "After decay, perks tied to that skill are checked. If you no longer meet a perk's requirements, the perk is reduced to your effective level and SP is returned for removed levels.")
                     },
                     new[]
                     {
-                        new QuestionAnswer("What can decay?", "Only other unlocked skills that count toward the 400-rank limit and have rank greater than 0."),
-                        new QuestionAnswer("What does LOCKED mean?", "The skill is excluded from the random decay pool."),
+                        new QuestionAnswer("What can decay?", "Only other unlocked skills that count toward the 400-rank cap, have rank greater than 0, and are above their limit if they have one. Skills above their limits are picked first."),
+                        new QuestionAnswer("What does LOCKED mean?", "The skill never loses ranks to decay."),
+                        new QuestionAnswer("What does a skill limit do?", "A skill at or above its limit gains no ranks, and it never decays below the limit. Set it with the Limit box in the Skills window."),
+                        new QuestionAnswer("Do limits stop RP XP?", "The RP XP window refuses a skill at its limit and only sends the RP XP it can use to reach the limit."),
                         new QuestionAnswer("Why did a perk change?", "Decay can make you fail a skill requirement, causing an automatic perk level refund.")
                     },
                     new[] { "Skills", "XP Debt", "Perk Refunds", "Perks", "Common Questions" }),
@@ -622,7 +637,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new QuestionAnswer("What helps XP gain?", "Social improves XP gain."),
                         new QuestionAnswer("What helps stamina?", "Might increases maximum STM and natural STM regeneration.")
                     },
-                    new[] { "Skills", "Abilities", "Perks", "Rebuilds", "Combat Basics", "Death & Recovery", "Common Questions" }),
+                    new[] { "Skills", "Abilities", "Perks", "Rebuilds", "Combat Basics", "Stat Caps", "Death & Recovery", "Common Questions" }),
 
                 new(
                     "Rebuilds",
@@ -634,7 +649,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new ArticleBlock("Full Rebuild",
                             "A full character rebuild refunds your skills, stats, and perks so you can redistribute your starting attributes and skills. Using a rebuild terminal requires 1 Rebuild Token, while some server-required rebuilds can send you to the rebuild area without a token."),
                         new ArticleBlock("Full Rebuild Reset",
-                            "The reset returns perk SP, resets skills that count toward the 400-rank limit to rank 0 and XP 0, clears skill locks, resets attributes to 10, returns your earned AP, and refunds your racial bonus stat. Partial XP toward the next skill rank is lost."),
+                            "The reset returns perk SP, resets skills that count toward the 400-rank cap to rank 0 and XP 0, clears skill decay locks (skill limits are kept), resets attributes to 10, returns your earned AP, and refunds your racial bonus stat. Partial XP toward the next skill rank is lost."),
                         new ArticleBlock("Finishing A Full Rebuild",
                             "You must distribute all required ability points and skill points before leaving the rebuild flow. Standard characters cannot take Force ranks, Force characters cannot take Devices ranks, and droids cannot become Force Sensitive."),
                         new ArticleBlock("AP Rebuild",
@@ -715,7 +730,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new ArticleBlock("Core Resources",
                             "HP is health. FP fuels Force abilities. STM fuels non-Force abilities. The Character Sheet shows your current and maximum values."),
                         new ArticleBlock("Hits and Misses",
-                            "Accuracy is compared against Evasion to decide whether an attack lands. Final hit chance is clamped between 20 and 95 percent, so very high or very low stats still leave uncertainty."),
+                            $"Accuracy is compared against Evasion to decide whether an attack lands. Final hit chance is clamped between {Combat.MinimumHitRate} and {Combat.MaximumHitRate} percent, so very high or very low stats still leave uncertainty. Bosses always have at least a {Combat.BossMinimumHitRate} percent chance to hit."),
                         new ArticleBlock("Damage and Defense",
                             "Physical attacks use Physical DEF and Force attacks use Force DEF; higher defense is better. Fire, poison, electrical, and ice use matching resistances. Sonic has no dedicated resistance. For percentage damage-taken modifiers, lower values are better."),
                         new ArticleBlock("Status Resistance",
@@ -729,12 +744,53 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                     },
                     new[]
                     {
-                        new QuestionAnswer("Why did I miss?", "Your Accuracy was checked against the target's Evasion, and final hit chance is always between 20 and 95 percent."),
+                        new QuestionAnswer("Why did I miss?", $"Your Accuracy was checked against the target's Evasion, and final hit chance is always between {Combat.MinimumHitRate} and {Combat.MaximumHitRate} percent."),
                         new QuestionAnswer("What defense matters?", "Physical DEF helps against physical attacks, Force DEF helps against Force attacks, and resistances help against matching elemental or status types."),
                         new QuestionAnswer("Are deflection and guard the same?", "No. Deflection can stop a hostile weapon auto-attack from landing, while Guard reduces physical damage after the hit."),
                         new QuestionAnswer("Does readiness lower cooldowns?", "No. Combat Readiness improves activated ability damage, healing, and temporary HP.")
                     },
-                    new[] { StatusEffectGuideTopics.TopicName, "Abilities", "Attributes", "Skills", "Death & Recovery", "Espionage", "Lightsaber Combat Styles", "Force Combat Styles", "Useful Windows" }),
+                    new[] { "Stat Caps", StatusEffectGuideTopics.TopicName, "Abilities", "Attributes", "Skills", "Death & Recovery", "Espionage", "Lightsaber Combat Styles", "Force Combat Styles", "Useful Windows" }),
+
+                new(
+                    "Stat Caps",
+                    "Combat",
+                    "Where character and combat stats stop, so you know when more of a stat no longer helps.",
+                    "Where stats stop",
+                    new[]
+                    {
+                        new ArticleBlock("Character Progression",
+                            "Skills that count toward the skill cap can reach 400 total ranks. Every 10 earned SP grants 1 AP, up to 40 AP. AP upgrades raise an attribute to at most 26; a racial bonus can take one attribute to 27."),
+                        new ArticleBlock("Hit Chance",
+                            $"Final hit chance always lands between {Combat.MinimumHitRate} and {Combat.MaximumHitRate} percent, however high or low Accuracy and Evasion are. Bosses always keep at least a {Combat.BossMinimumHitRate} percent chance to hit."),
+                        new ArticleBlock("Critical Hits",
+                            $"Critical chance is at least {Combat.MinimumCriticalRate} percent and at most {Combat.MaximumCriticalRate} percent. Critical Damage bonuses add at most +{Combat.MaximumCriticalDamagePercentAdjustment} percent to a critical hit."),
+                        new ArticleBlock("Damage Dealt",
+                            $"Percentage damage bonuses together can raise a hit by at most +{Combat.MaximumDamageBonusPercent} percent, double its base damage. Flat damage bonuses are added on top of that cap, and stance changes to ordinary weapon auto-attack damage apply after it."),
+                        new ArticleBlock("Damage Taken",
+                            $"Percentage damage-taken reductions from your gear and effects stop at {Combat.MaximumCombinedDamageReductionPercent} percent combined. Reductions from Leadership abilities, Guard, and elemental resistance are applied separately on top of that, and damage immunity effects stop a hit entirely."),
+                        new ArticleBlock("Guard",
+                            $"Guard chance can reach {Stat.MaximumGuardChance} percent. A guarded hit loses {Combat.BaseGuardDamageReductionPercent} percent of its physical damage, and bonuses can raise that to at most {Combat.MaximumGuardDamageReductionPercent} percent."),
+                        new ArticleBlock("Deflection",
+                            $"Melee and Ranged Deflection chance each stop at {Stat.DefaultMeleeDeflectionChanceCap} percent. Some perks and effects raise that cap, up to {Stat.MaximumDeflectionChanceCap} percent. Shield Deflection stops at {Stat.MaximumShieldDeflectionChance} percent."),
+                        new ArticleBlock("Resistances",
+                            $"Fire, Poison, Electrical, Ice, Mind, Mobility, Trauma, and Disruption resistance stop at {Resistance.MaximumResistance - 1} percent for players. Only temporary immunity effects reach {Resistance.MaximumResistance} percent."),
+                        new ArticleBlock("Attack Speed and Movement",
+                            $"Attack speed bonuses shorten your attack delay by at most {Combat.MaximumAttackDelayAdjustmentPercent} percent, and slows lengthen it by at most {Combat.MaximumAttackDelayAdjustmentPercent} percent. Movement speed stops at {(int)Math.Round(Stat.MaximumMovementSpeedMultiplier * 100)} percent of normal, or 100 percent while walking."),
+                        new ArticleBlock("Combat Readiness",
+                            $"Combat Readiness stops at {Stat.MaximumCombatReadinessPercent} percent."),
+                        new ArticleBlock("Healing From Damage",
+                            $"Healing from damage you deal, such as lifesteal, is at most {Combat.MaximumDamageDerivedHealingPercentPerHit} percent of that hit's damage. An activated ability heals you at most {Combat.MaximumActivatedDamageHealingMaxHPPercent} percent of your maximum HP this way per use. Passive on-hit healing gives at most {Combat.MaximumPassiveDamageHealingMaxHPPercentPerHit} percent of your maximum HP per hit ({Combat.MaximumCooldownDamageHealingMaxHPPercentPerHit} percent for effects with their own cooldown) and at most {Combat.MaximumPassiveDamageHealingMaxHPPercentPerWindow} percent every {Combat.CombatHealingWindowSeconds} seconds. Healing from defeating enemies gives at most {Combat.MaximumDefeatedEnemyHealingMaxHPPercentPerWindow} percent of your maximum HP every {Combat.CombatHealingWindowSeconds} seconds."),
+                        new ArticleBlock("Hard Crowd Control",
+                            $"Hard crowd control lasts at most {StatusEffect.MaximumHardCrowdControlDurationSeconds} seconds, however long it was meant to last. Against players it is then halved by the PvP rules.")
+                    },
+                    new[]
+                    {
+                        new QuestionAnswer("Why does my hit chance never reach 100?", $"Final hit chance stops at {Combat.MaximumHitRate} percent, so more Accuracy past that point does not help."),
+                        new QuestionAnswer("What is the highest critical chance?", $"{Combat.MaximumCriticalRate} percent."),
+                        new QuestionAnswer("Can I become immune to damage?", $"Only through damage immunity effects. Otherwise percentage damage-taken reductions from your gear and effects stop at {Combat.MaximumCombinedDamageReductionPercent} percent combined, and resistances stop at {Resistance.MaximumResistance - 1} percent outside temporary immunity effects."),
+                        new QuestionAnswer("How high can attributes go?", "AP upgrades stop at 26. A racial bonus can raise one attribute to 27.")
+                    },
+                    new[] { "Combat Basics", "Attributes", "Skills", "Force Affinity", StatusEffectGuideTopics.TopicName, "PvP Combat" }),
 
                 new(
                     "Espionage",
@@ -748,9 +804,9 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new ArticleBlock("Starting at Rank 0",
                             "Choose Stealth I, Poisoncraft I, Slicing I, or Trapcraft I in the Perks window. All four are available at Espionage rank 0. You can train with your chosen activity without buying the other starter perks. Craft at a marked Espionage Workbench beside a market terminal in Veles Shops."),
                         new ArticleBlock("Stealth and Back Attacks",
-                            "Stealth is activated out of combat and drains STM while maintained. Hostile actions break stealth. Back Attack bonuses require attacking from behind the target, so position matters."),
+                            "Stealth is activated out of combat and drains STM while maintained, and no STM recovers while hidden. Other players within 5m spot you more easily and more often, and a lucky player can always spot you. Hostile actions break stealth. Back Attack bonuses require attacking from behind the target, so position matters."),
                         new ArticleBlock("Slicing Lockboxes and Sealed Crates",
-                            "Right-click a lockbox and choose Activate Item, or use a Sealed Field Crate to slice its electronic lock. Rotate or swap circuit tiles to connect the entry to the core before trace runs out. Lockpicking and Perception add trace. Tier 1 crates can be found in the Viscaran Wildlands, CZ-220 maintenance level, and Abandoned Nano Station. Slicing II-V unlock at Espionage ranks 22, 30, 42, and 48. Each tier awards XP until the next unlock; tier 5 trains to 50."),
+                            "Right-click a lockbox and choose Activate Item, or use a Sealed Field Crate to slice its electronic lock. Rotate or swap circuit tiles to connect the entry to the core before trace runs out. Every board is different and leaves little spare trace, so plan your route before you move. Each Slicing rank above a target's tier adds 1 trace, and Lockpicking gear plus Perception add up to 2 more. Tier 1 crates can be found in the Viscaran Wildlands, CZ-220 maintenance level, and Abandoned Nano Station. Slicing II-V unlock at Espionage ranks 22, 30, 42, and 48. Each tier awards XP until the next unlock; tier 5 trains to 50."),
                         new ArticleBlock("Slicing Supplies and Failure",
                             "Consumables are optional. The Veles General Store sells tier 1 Copper Trace Fuses, Ratchet Bypass Pins, and Continuity Samplers. Select supplies inside the slicing window. Advanced tools come from slicing rewards; higher-tier trace fuses are crafted by engineers. Cancelling before commitment is free. After a move or information-tool use, aborting counts as failure. The first lockbox failure cannot destroy it; later failures can. Field crates are shared and respawn after 45-75 minutes."),
                         new ArticleBlock("Poisoncraft",
@@ -769,7 +825,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new QuestionAnswer("Why did my recipe or slicing tier stop giving XP?", "You reached the next tier's unlock rank. Purchase that tier's perk and use its recipes or targets to continue training."),
                         new QuestionAnswer("Where do I craft poisons and snares?", "At a marked Espionage Workbench beside a market terminal in Veles Shops."),
                         new QuestionAnswer("How many traps can I place?", "One by default; Trap Management increases your active-trap limit."),
-                        new QuestionAnswer("What breaks stealth?", "Hostile actions break stealth, and maintaining it continuously drains STM.")
+                        new QuestionAnswer("What breaks stealth?", "Hostile actions break stealth, and maintaining it continuously drains STM with no STM recovery until you leave stealth.")
                     },
                     new[] { "Skills", "Perks", "Abilities", "Combat Basics", "Crafting" }),
 
@@ -1163,13 +1219,13 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                         new ArticleBlock("Guide Button",
                             "The Character Sheet also has a Guide button, so you can return here while reviewing your character."),
                         new ArticleBlock("Character Sheet Actions",
-                            "The Character Sheet action list opens Skills, Perks, Techniques, Appearance, Disguises, Quests, Open Trash, HoloCom, Recipes, Currencies, Key Items, Notes, this Guide, Achievements, and Settings."),
+                            "The Character Sheet action list opens Skills, Perks, Techniques, Appearance, Disguises, Quests, Open Trash, Recipes, Currencies, Key Items, Notes, this Guide, Achievements, and Settings."),
                         new ArticleBlock("Skills and Perks",
-                            "Skills shows ranks, XP, XP debt, decay locks, and RP XP distribution. Perks shows player perks and, when you have an active beast, beast perks."),
+                            "Skills shows ranks, XP, XP debt, decay locks, rank limits, and RP XP distribution. Perks shows player perks and, when you have an active beast, beast perks."),
                         new ArticleBlock("Quests and Progress",
                             "Press J to open Quests, which shows active quest objectives. Key Items shows character-specific unlocks and progress records. Achievements shows long-term account-wide progress."),
                         new ArticleBlock("Social Windows",
-                            "Notes stores private notes. Settings controls notifications, subdual mode, reset reminders, Mini-Vitals, identity/privacy options, chat colors, and description access. HoloCom opens calling options when you are not in space."),
+                            "Notes stores private notes. Settings controls notifications, subdual mode, reset reminders, Mini-Vitals, identity/privacy options, chat colors, and description access."),
                         new ArticleBlock("Recovery and Utility",
                             "Open Trash provides a disposal container. Appearance and Disguises manage your visible presentation. If a window becomes unreachable, use /resetwindows. Use /help for the full command list and /bug to report a problem.")
                     },

@@ -18,17 +18,21 @@
          opened once, and a KeyBinding declared here has no DataContext to bind a command from). -->
     <Menu Grid.Row="0">
       <MenuItem Header="_File">
+        <MenuItem Header="_Workspaces..." Command="{Binding WorkspacesCommand}" />
+        <Separator />
         <MenuItem Header="_Save" Command="{Binding SaveCommand}" InputGesture="Ctrl+S" />
         <MenuItem Header="Save _All" Command="{Binding SaveAllCommand}" InputGesture="Ctrl+Shift+S" />
         <Separator />
         <MenuItem x:Name="ErfManagerMenuItem" Header="ERF _Manager..."
                   Command="{Binding ErfArchivesCommand}" />
         <Separator />
+        <MenuItem Header="Export _Contribution..." Command="{Binding ExportContributionCommand}" />
+        <Separator />
         <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
       </MenuItem>
       <MenuItem Header="_Edit">
         <MenuItem Header="_Undo" Command="{Binding UndoCommand}" InputGesture="Ctrl+Z" />
-        <MenuItem Header="_Redo" Command="{Binding RedoCommand}" InputGesture="Ctrl+Y" />
+        <MenuItem Header="_Redo" Command="{Binding RedoCommand}" InputGesture="Ctrl+Shift+Z" />
         <Separator />
         <MenuItem x:Name="ModulePropertiesMenuItem" Header="Module _Properties..."
                   Command="{Binding ModulePropertiesCommand}" />
@@ -57,6 +61,9 @@
         <Separator />
         <MenuItem Header="Build _Preview Cache" Command="{Binding BuildPreviewCacheCommand}" />
       </MenuItem>
+      <MenuItem Header="_Help">
+        <MenuItem Header="Check for _Updates..." Command="{Binding CheckForUpdatesCommand}" />
+      </MenuItem>
     </Menu>
     <!-- Quick-access bar: the handful of actions a builder reaches for constantly, so they are one
          click away rather than two menus deep. Icon-only with tooltips, in two groups - what changes
@@ -79,7 +86,7 @@
         <Button Classes="tool" Command="{Binding UndoCommand}" ToolTip.Tip="Undo (Ctrl+Z)">
           <Path Data="M8,6 L3,11 L8,16 M3,11 H14 A6,6 0 0 1 14,23 H10" />
         </Button>
-        <Button Classes="tool" Command="{Binding RedoCommand}" ToolTip.Tip="Redo (Ctrl+Y)">
+        <Button Classes="tool" Command="{Binding RedoCommand}" ToolTip.Tip="Redo (Ctrl+Shift+Z)">
           <Path Data="M16,6 L21,11 L16,16 M21,11 H10 A6,6 0 0 0 10,23 H14" />
         </Button>
 
@@ -150,6 +157,8 @@
                      TextAlignment="Center"
                      TextWrapping="Wrap"
                      Foreground="{DynamicResource InkSecondaryBrush}" />
+          <Button x:Name="StartupWorkspaceButton" Content="Choose workspace"
+                  HorizontalAlignment="Center" IsVisible="False" Click="OnStartupWorkspaceClick" />
         </StackPanel>
         </ScrollViewer>
       </Border>

@@ -63,8 +63,10 @@ public class FightClubBackroomsWardenPlacementTests
     public void FightClubDungeon_UsesGeneratedCapstoneSpawnTable()
     {
         using var dungeon = LoadModuleJson("git", DungeonArea);
-        GetLocalString(dungeon.RootElement, "CREATURE_SPAWN_TABLE_ID")
-            .Should().Be("CAPSTONE_SMUGGLERS_MOON_FIGHT_CLUB_BACKROOMS");
+        GetLocalString(dungeon.RootElement, "CREATURE_SPAWN_TABLE_ID").Should().BeEmpty();
+        dungeon.RootElement.GetProperty("WaypointList").GetProperty("value").EnumerateArray()
+            .Count(waypoint => GetString(waypoint, "Tag") is "CAPSTONE_SMUGGLERS_MOON_FIGHT_CLUB_BACKROOMS" or "CAPSTONE_SMUGGLERS_MOON_FIGHT_CLUB_BACKROOMS_DEEP")
+            .Should().Be(20);
         GetLocalInt(dungeon.RootElement, "IS_DUNGEON").Should().Be(1);
     }
 

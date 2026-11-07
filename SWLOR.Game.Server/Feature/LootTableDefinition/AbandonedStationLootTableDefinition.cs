@@ -72,8 +72,10 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("cnt_spear", 1)
                 .AddItem("cnt_twinblade", 1)
                 .AddItem("cnt_katar", 1)
+                .AddItem("cnt_pglove", 1)
                 .AddItem("cnt_staff", 1)
                 .AddItem("cnt_pistol", 1)
+                .AddItem("cnt_twinpistol", 1)
                 .AddItem("cnt_rifle", 1)
                 .AddItem("cnt_shuriken", 1);
 
@@ -89,7 +91,7 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("biolab_gloves", 1)
                 .AddItem("biolab_boots", 1);
 
-            // Rakghouls, test subjects and the rancor carry whatever their victims wore.
+            // Colicoids, test subjects and the rancor carry whatever their victims wore.
             _builder.Create("STATION_GEAR")
                 .AddItem("cnt_helmet", 1)
                 .AddItem("cnt_armor", 1)
@@ -102,8 +104,10 @@ namespace SWLOR.Game.Server.Feature.LootTableDefinition
                 .AddItem("cnt_spear", 1)
                 .AddItem("cnt_twinblade", 1)
                 .AddItem("cnt_katar", 1)
+                .AddItem("cnt_pglove", 1)
                 .AddItem("cnt_staff", 1)
                 .AddItem("cnt_pistol", 1)
+                .AddItem("cnt_twinpistol", 1)
                 .AddItem("cnt_rifle", 1)
                 .AddItem("cnt_shuriken", 1)
                 .AddItem("gantry_cap", 1)

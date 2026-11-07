@@ -89,6 +89,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                             {
                                 header.AddLabel()
                                     .SetText("Name")
+                                    .SetTooltip("Select one character for their details and actions, or several to bring them here together. Selections stay across searches and pages.")
                                     .SetHorizontalAlign(NuiHorizontalAlign.Left)
                                     .SetHeight(20f);
 
@@ -116,6 +117,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                             {
                                 listRow.AddList(template =>
                                 {
+                                    // Each name toggles independently, so several characters can be selected at once.
                                     template.AddCell(cell =>
                                     {
                                         cell.AddToggleButton()
@@ -170,6 +172,21 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                                     .SetHorizontalAlign(NuiHorizontalAlign.Left)
                                     .SetHeight(20f);
                             });
+
+                            content.AddRow(selection =>
+                            {
+                                selection.AddLabel()
+                                    .BindText(model => model.SelectionSummary)
+                                    .SetHorizontalAlign(NuiHorizontalAlign.Left)
+                                    .SetHeight(20f);
+
+                                selection.AddButton()
+                                    .SetText("Clear Selection")
+                                    .SetWidth(130f)
+                                    .SetHeight(ButtonHeight)
+                                    .BindIsEnabled(model => model.HasSelection)
+                                    .BindOnClicked(model => model.OnClickClearSelection());
+                            });
                         });
                     })
                         .SetWidth(ContentPanelWidth);
@@ -203,6 +220,17 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                 model => model.OnClickJumpTo(), model => model.CanJumpTo);
             AddActionButton(col, "Jump Here", "Bring the online character to you",
                 model => model.OnClickJumpHere(), model => model.IsSelectedOnline);
+            col.AddRow(row =>
+            {
+                row.AddButton()
+                    .BindText(model => model.BringSelectedText)
+                    .SetTooltip("Bring every selected online character to you")
+                    .SetDisabledTooltip("Select one or more online characters first.")
+                    .SetWidth(RailButtonWidth)
+                    .SetHeight(ButtonHeight)
+                    .BindIsEnabled(model => model.CanBringSelected)
+                    .BindOnClicked(model => model.OnClickBringSelected());
+            });
             AddActionButton(col, "Examine", "Open the DM examine window for the online character",
                 model => model.OnClickExamine(), model => model.IsSelectedOnline);
             AddActionButton(col, "Send Message", "Send the online character a private DM message",
@@ -225,6 +253,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                 row.AddButton()
                     .SetText(text)
                     .SetTooltip(tooltip)
+                    .BindDisabledTooltip(model => model.SingleActionReason)
                     .SetWidth(RailButtonWidth)
                     .SetHeight(ButtonHeight)
                     .BindIsEnabled(isEnabled)

@@ -126,7 +126,7 @@
   },
   "Comment": {
     "type": "cexostring",
-    "value": "Crippling Defense master in Smuggler's Moon - Private Pit."
+    "value": "Stable Champion Thrask (Crippling Defense line) in Smuggler's Moon - Private Pit."
   },
   "Con": {
     "type": "byte",
@@ -386,7 +386,7 @@
   "FirstName": {
     "type": "cexolocstring",
     "value": {
-      "0": "Crippling Defense Master"
+      "0": "Stable Champion Thrask"
     }
   },
   "fortbonus": {
@@ -802,6 +802,21 @@
         "Name": {
           "type": "cexostring",
           "value": "PERK_LEVEL_354"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "IS_BOSS"
         },
         "Type": {
           "type": "dword",

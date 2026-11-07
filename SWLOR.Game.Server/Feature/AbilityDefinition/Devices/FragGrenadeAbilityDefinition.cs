@@ -51,7 +51,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(2)
+                .RequirementStamina(1)
                 .RequirementItem("explosives");
         }
 
@@ -79,7 +79,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(3)
+                .RequirementStamina(2)
                 .RequirementItem("explosives");
         }
 
@@ -107,7 +107,7 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 .IsCastedAbility()
                 .IsHostileAbility()
                 .BreaksStealth()
-                .RequirementStamina(5)
+                .RequirementStamina(3)
                 .RequirementItem("explosives");
         }
 
@@ -153,7 +153,8 @@ namespace SWLOR.Game.Server.Feature.AbilityDefinition.Devices
                 Array.Empty<Type>(),
                 damageType: CombatDamageType.Fire,
                 targetVisualEffect: VisualEffect.Vfx_Com_Hit_Fire,
-                areaVisualEffect: VisualEffect.None);
+                areaVisualEffect: VisualEffect.None,
+                damagePercentAdjustment: DeviceAbilityEffects.GetBlastDamageAdjustment(activator));
         }
 
         private static Location GetFragGrenadeImpactLocation(uint activator, uint target, Location targetLocation)

@@ -82,14 +82,16 @@ public sealed partial class QuestConversationTests
                     .SelectMany(graph => ReachableActions(graph, quest.QuestId, number))
                     .Where(action => action.Arguments.SequenceEqual(new[] { quest.QuestId }))
                     .Select(action => action.Key).ToHashSet();
-                var hasCollection = state.GetObjectives().OfType<CollectItemObjective>().Any();
-                var hasKills = state.GetObjectives().OfType<KillTargetObjective>().Any();
+                var objectives = state.GetObjectives().ToArray();
+                var hasCollection = objectives.OfType<CollectItemObjective>().Any();
                 if (hasCollection)
                     actions.Should().Contain("action-request-quest-items", $"{quest.QuestId} state {number} needs an item hand-in");
                 else
                     actions.Should().NotContain("action-request-quest-items", $"{quest.QuestId} state {number} has no collection objective");
 
-                if (!hasCollection && !hasKills)
+                // Objective implementations own their runtime completion checks. Only an
+                // objective-free state needs an explicit conversation or world advance.
+                if (objectives.Length == 0)
                 {
                     var worldAdvance = worldSteps.Contains((quest.QuestId, number.ToString()));
                     (worldAdvance || actions.Contains("action-advance-quest")).Should().BeTrue(
@@ -163,8 +165,9 @@ public sealed partial class QuestConversationTests
         var obtainable = EconomyObtainabilityCoverageTests.ReadObtainableResrefs(root);
         var craftable = Directory.EnumerateFiles(Path.Combine(root, "SWLOR.Game.Server", "Feature", "RecipeDefinition"),
                 "*.cs", SearchOption.AllDirectories)
-            .SelectMany(path => Regex.Matches(File.ReadAllText(path), "\\.Resref\\(\\s*\"([^\"]+)\"")
-                .Select(match => match.Groups[1].Value)).ToHashSet();
+            .SelectMany(path => Regex.Matches(File.ReadAllText(path),
+                    "\\.Resref\\(\\s*\"([^\"]+)\"|\\(RecipeType\\.\\w+, RecipeType\\.\\w+, \"([^\"]+)\"\\)")
+                .Select(match => match.Groups[1].Success ? match.Groups[1].Value : match.Groups[2].Value)).ToHashSet();
         var objectives = 0;
         foreach (var quest in BuildQuests().Values)
         foreach (var state in quest.States.Values)
@@ -276,6 +279,71 @@ public sealed partial class QuestConversationTests
         advances.Should().Be(1);
         completed.Should().BeTrue();
         session.EndReason.Should().NotBe(ConversationEndReason.RuntimeError);
+    }
+
+    [TestCase(17, 18)]
+    [TestCase(15, 16)]
+    [TestCase(13, 14)]
+    [TestCase(11, 12)]
+    [TestCase(10, 12)]
+    public void RepublicAssessment_WrongAnswersRestartAndStillAllowCompletion(int wrongAnswer, int retry)
+    {
+        var graph = ReadGraphs().Single(graph => graph.Id == "rep_trdrddialog");
+        var runtime = new ConversationRuntime();
+        var advances = 0;
+        runtime.RegisterCondition("condition-on-quest-state", (_, args) =>
+            args.SequenceEqual(new[] { "joining_the_republic", "3" }));
+        runtime.RegisterAction("system.execute-owner-script", (_, _) => true);
+        runtime.RegisterAction("action-advance-quest", (_, args) =>
+        {
+            args.Should().Equal("joining_the_republic");
+            advances++;
+            return true;
+        });
+        var session = new ConversationSession(graph, new ConversationContext(1, 2), runtime);
+        session.Start().Should().BeTrue();
+        Select(0);
+        Select(2);
+        if (wrongAnswer <= 13)
+        {
+            Select(3);
+            Select(4);
+        }
+        if (wrongAnswer <= 11)
+        {
+            Select(5);
+            Select(6);
+        }
+        Select(wrongAnswer);
+        Select(retry);
+        session.HasEnded.Should().BeFalse("every wrong answer must allow an in-conversation retry");
+        session.CurrentNode.Id.Should().Be("entry-00002");
+        advances.Should().Be(0, "failed attempts must not advance the quest");
+
+        foreach (var reply in new[] { 3, 4, 5, 6, 7, 8 }) Select(reply);
+        advances.Should().Be(0, "the player must explicitly finish the assessment");
+        Select(9);
+        session.HasEnded.Should().BeTrue();
+        session.EndReason.Should().Be(ConversationEndReason.Completed);
+        advances.Should().Be(1);
+
+        void Select(int reply)
+        {
+            var index = session.VisibleChoices.ToList().FindIndex(choice => choice.Id == $"reply-{reply:00000}");
+            index.Should().BeGreaterThanOrEqualTo(0, $"reply {reply} must be reachable");
+            session.SelectChoice(index);
+        }
+    }
+
+    [Test]
+    public void RepublicAssessment_CorrectAnswersAppearInDifferentPositions()
+    {
+        var graph = ReadGraphs().Single(graph => graph.Id == "rep_trdrddialog");
+        var positions = new[] { (2, 3), (4, 5), (6, 7) }.Select(pair =>
+            graph.Nodes[$"entry-{pair.Item1:00000}"].Choices.FindIndex(route =>
+                route.ChoiceId == $"reply-{pair.Item2:00000}")).ToArray();
+        positions.Should().OnlyContain(position => position >= 0);
+        positions.Should().OnlyHaveUniqueItems("the correct option must not have a predictable position");
     }
 
     [Test]

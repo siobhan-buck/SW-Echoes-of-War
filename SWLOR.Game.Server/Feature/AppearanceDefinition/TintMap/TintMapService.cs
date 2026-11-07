@@ -150,6 +150,9 @@ namespace SWLOR.Game.Server.Feature.AppearanceDefinition.TintMap
             if (!GetIsObjectValid(creature))
                 return;
 
+            PowerGloveFit.Apply(creature);
+            TwinPistolEquipment.RefreshAppearance(creature);
+
             // Rebuild the complete tint state in one pass. Parameter-scoped wildcard resets are
             // not reliable for modular creatures: on the game client they can discard palette
             // rows already written for other layers, which leaves equipped clothing at row zero.
@@ -159,6 +162,8 @@ namespace SWLOR.Game.Server.Feature.AppearanceDefinition.TintMap
             var rendersRobeRgb = RobeModelRenderer.Apply(creature, selections);
             HelmetModelRenderer.Apply(creature, selections);
             NeckModelRenderer.Apply(creature);
+            ShoulderModelRenderer.Apply(creature);
+            PartSkinModelRenderer.Apply(creature);
             ProjectNativeRobeColors(creature, selections, rendersRobeRgb);
             ApplyEquippedHelmetColors(creature, selections, resetShaderOverrides);
             if (resetShaderOverrides)
@@ -1412,9 +1417,11 @@ namespace SWLOR.Game.Server.Feature.AppearanceDefinition.TintMap
                     RobeAppearance.RemoveUnavailableRobe(creature, armor);
                 var recoveredNeck = GetIsObjectValid(armor) &&
                     NeckAppearance.RemoveUnavailableNeck(creature, armor);
+                var recoveredParts = GetIsObjectValid(armor) &&
+                    ArmorPartAppearance.RemoveUnavailableParts(creature, armor);
                 CarryStoredEquipmentCustomColors(creature);
                 CarryStoredCreatureCustomColors(creature);
-                if (recoveredRobe || recoveredNeck)
+                if (recoveredRobe || recoveredNeck || recoveredParts)
                     EquippedItemAppearance.Refresh(creature, armor, resetShaderOverrides);
                 else
                     ApplyCurrentColors(creature, resetShaderOverrides);

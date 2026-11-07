@@ -221,6 +221,33 @@ namespace SWLOR.Game.Server.Service
             return _npcsWithKillQuests[npcGroupType];
         }
 
+        /// <summary>Credits only the reporting player's active, matching combat objectives.</summary>
+        public static void RecordCombatObjective(uint player, string key, uint source)
+        {
+            if (!GetIsPC(player) || GetIsDM(player) || string.IsNullOrWhiteSpace(key))
+                return;
+
+            var record = DB.Get<Player>(GetObjectUUID(player));
+            if (record == null)
+                return;
+
+            foreach (var (questId, progress) in record.Quests.ToArray())
+            {
+                var quest = GetQuestByIdOrDefault(questId);
+                if (progress.CurrentState <= 0 || progress.DateLastCompleted != null ||
+                    quest == null || !quest.States.TryGetValue(progress.CurrentState, out var state))
+                    continue;
+
+                var objective = state.GetObjectives().OfType<CombatObjective>()
+                    .FirstOrDefault(candidate => candidate.Key == key);
+                if (objective == null || objective.IsComplete(player, questId))
+                    continue;
+
+                objective.Advance(player, questId);
+                quest.Advance(player, source);
+            }
+        }
+
         public static void AbandonQuest(uint player, string questId)
         {
             _quests[questId].Abandon(player);
@@ -380,8 +407,7 @@ namespace SWLOR.Game.Server.Service
                 if (GetArea(member) != GetArea(killer))
                     continue;
 
-                if (GetDistanceBetween(member, creature) > 50f)
-                    continue;
+                var distance = GetDistanceBetween(member, creature);
 
                 var playerId = GetObjectUUID(member);
                 var dbPlayer = DB.Get<Player>(playerId);
@@ -403,7 +429,9 @@ namespace SWLOR.Game.Server.Service
                         // Only kill target objectives matching this NPC group ID are processed.
                         if (objective is KillTargetObjective killTargetObjective)
                         {
-                            if (killTargetObjective.Group != npcGroupType) continue;
+                            if (killTargetObjective.Group != npcGroupType ||
+                                distance > killTargetObjective.MaximumCreditDistance) continue;
+                            if (!killTargetObjective.CountsKill(member, creature)) continue;
 
                             killRequiredForQuestAndState = true;
                             killTargetObjective.Advance(member, questId);
@@ -566,15 +594,22 @@ namespace SWLOR.Game.Server.Service
             {
                 var consumedAmount = Math.Min(stackSize, requiredAmount);
                 var isFullStackConsumed = stackSize <= requiredAmount;
-                var consumedItem = isFullStackConsumed ? item : CopyItem(item, container, true);
+                // A detached snapshot cannot merge into and resize the source stack.
+                var consumedItem = isFullStackConsumed ? item : ObjectPlugin.Deserialize(ObjectPlugin.Serialize(item));
+                try
+                {
+                    if (!GetIsObjectValid(consumedItem))
+                        throw new InvalidOperationException("Could not snapshot the consumed quest items.");
+                    if (!isFullStackConsumed)
+                        SetItemStackSize(consumedItem, consumedAmount);
 
-                if (!isFullStackConsumed)
-                    SetItemStackSize(consumedItem, consumedAmount);
-
-                questDetail.CollectedItemHandler.Invoke(player, consumedItem);
-
-                if (!isFullStackConsumed)
-                    DestroyObject(consumedItem);
+                    questDetail.CollectedItemHandler.Invoke(player, consumedItem);
+                }
+                finally
+                {
+                    if (!isFullStackConsumed)
+                        DestroyObject(consumedItem);
+                }
             }
 
             // Decrement the required items and update the DB.
