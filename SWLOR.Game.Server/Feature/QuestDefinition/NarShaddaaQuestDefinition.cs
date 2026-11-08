@@ -55,7 +55,6 @@ namespace SWLOR.Game.Server.Feature.QuestDefinition
         private void SpaceDungeon_PirateHideout()
         {
             _builder.Create("nar_space_pirate_hideout", "Clear the Pirate Hideout")
-                .IsRepeatable()
                 .AddState()
                 .SetStateJournalText("Hutt sensors detected a pirate outpost in the asteroid belt. Clear out ten pirates and destroy their command droid.")
                 .AddKillObjective(NPCGroupType.NarShaddaa_Pirates, 10)
