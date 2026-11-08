@@ -22,9 +22,7 @@ namespace SWLOR.Game.Server.Feature.QuestDefinition
         private static void WorkinForTheMan(QuestBuilder builder)
         {
             builder.Create("workin_for_man", "Workin' for the Man")
-
-                .IsRepeatable()
-
+            
                 .AddState()
                 .SetStateJournalText("You've been recruited by Czerka to take care of their Tusken problem. Explore the dunes of Tatooine and thin their numbers.")
                 .AddKillObjective(NPCGroupType.Tatooine_TuskenRaider, 20)

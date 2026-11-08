@@ -557,8 +557,6 @@ namespace SWLOR.Game.Server.Feature.QuestDefinition
         private void PutThemToRest()
         {
             _builder.Create("put_them_to_rest", "Put Them to Rest")
-                .IsRepeatable()
-
                 .AddState()
                 .SetStateJournalText("Telford Brelnak traced a distress beacon to an abandoned research station in orbit around Viscara. Its crew was brought back from the dead, and experimental Colicoids escaped their containment pens. Find a pilot to take you there, then put twenty of its horrors down for good.")
                 .AddKillObjective(NPCGroupType.AbandonedStation_Horror, 20)
