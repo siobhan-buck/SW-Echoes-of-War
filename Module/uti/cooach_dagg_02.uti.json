@@ -1,0 +1,296 @@
+{
+  "__data_type": "UTI ",
+  "AddCost": {
+    "type": "dword",
+    "value": 0
+  },
+  "BaseItem": {
+    "type": "int",
+    "value": 0
+  },
+  "Charges": {
+    "type": "byte",
+    "value": 0
+  },
+  "Comment": {
+    "type": "cexostring",
+    "value": ""
+  },
+  "Cost": {
+    "type": "dword",
+    "value": 0
+  },
+  "Cursed": {
+    "type": "byte",
+    "value": 0
+  },
+  "DescIdentified": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "This deadly Vibroknife has been designed for swift, accurate strikes. It is sleek, and of high quality, clearly designed by a master smith. A true tool of death in the hands of someone who knows how to use it, it is one of a pair wielded by the Assault Droid Z-AU27 for it's programmed task of subduing Force Sensitives."
+    }
+  },
+  "Description": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "This deadly Vibroknife has been designed for swift, accurate strikes. It is sleek, and of high quality, clearly designed by a master smith. A true tool of death in the hands of someone who knows how to use it, it is one of a pair wielded by the Assault Droid Z-AU27 for it's programmed task of subduing Force Sensitives."
+    }
+  },
+  "Identified": {
+    "type": "byte",
+    "value": 1
+  },
+  "LocalizedName": {
+    "type": "cexolocstring",
+    "value": {
+      "0": "Hunter's Resolve"
+    }
+  },
+  "ModelPart1": {
+    "type": "byte",
+    "value": 1
+  },
+  "ModelPart2": {
+    "type": "byte",
+    "value": 73
+  },
+  "ModelPart3": {
+    "type": "byte",
+    "value": 71
+  },
+  "PaletteID": {
+    "type": "byte",
+    "value": 34
+  },
+  "Plot": {
+    "type": "byte",
+    "value": 0
+  },
+  "PropertiesList": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "ChanceAppear": {
+          "type": "byte",
+          "value": 100
+        },
+        "CostTable": {
+          "type": "byte",
+          "value": 48
+        },
+        "CostValue": {
+          "type": "word",
+          "value": 45
+        },
+        "Param1": {
+          "type": "byte",
+          "value": 255
+        },
+        "Param1Value": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertyName": {
+          "type": "word",
+          "value": 131
+        },
+        "Subtype": {
+          "type": "word",
+          "value": 37
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ChanceAppear": {
+          "type": "byte",
+          "value": 100
+        },
+        "CostTable": {
+          "type": "byte",
+          "value": 34
+        },
+        "CostValue": {
+          "type": "word",
+          "value": 20
+        },
+        "Param1": {
+          "type": "byte",
+          "value": 255
+        },
+        "Param1Value": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertyName": {
+          "type": "word",
+          "value": 93
+        },
+        "Subtype": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ChanceAppear": {
+          "type": "byte",
+          "value": 100
+        },
+        "CostTable": {
+          "type": "byte",
+          "value": 52
+        },
+        "CostValue": {
+          "type": "word",
+          "value": 21
+        },
+        "Param1": {
+          "type": "byte",
+          "value": 255
+        },
+        "Param1Value": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertyName": {
+          "type": "word",
+          "value": 98
+        },
+        "Subtype": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ChanceAppear": {
+          "type": "byte",
+          "value": 100
+        },
+        "CostTable": {
+          "type": "byte",
+          "value": 45
+        },
+        "CostValue": {
+          "type": "word",
+          "value": 5
+        },
+        "Param1": {
+          "type": "byte",
+          "value": 255
+        },
+        "Param1Value": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertyName": {
+          "type": "word",
+          "value": 111
+        },
+        "Subtype": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ChanceAppear": {
+          "type": "byte",
+          "value": 100
+        },
+        "CostTable": {
+          "type": "byte",
+          "value": 36
+        },
+        "CostValue": {
+          "type": "word",
+          "value": 2
+        },
+        "Param1": {
+          "type": "byte",
+          "value": 255
+        },
+        "Param1Value": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertyName": {
+          "type": "word",
+          "value": 92
+        },
+        "Subtype": {
+          "type": "word",
+          "value": 0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ChanceAppear": {
+          "type": "byte",
+          "value": 100
+        },
+        "CostTable": {
+          "type": "byte",
+          "value": 41
+        },
+        "CostValue": {
+          "type": "word",
+          "value": 5
+        },
+        "Param1": {
+          "type": "byte",
+          "value": 255
+        },
+        "Param1Value": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertyName": {
+          "type": "word",
+          "value": 136
+        },
+        "Subtype": {
+          "type": "word",
+          "value": 0
+        }
+      }
+    ]
+  },
+  "StackSize": {
+    "type": "word",
+    "value": 1
+  },
+  "Stolen": {
+    "type": "byte",
+    "value": 0
+  },
+  "Tag": {
+    "type": "cexostring",
+    "value": "cooach_dagg_02"
+  },
+  "TemplateResRef": {
+    "type": "resref",
+    "value": "cooach_dagg_02"
+  },
+  "VarTable": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "Name": {
+          "type": "cexostring",
+          "value": "NO_ECONOMY"
+        },
+        "Type": {
+          "type": "dword",
+          "value": 1
+        },
+        "Value": {
+          "type": "int",
+          "value": 1
+        }
+      }
+    ]
+  }
+}

@@ -1920,7 +1920,8 @@
                 "gerothehutt001",
                 "gerogoon002",
                 "gerogoon003",
-                "gerogoon005"
+                "gerogoon005",
+                "gerothehutt002"
               ],
               "placeholder": false
             },
@@ -2710,7 +2711,8 @@
               "name": "Custom 1",
               "members": [
                 "_mdrn_dt_jumpto",
-                "marsh_office_01"
+                "marsh_office_01",
+                "tat_can_back"
               ],
               "placeholder": false
             },
@@ -9638,7 +9640,8 @@
                 "key_sith_3",
                 "key_smuggler01",
                 "wpn_sub_token",
-                "key_marsh_01"
+                "key_marsh_01",
+                "key_tatcan_01"
               ],
               "placeholder": false
             },
@@ -9847,7 +9850,9 @@
                     "vet_knife",
                     "vreegoknife",
                     "sysshut_w1",
-                    "vitrupt_w1"
+                    "vitrupt_w1",
+                    "cooach_dagg_01",
+                    "cooach_dagg_02"
                   ],
                   "placeholder": false
                 },
