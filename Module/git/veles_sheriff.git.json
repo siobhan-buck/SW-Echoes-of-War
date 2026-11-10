@@ -104668,233 +104668,6 @@
         },
         "Appearance": {
           "type": "dword",
-          "value": 32042
-        },
-        "AutoRemoveKey": {
-          "type": "byte",
-          "value": 0
-        },
-        "Bearing": {
-          "type": "float",
-          "value": 2.975786209106445
-        },
-        "BodyBag": {
-          "type": "byte",
-          "value": 0
-        },
-        "CloseLockDC": {
-          "type": "byte",
-          "value": 0
-        },
-        "Conversation": {
-          "type": "resref",
-          "value": ""
-        },
-        "CurrentHP": {
-          "type": "short",
-          "value": 10
-        },
-        "Description": {
-          "type": "cexolocstring",
-          "value": {
-            "0": ""
-          }
-        },
-        "DisarmDC": {
-          "type": "byte",
-          "value": 0
-        },
-        "Faction": {
-          "type": "dword",
-          "value": 3
-        },
-        "Fort": {
-          "type": "byte",
-          "value": 5
-        },
-        "Hardness": {
-          "type": "byte",
-          "value": 5
-        },
-        "HasInventory": {
-          "type": "byte",
-          "value": 0
-        },
-        "HP": {
-          "type": "short",
-          "value": 10
-        },
-        "Interruptable": {
-          "type": "byte",
-          "value": 1
-        },
-        "KeyName": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "KeyRequired": {
-          "type": "byte",
-          "value": 0
-        },
-        "Lockable": {
-          "type": "byte",
-          "value": 1
-        },
-        "Locked": {
-          "type": "byte",
-          "value": 0
-        },
-        "LocName": {
-          "type": "cexolocstring",
-          "value": {
-            "0": "[SWTOR] Chair - Cockpit, Black"
-          }
-        },
-        "OnClick": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnClosed": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnDamaged": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnDeath": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnDisarm": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnHeartbeat": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnInvDisturbed": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnLock": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnMeleeAttacked": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnOpen": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnSpellCastAt": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnTrapTriggered": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnUnlock": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnUsed": {
-          "type": "resref",
-          "value": ""
-        },
-        "OnUserDefined": {
-          "type": "resref",
-          "value": ""
-        },
-        "OpenLockDC": {
-          "type": "byte",
-          "value": 0
-        },
-        "Plot": {
-          "type": "byte",
-          "value": 0
-        },
-        "PortraitId": {
-          "type": "word",
-          "value": 0
-        },
-        "Ref": {
-          "type": "byte",
-          "value": 0
-        },
-        "Static": {
-          "type": "byte",
-          "value": 1
-        },
-        "Tag": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "TemplateResRef": {
-          "type": "resref",
-          "value": "_mdrn_pl_carpt04"
-        },
-        "TrapDetectable": {
-          "type": "byte",
-          "value": 1
-        },
-        "TrapDetectDC": {
-          "type": "byte",
-          "value": 0
-        },
-        "TrapDisarmable": {
-          "type": "byte",
-          "value": 1
-        },
-        "TrapFlag": {
-          "type": "byte",
-          "value": 0
-        },
-        "TrapOneShot": {
-          "type": "byte",
-          "value": 1
-        },
-        "TrapType": {
-          "type": "byte",
-          "value": 0
-        },
-        "Type": {
-          "type": "byte",
-          "value": 0
-        },
-        "Useable": {
-          "type": "byte",
-          "value": 0
-        },
-        "Will": {
-          "type": "byte",
-          "value": 0
-        },
-        "X": {
-          "type": "float",
-          "value": 5.050000190734863
-        },
-        "Y": {
-          "type": "float",
-          "value": 19.76000022888184
-        },
-        "Z": {
-          "type": "float",
-          "value": 0.0
-        }
-      },
-      {
-        "__struct_id": 9,
-        "AnimationState": {
-          "type": "byte",
-          "value": 0
-        },
-        "Appearance": {
-          "type": "dword",
           "value": 32062
         },
         "AutoRemoveKey": {
@@ -172542,7 +172315,7 @@
         },
         "Appearance": {
           "type": "dword",
-          "value": 32041
+          "value": 1415
         },
         "AutoRemoveKey": {
           "type": "byte",
@@ -172550,7 +172323,7 @@
         },
         "Bearing": {
           "type": "float",
-          "value": 0.2008656710386276
+          "value": 3.113187789916992
         },
         "BodyBag": {
           "type": "byte",
@@ -172570,9 +172343,7 @@
         },
         "Description": {
           "type": "cexolocstring",
-          "value": {
-            "0": ""
-          }
+          "value": {}
         },
         "DisarmDC": {
           "type": "byte",
@@ -172621,7 +172392,7 @@
         "LocName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Sit"
+            "0": "Chair, Pilot's"
           }
         },
         "OnClick": {
@@ -172678,7 +172449,7 @@
         },
         "OnUsed": {
           "type": "resref",
-          "value": "sit"
+          "value": "x0_o2_use_chair"
         },
         "OnUserDefined": {
           "type": "resref",
@@ -172706,11 +172477,11 @@
         },
         "Tag": {
           "type": "cexostring",
-          "value": "sit_test_1"
+          "value": "_mdrn_pl_chrplt"
         },
         "TemplateResRef": {
           "type": "resref",
-          "value": "sit_test_1"
+          "value": "_mdrn_pl_chrplt"
         },
         "TrapDetectable": {
           "type": "byte",
@@ -172750,11 +172521,11 @@
         },
         "X": {
           "type": "float",
-          "value": 3.529876232147217
+          "value": 5.088762760162354
         },
         "Y": {
           "type": "float",
-          "value": 24.01118850708008
+          "value": 19.73865127563477
         },
         "Z": {
           "type": "float",
@@ -172769,7 +172540,7 @@
         },
         "Appearance": {
           "type": "dword",
-          "value": 32041
+          "value": 20030
         },
         "AutoRemoveKey": {
           "type": "byte",
@@ -172777,7 +172548,7 @@
         },
         "Bearing": {
           "type": "float",
-          "value": -0.2700000107288361
+          "value": 1.6456698179245
         },
         "BodyBag": {
           "type": "byte",
@@ -172797,9 +172568,7 @@
         },
         "Description": {
           "type": "cexolocstring",
-          "value": {
-            "0": ""
-          }
+          "value": {}
         },
         "DisarmDC": {
           "type": "byte",
@@ -172807,7 +172576,7 @@
         },
         "Faction": {
           "type": "dword",
-          "value": 3
+          "value": 4
         },
         "Fort": {
           "type": "byte",
@@ -172848,7 +172617,7 @@
         "LocName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Sit"
+            "0": "Chair, Crew (Grey)"
           }
         },
         "OnClick": {
@@ -172905,7 +172674,7 @@
         },
         "OnUsed": {
           "type": "resref",
-          "value": "sit"
+          "value": "x2_plc_used_sit"
         },
         "OnUserDefined": {
           "type": "resref",
@@ -172933,11 +172702,11 @@
         },
         "Tag": {
           "type": "cexostring",
-          "value": "sit_test_1"
+          "value": "_mdrn_pl_chrgren"
         },
         "TemplateResRef": {
           "type": "resref",
-          "value": "sit_test_1"
+          "value": "_mdrn_pl_chrgren"
         },
         "TrapDetectable": {
           "type": "byte",
@@ -172977,15 +172746,15 @@
         },
         "X": {
           "type": "float",
-          "value": 6.103241920471191
+          "value": 3.835893630981445
         },
         "Y": {
           "type": "float",
-          "value": 23.99040222167969
+          "value": 23.69827270507813
         },
         "Z": {
           "type": "float",
-          "value": 0.0
+          "value": 9.5367431640625e-007
         }
       },
       {
@@ -172996,7 +172765,7 @@
         },
         "Appearance": {
           "type": "dword",
-          "value": 1604
+          "value": 20030
         },
         "AutoRemoveKey": {
           "type": "byte",
@@ -173004,7 +172773,7 @@
         },
         "Bearing": {
           "type": "float",
-          "value": -3.133187770843506
+          "value": 1.31070601940155
         },
         "BodyBag": {
           "type": "byte",
@@ -173020,26 +172789,23 @@
         },
         "CurrentHP": {
           "type": "short",
-          "value": 15
+          "value": 10
         },
         "Description": {
-          "id": 16810880,
           "type": "cexolocstring",
-          "value": {
-            "0": "Click to Sit"
-          }
+          "value": {}
         },
         "DisarmDC": {
           "type": "byte",
-          "value": 15
+          "value": 0
         },
         "Faction": {
           "type": "dword",
-          "value": 1
+          "value": 4
         },
         "Fort": {
           "type": "byte",
-          "value": 16
+          "value": 5
         },
         "Hardness": {
           "type": "byte",
@@ -173051,7 +172817,7 @@
         },
         "HP": {
           "type": "short",
-          "value": 15
+          "value": 10
         },
         "Interruptable": {
           "type": "byte",
@@ -173067,17 +172833,16 @@
         },
         "Lockable": {
           "type": "byte",
-          "value": 0
+          "value": 1
         },
         "Locked": {
           "type": "byte",
           "value": 0
         },
         "LocName": {
-          "id": 16812066,
           "type": "cexolocstring",
           "value": {
-            "0": "*Sit*"
+            "0": "Chair, Crew (Grey)"
           }
         },
         "OnClick": {
@@ -173134,7 +172899,7 @@
         },
         "OnUsed": {
           "type": "resref",
-          "value": "zep_use_chair"
+          "value": "x2_plc_used_sit"
         },
         "OnUserDefined": {
           "type": "resref",
@@ -173142,7 +172907,7 @@
         },
         "OpenLockDC": {
           "type": "byte",
-          "value": 18
+          "value": 0
         },
         "Plot": {
           "type": "byte",
@@ -173162,11 +172927,11 @@
         },
         "Tag": {
           "type": "cexostring",
-          "value": "Night_InvisbileSit"
+          "value": "_mdrn_pl_chrgren"
         },
         "TemplateResRef": {
           "type": "resref",
-          "value": "night_invissit"
+          "value": "_mdrn_pl_chrgren"
         },
         "TrapDetectable": {
           "type": "byte",
@@ -173206,15 +172971,15 @@
         },
         "X": {
           "type": "float",
-          "value": 5.063551425933838
+          "value": 6.216017246246338
         },
         "Y": {
           "type": "float",
-          "value": 19.84954643249512
+          "value": 23.69119834899902
         },
         "Z": {
           "type": "float",
-          "value": 0.699999988079071
+          "value": -9.5367431640625e-007
         }
       }
     ]

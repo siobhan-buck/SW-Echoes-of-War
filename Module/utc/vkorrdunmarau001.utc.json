@@ -728,7 +728,7 @@
   },
   "Str": {
     "type": "byte",
-    "value": 25
+    "value": 30
   },
   "Subrace": {
     "type": "cexostring",
