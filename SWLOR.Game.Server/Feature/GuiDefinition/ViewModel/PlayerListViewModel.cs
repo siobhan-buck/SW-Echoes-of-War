@@ -209,22 +209,25 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
             foreach (var entry in _visibleEntries)
             {
-                var status = "";
+                var status = string.Empty;
+                var statusColour = GuiColor.Grey;
                 if (entry.Status == PlayerListStatus.Hostile)
                 {
                     status = "Hostile";
-                    statusColors.Add(new GuiColor(230, 60, 60));
+                    statusColour = new GuiColor(230, 60, 60);
                 } 
                 else if (entry.Status == PlayerListStatus.DM)
                 {
                     status = "DM";
-                    statusColors.Add(new GuiColor(100, 180, 255));
+                    statusColour = new GuiColor(100, 180, 255);
                 }
                 else if (entry.Flags.Contains(PlayerListFlagType.GeneralRP))
                 {
                     status = entry.AreaName;
+                    statusColour = DescriptorColor;
                 }
                 statuses.Add(status);
+                statusColors.Add(statusColour);
 
                 var name = GetDisplayName(entry);
                 names.Add(PlayerListRules.GetRowName(entry.Name, entry.Relation.TargetIsSelf, entry.IsAfk, NameColumnLength));

@@ -184,6 +184,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                         cell.SetWidth(StatusColumnWidth);
                         cell.AddLabel()
                             .BindText(model => model.RowStatuses)
+                            .BindTooltip(model => model.RowStatuses)
                             .BindColor(model => model.RowStatusColors)
                             .SetHorizontalAlign(NuiHorizontalAlign.Left);
                     });
