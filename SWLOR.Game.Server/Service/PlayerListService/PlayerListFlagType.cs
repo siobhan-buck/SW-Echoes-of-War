@@ -6,7 +6,7 @@ namespace SWLOR.Game.Server.Service.PlayerListService
     /// </summary>
     public enum PlayerListFlagType
     {
-        [PlayerListFlag("General RP", "General RP: looking for roleplay. Please approach.", "pl_flag_rp")]
+        [PlayerListFlag("General RP", "General RP: looking for roleplay. This will broadcast your area to the player list for ease of OOC coordination.", "pl_flag_rp")]
         GeneralRP = 1,
 
         [PlayerListFlag("PvP", "PvP: seeking player-versus-player conflict. Reminder that PvP is always a potential, even if this flag is not checked.", "pl_flag_pvp")]
