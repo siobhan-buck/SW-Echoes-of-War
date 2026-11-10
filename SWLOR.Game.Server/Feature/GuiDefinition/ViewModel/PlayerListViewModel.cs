@@ -25,15 +25,6 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         private static readonly GuiColor DescriptorColor = new(180, 180, 180);
         private static readonly GuiColor DisguisedDescriptorColor = new(255, 127, 0);
-        private static readonly Dictionary<PlayerListStatus, (string Text, GuiColor Color)> StatusDisplay = new()
-        {
-            [PlayerListStatus.None] = (string.Empty, new GuiColor(255, 255, 255)),
-            [PlayerListStatus.Leader] = ("Leader", new GuiColor(221, 181, 93)),
-            [PlayerListStatus.Party] = ("Party", new GuiColor(0, 200, 0)),
-            [PlayerListStatus.Grouped] = ("Grouped", new GuiColor(150, 150, 150)),
-            [PlayerListStatus.Hostile] = ("Hostile", new GuiColor(230, 60, 60)),
-            [PlayerListStatus.DM] = ("DM", new GuiColor(100, 180, 255)),
-        };
 
         private List<PlayerListEntry> _entries = new();
         private readonly List<PlayerListEntry> _visibleEntries = new();
@@ -218,11 +209,27 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
             foreach (var entry in _visibleEntries)
             {
-                var status = StatusDisplay[entry.Status];
-                var name = GetDisplayName(entry);
+                var status = string.Empty;
+                var statusColour = GuiColor.Grey;
+                if (entry.Status == PlayerListStatus.Hostile)
+                {
+                    status = "Hostile";
+                    statusColour = new GuiColor(230, 60, 60);
+                } 
+                else if (entry.Status == PlayerListStatus.DM)
+                {
+                    status = "DM";
+                    statusColour = new GuiColor(100, 180, 255);
+                }
+                else if (entry.Flags.Contains(PlayerListFlagType.GeneralRP))
+                {
+                    status = entry.AreaName;
+                    statusColour = DescriptorColor;
+                }
+                statuses.Add(status);
+                statusColors.Add(statusColour);
 
-                statuses.Add(status.Text);
-                statusColors.Add(status.Color);
+                var name = GetDisplayName(entry);
                 names.Add(PlayerListRules.GetRowName(entry.Name, entry.Relation.TargetIsSelf, entry.IsAfk, NameColumnLength));
                 nameTooltips.Add(string.IsNullOrEmpty(entry.Name)
                     ? "You have not given this player a name. Use /name to give them one."
