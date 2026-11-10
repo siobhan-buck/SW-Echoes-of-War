@@ -16,5 +16,6 @@ namespace SWLOR.Game.Server.Service.PlayerListService
         public IReadOnlyCollection<PlayerListFlagType> Flags { get; set; }
         public PlayerListRelation Relation { get; set; }
         public PlayerListStatus Status { get; set; }
+        public string AreaName { get; set; }
     }
 }

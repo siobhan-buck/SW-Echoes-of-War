@@ -146,6 +146,7 @@ namespace SWLOR.Game.Server.Service
                     Flags = subject.Flags,
                     Relation = relation,
                     Status = PlayerListRules.GetStatus(relation),
+                    AreaName = subject.Flags.Contains(PlayerListFlagType.GeneralRP) ? GetName(GetArea(subject.Player)) : string.Empty,
                 });
             }
 
