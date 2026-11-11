@@ -240,7 +240,7 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
 
         private void LanguageCommand()
         {
-            _builder.Create("language")
+            _builder.Create("language", "lang", "l")
                 .Description("Switches the active language. Use /language help for more information.")
                 .Permissions(AuthorizationLevel.All)
                 .Validate((user, args) =>
@@ -675,7 +675,7 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
 
         private void Introductions()
         {
-            _builder.Create("introduce")
+            _builder.Create("introduce", "me")
                 .Description("Offers a name or alias to visible players within 20m. They choose whether to remember it.")
                 .Permissions(AuthorizationLevel.All)
                 .Validate((user, args) => PlayerIntroduction.ValidateIntroduction(user, string.Join(" ", args)))
