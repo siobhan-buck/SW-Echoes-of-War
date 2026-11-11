@@ -9274,7 +9274,8 @@
                 "map_040",
                 "map_047",
                 "map_053",
-                "map_034"
+                "map_034",
+                "key_86"
               ],
               "placeholder": false
             }
@@ -10835,7 +10836,8 @@
             "blueprint",
             "training_gear",
             "veles_gen_merch",
-            "visc_smuggler"
+            "visc_smuggler",
+            "visc_concourse"
           ],
           "placeholder": false
         },

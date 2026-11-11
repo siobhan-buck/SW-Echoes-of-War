@@ -74379,7 +74379,7 @@
         "__struct_id": 11,
         "BlackMarket": {
           "type": "byte",
-          "value": 0
+          "value": 1
         },
         "BM_MarkDown": {
           "type": "int",
@@ -74387,12 +74387,12 @@
         },
         "IdentifyPrice": {
           "type": "int",
-          "value": 100
+          "value": 0
         },
         "LocName": {
           "type": "cexolocstring",
           "value": {
-            "0": "Viscara Smuggler"
+            "0": "Viscara Concourse Droid"
           }
         },
         "MarkDown": {
@@ -74401,7 +74401,7 @@
         },
         "MarkUp": {
           "type": "int",
-          "value": 100
+          "value": 120
         },
         "MaxBuyPrice": {
           "type": "int",
@@ -74417,7 +74417,7 @@
         },
         "ResRef": {
           "type": "resref",
-          "value": "visc_smuggler"
+          "value": "visc_concourse"
         },
         "StoreGold": {
           "type": "int",
@@ -75278,11 +75278,11 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 4
+                      "value": 0
                     },
                     "Repos_Posy": {
                       "type": "word",
-                      "value": 1
+                      "value": 2
                     },
                     "StackSize": {
                       "type": "word",
@@ -75448,11 +75448,11 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 6
+                      "value": 2
                     },
                     "Repos_Posy": {
                       "type": "word",
-                      "value": 1
+                      "value": 2
                     },
                     "StackSize": {
                       "type": "word",
@@ -75590,11 +75590,11 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 8
+                      "value": 4
                     },
                     "Repos_Posy": {
                       "type": "word",
-                      "value": 1
+                      "value": 2
                     },
                     "StackSize": {
                       "type": "word",
@@ -75732,7 +75732,7 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 0
+                      "value": 6
                     },
                     "Repos_Posy": {
                       "type": "word",
@@ -75997,7 +75997,7 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 2
+                      "value": 8
                     },
                     "Repos_Posy": {
                       "type": "word",
@@ -76139,11 +76139,11 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 4
+                      "value": 0
                     },
                     "Repos_Posy": {
                       "type": "word",
-                      "value": 2
+                      "value": 4
                     },
                     "StackSize": {
                       "type": "word",
@@ -76281,11 +76281,11 @@
                     },
                     "Repos_PosX": {
                       "type": "word",
-                      "value": 8
+                      "value": 2
                     },
                     "Repos_Posy": {
                       "type": "word",
-                      "value": 2
+                      "value": 4
                     },
                     "StackSize": {
                       "type": "word",
@@ -76335,7 +76335,7 @@
         },
         "Tag": {
           "type": "cexostring",
-          "value": "concourse_goods"
+          "value": "visc_concourse"
         },
         "WillNotBuy": {
           "type": "list",
