@@ -74,9 +74,7 @@
       "Actions": [
         {
           "Key": "action-open-store",
-          "Arguments": [
-            "concourse_goods"
-          ]
+          "Arguments": []
         }
       ],
       "Next": [],
