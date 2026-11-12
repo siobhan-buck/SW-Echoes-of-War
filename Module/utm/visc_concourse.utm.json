@@ -32,7 +32,7 @@
   },
   "MarkUp": {
     "type": "int",
-    "value": 120
+    "value": 105
   },
   "MaxBuyPrice": {
     "type": "int",
