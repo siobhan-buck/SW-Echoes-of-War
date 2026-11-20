@@ -1460,7 +1460,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         public Action OnClickUnregisterShip() => () =>
         {
-            ShowModal($"Unregistering a ship will convert it back into a deed item. Any structures contained inside will be permanently lost. Are you sure you wish to unregister this ship?",
+            ShowModal($"Unregistering a ship will convert it back into a deed item. Any items stored within or structures contained inside will be permanently lost. Are you sure you wish to unregister this ship?",
                 () =>
                 {
                     var playerId = GetObjectUUID(Player);
