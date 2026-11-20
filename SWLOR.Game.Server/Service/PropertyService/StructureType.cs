@@ -1628,7 +1628,7 @@ namespace SWLOR.Game.Server.Service.PropertyService
             "",
             true,
             0,
-            PropertyType.Lab,
+            PropertyType.Lab | PropertyType.Starship,
             PropertyLayoutType.Invalid,
             true,
             StructureCategoryType.ResearchDevice)]
