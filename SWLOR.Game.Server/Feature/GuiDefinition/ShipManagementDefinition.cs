@@ -13,7 +13,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
             _builder.CreateWindow(GuiWindowType.ShipManagement)
                 .SetIsResizable(true)
                 .SetIsCollapsible(true)
-                .SetInitialGeometry(0, 0, 545f, 350f)
+                .SetInitialGeometry(0, 0, 645f, 400f)
                 .SetTitle("Ship Management")
 
                 .AddColumn(col =>
