@@ -13,7 +13,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
             _builder.CreateWindow(GuiWindowType.DMTools)
                 .SetIsResizable(true)
                 .SetIsCollapsible(true)
-                .SetInitialGeometry(0, 0, 545f, 520f)
+                .SetInitialGeometry(0, 0, 745f, 520f)
                 .SetTitle("DM Placeable Tools")
                 .BindOnClosed(model => model.OnCloseWindow())
 
@@ -78,6 +78,12 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                             .SetText("Battle Grid")
                             .SetTooltip("Project a sizable grid over this area for battles")
                             .BindOnClicked(model => model.OnOpenBattleGrid())
+                            .SetHeight(35f);
+                        
+                        row.AddButton()
+                            .SetText("Reset Area")
+                            .SetTooltip("Delete all DM-spawned placeables in this area")
+                            .BindOnClicked(model => model.OnResetArea())
                             .SetHeight(35f);
                     });
                 })

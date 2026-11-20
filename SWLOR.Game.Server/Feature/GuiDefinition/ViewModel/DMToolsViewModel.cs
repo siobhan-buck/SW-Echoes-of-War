@@ -920,5 +920,18 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 InstructionColor = GuiColor.Green;
             });
         };
+
+        public Action OnResetArea() => () =>
+        {
+            ShowModal("Delete all DM-spawned placeables in this area?", () =>
+            {
+                ClearHighlight();
+                _allPlaceables.ForEach((placeable) => DestroyObject(placeable));
+                RebuildPlaceables();
+                Search();
+                Instructions = "Deleted all DM-spawned placeables.";
+                InstructionColor = GuiColor.Green;
+            });
+        };
     }
 }
