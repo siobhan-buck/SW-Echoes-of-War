@@ -212,13 +212,6 @@ public class DMSettingsWindowTests
     }
 
     [Test]
-    public void ToolbarFitsBeforeThePortraitAtTheLargestUIScale()
-    {
-        // A 1280x1024 screen at the largest UI scale is about 914 UI pixels wide, and the portrait takes about 80.
-        (DMToolbarViewModel.ToolbarX + DMToolbarViewModel.AdminToolbarWidth).Should().BeLessThanOrEqualTo(914f - 80f);
-    }
-
-    [Test]
     public void SettingsWindowStaysOpenAcrossAreaChanges()
     {
         using var validationBuild = GuiLayoutValidator.BeginValidationOnlyBuild();

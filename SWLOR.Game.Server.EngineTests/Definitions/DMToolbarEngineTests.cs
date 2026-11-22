@@ -112,13 +112,6 @@ namespace SWLOR.Game.Server.EngineTests.Definitions
                 await InContext(ctx, player.Creature, toolbar.OnClickAdmin());
                 ctx.Assert(!Gui.IsWindowOpen(player.Creature, GuiWindowType.DMAdminTools), "non-admins cannot open the admin tools");
 
-                // The admin layout, exported for the client check.
-                await InContext(ctx, player.Creature, () => toolbar.ShowAdminButton(true));
-                ctx.AssertEqual(DMToolbarViewModel.AdminToolbarWidth, toolbar.Geometry.Width, "the toolbar grows to fit the Admin button");
-                Capture(player.Creature, GuiWindowType.DMToolbar, "toolbar-admin");
-                await InContext(ctx, player.Creature, () => Gui.TogglePlayerWindow(player.Creature, GuiWindowType.DMAdminTools));
-                Capture(player.Creature, GuiWindowType.DMAdminTools, "admin-tools");
-
                 // /resetwindows closes other windows but keeps the toolbar, which stands in for the hidden native taskbar.
                 var resetWindows = new CharacterChatCommand().BuildChatCommands()["resetwindows"];
                 await InContext(ctx, player.Creature, () =>

@@ -21,9 +21,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         // Measured in the client: each button takes 4 pixels of margin and the window about 14 of padding per side.
         public const float ButtonSlotWidth = ButtonWidth + 4f;
         // Every DM sees these buttons; admins also get the Admin button at the end.
-        public const int PublicButtonCount = 9;
-        public const float ToolbarWidth = PublicButtonCount * ButtonSlotWidth + 28f;
-        public const float AdminToolbarWidth = ToolbarWidth + ButtonSlotWidth;
+        public const int PublicButtonCount = 10;
+        public const float ToolbarWidth = PublicButtonCount * ButtonSlotWidth + 22f;
         public const float ToolbarHeight = 32f;
 
         public bool IsAdmin
@@ -46,21 +45,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         protected override void Initialize(GuiPayloadBase initialPayload)
         {
-            ShowAdminButton(DMAdminToolsViewModel.CanUse(Player));
             RefreshAppearText();
-        }
-
-        /// <summary>
-        /// Shows or hides the Admin button and sizes the toolbar to fit.
-        /// Hiding the button only affects the layout; the admin windows check permissions themselves.
-        /// </summary>
-        /// <param name="isAdmin">Whether to show the Admin button.</param>
-        public void ShowAdminButton(bool isAdmin)
-        {
-            IsAdmin = isAdmin;
-            // The toolbar replaces the native DM taskbar, so it always sits in the top-left corner.
-            // A hidden button still takes up its space, so the toolbar is cut short before it.
-            Geometry = new GuiRectangle(ToolbarX, ToolbarY, isAdmin ? AdminToolbarWidth : ToolbarWidth, ToolbarHeight);
         }
 
         /// <summary>
@@ -133,8 +118,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         public Action OnClickAdmin() => () =>
         {
-            if (DMAdminToolsViewModel.CanUse(Player))
-                DMPresence.ToggleWindow(Player, GuiWindowType.DMAdminTools);
+            DMPresence.ToggleWindow(Player, GuiWindowType.DMAdminTools);
         };
 
         public Action OnClickToggleAppear() => () =>
