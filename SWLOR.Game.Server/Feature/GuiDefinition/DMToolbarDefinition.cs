@@ -51,8 +51,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                         AddButton(row, "Settings", "Emote style, Comms filter, helmet and cloak", model => model.OnClickSettings());
 
                         // Must stay last: the toolbar is sized to end before it when it is hidden.
-                        AddButton(row, "Admin", "Staff, bans and property diagnostics", model => model.OnClickAdmin())
-                            .BindIsVisible(model => model.IsAdmin);
+                        AddButton(row, "Admin", "Manage CDKeys", model => model.OnClickAdmin());
                     });
                 });
 

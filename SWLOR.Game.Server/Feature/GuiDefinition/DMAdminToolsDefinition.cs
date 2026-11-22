@@ -48,9 +48,11 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                         panel.AddColumn(content =>
                         {
                             AddButton(content, "Manage Staff", "Add or remove DMs and admins",
-                                model => model.OnClickManageStaff());
+                                model => model.OnClickManageStaff(),
+                                model => model.CanManageStaff());
                             AddButton(content, "Manage Bans", "Add or remove banned players",
-                                model => model.OnClickManageBans());
+                                model => model.OnClickManageBans(),
+                                model => true);
                         });
                     })
                         .SetWidth(ContentPanelWidth);
@@ -62,7 +64,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
             GuiColumn<DMAdminToolsViewModel> col,
             string text,
             string tooltip,
-            Expression<Func<DMAdminToolsViewModel, Action>> onClick)
+            Expression<Func<DMAdminToolsViewModel, Action>> onClick,
+            Expression<Func<DMAdminToolsViewModel, bool>> isVisible)
         {
             col.AddRow(row =>
             {
@@ -71,7 +74,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                     .SetTooltip(tooltip)
                     .SetWidth(ButtonWidth)
                     .SetHeight(ButtonHeight)
-                    .BindOnClicked(onClick);
+                    .BindOnClicked(onClick)
+                    .BindIsVisible(isVisible);
             });
         }
     }

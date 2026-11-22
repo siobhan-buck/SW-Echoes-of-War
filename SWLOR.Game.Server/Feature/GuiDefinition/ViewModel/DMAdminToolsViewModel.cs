@@ -17,9 +17,16 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         {
             // The CD key resolves from the object the player controls, which is the possessed creature while possessing.
             player = DMPresence.GetControlledCreature(player);
-            // Staff are matched by CD key; a character without one cannot be an admin.
+            // Staff are matched by CD key; a character without one cannot be an dm.
             return !string.IsNullOrEmpty(GetPCPublicCDKey(player)) &&
-                   Authorization.GetAuthorizationLevel(player).HasFlag(AuthorizationLevel.Admin);
+                   Authorization.GetAuthorizationLevel(player).HasFlag(AuthorizationLevel.DM);
+        }
+
+        public bool CanManageStaff()
+        {
+            // Staff are matched by CD key; a character without one cannot be an admin.
+            return !string.IsNullOrEmpty(GetPCPublicCDKey(Player)) &&
+                   Authorization.GetAuthorizationLevel(Player).HasFlag(AuthorizationLevel.Admin);
         }
 
         protected override void Initialize(GuiPayloadBase initialPayload)
@@ -30,7 +37,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         public Action OnClickManageStaff() => () =>
         {
-            if (CanUse(Player))
+            if (CanManageStaff())
                 DMPresence.ToggleWindow(Player, GuiWindowType.ManageStaff);
         };
 
