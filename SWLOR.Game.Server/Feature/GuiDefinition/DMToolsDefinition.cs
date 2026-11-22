@@ -13,7 +13,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
             _builder.CreateWindow(GuiWindowType.DMTools)
                 .SetIsResizable(true)
                 .SetIsCollapsible(true)
-                .SetInitialGeometry(0, 0, 745f, 520f)
+                .SetInitialGeometry(0, 0, 845f, 520f)
                 .SetTitle("DM Placeable Tools")
                 .BindOnClosed(model => model.OnCloseWindow())
 
