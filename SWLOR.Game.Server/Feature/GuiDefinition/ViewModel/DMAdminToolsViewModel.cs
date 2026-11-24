@@ -9,34 +9,36 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         public const string MainContentElement = "dmadmintools_content";
         public const string MainContentPartial = "DMADMINTOOLS_MAIN";
 
-        /// <summary>
-        /// Returns whether a player may use the admin tools.
-        /// </summary>
-        /// <param name="player">The player to check.</param>
-        public static bool CanUse(uint player)
+        public bool CanManageBans
         {
-            // The CD key resolves from the object the player controls, which is the possessed creature while possessing.
-            player = DMPresence.GetControlledCreature(player);
-            // Staff are matched by CD key; a character without one cannot be an admin.
-            return !string.IsNullOrEmpty(GetPCPublicCDKey(player)) &&
-                   Authorization.GetAuthorizationLevel(player).HasFlag(AuthorizationLevel.Admin);
+            get => Get<bool>();
+            set => Set(value);
+        }
+
+        public bool CanManageStaff
+        {
+            get => Get<bool>();
+            set => Set(value);
         }
 
         protected override void Initialize(GuiPayloadBase initialPayload)
         {
             Geometry = DMToolbarViewModel.PlaceBelowToolbar(Player, Geometry);
             ChangePartialView(MainContentElement, MainContentPartial);
+            AuthorizationLevel authorization = Authorization.GetAuthorizationLevel(Player);
+            CanManageStaff = authorization == AuthorizationLevel.Admin;
+            CanManageBans = CanManageStaff || authorization == AuthorizationLevel.DM;
         }
 
         public Action OnClickManageStaff() => () =>
         {
-            if (CanUse(Player))
+            if (CanManageStaff)
                 DMPresence.ToggleWindow(Player, GuiWindowType.ManageStaff);
         };
 
         public Action OnClickManageBans() => () =>
         {
-            if (CanUse(Player))
+            if (CanManageBans)
                 DMPresence.ToggleWindow(Player, GuiWindowType.ManageBans);
         };
     }

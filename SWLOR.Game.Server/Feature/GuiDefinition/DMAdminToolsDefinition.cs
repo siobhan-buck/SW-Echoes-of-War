@@ -47,31 +47,30 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                         panel.SetScrollbars(NuiScrollbars.None);
                         panel.AddColumn(content =>
                         {
-                            AddButton(content, "Manage Staff", "Add or remove DMs and admins",
-                                model => model.OnClickManageStaff());
-                            AddButton(content, "Manage Bans", "Add or remove banned players",
-                                model => model.OnClickManageBans());
+                            col.AddRow(row =>
+                                {
+                                    row.AddButton()
+                                        .SetText("Manage Bans")
+                                        .SetTooltip("Add or remove banned players")
+                                        .SetWidth(ButtonWidth)
+                                        .SetHeight(ButtonHeight)
+                                        .BindOnClicked(model => model.OnClickManageBans())
+                                        .BindIsVisible(model => model.CanManageBans);
+                                });
+                            col.AddRow(row =>
+                                {
+                                    row.AddButton()
+                                        .SetText("Manage Staff")
+                                        .SetTooltip("Add or remove DMs and admins")
+                                        .SetWidth(ButtonWidth)
+                                        .SetHeight(ButtonHeight)
+                                        .BindOnClicked(model => model.OnClickManageStaff())
+                                        .BindIsVisible(model => model.CanManageStaff);
+                                });
                         });
                     })
                         .SetWidth(ContentPanelWidth);
                 });
-            });
-        }
-
-        private static void AddButton(
-            GuiColumn<DMAdminToolsViewModel> col,
-            string text,
-            string tooltip,
-            Expression<Func<DMAdminToolsViewModel, Action>> onClick)
-        {
-            col.AddRow(row =>
-            {
-                row.AddButton()
-                    .SetText(text)
-                    .SetTooltip(tooltip)
-                    .SetWidth(ButtonWidth)
-                    .SetHeight(ButtonHeight)
-                    .BindOnClicked(onClick);
             });
         }
     }

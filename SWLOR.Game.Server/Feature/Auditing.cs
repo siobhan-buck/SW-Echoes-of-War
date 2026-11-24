@@ -50,13 +50,14 @@ namespace SWLOR.Game.Server.Feature
             {
                 var sender = ChatPlugin.GetSender();
                 var chatChannel = ChatPlugin.GetChannel();
+                var area = GetTag(GetArea(sender));
                 var message = ChatPlugin.GetMessage();
                 var ipAddress = GetPCIPAddress(sender);
                 var cdKey = GetPCPublicCDKey(sender);
                 var account = GetPCPlayerName(sender);
                 var pcName = PlayerName.GetAuditIdentity(sender);
 
-                var logMessage = $"{pcName} - {account} - {cdKey} - {ipAddress} - {chatChannel}: {message}";
+                var logMessage = $"{pcName} - {account} - {cdKey} - {ipAddress} - {chatChannel} - {area}: {message}";
 
                 return logMessage;
             }

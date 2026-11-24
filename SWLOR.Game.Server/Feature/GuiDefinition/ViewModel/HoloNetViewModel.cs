@@ -16,7 +16,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             set => Set(value);
         }
 
-        public const int MaxHoloNetTextLength = 600;
+        public const int MaxHoloNetTextLength = 1200;
         public const int BroadcastPrice = 2500;
 
         protected override void Initialize(GuiPayloadBase initialPayload)

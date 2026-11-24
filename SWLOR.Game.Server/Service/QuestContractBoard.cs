@@ -19,7 +19,7 @@ namespace SWLOR.Game.Server.Service
     /// </summary>
     public static class QuestContractBoard
     {
-        public const int MaxActiveContractsPerCDKey = 3;
+        public const int MaxActiveContractsPerCDKey = 10;
         public const int MaxObjectives = 3;
         // SWLOR's stackable resource base items cap at 99 in baseitems.2da. The quest system can
         // count loose items and partial turn-ins, but this keeps an objective representable by one full stack.

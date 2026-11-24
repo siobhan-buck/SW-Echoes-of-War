@@ -6,6 +6,7 @@ using SWLOR.Game.Server.Service.LogService;
 using SWLOR.Game.Server.Service.LootService;
 using SWLOR.Game.Server.Service.PerkService;
 using SWLOR.Game.Server.Service.StatService;
+using SWLOR.NWN.API.NWNX;
 using SWLOR.NWN.API.NWScript.Enum;
 using SWLOR.NWN.API.NWScript.Enum.Area;
 
@@ -277,6 +278,8 @@ namespace SWLOR.Game.Server.Service
         {
             var self = OBJECT_SELF;
             SetIsDestroyable(false);
+            // Set display of health status to perma-dead
+            CreaturePlugin.OverrideDamageLevel(self, 6);
 
             var area = GetArea(self);
             var position = GetPosition(self);
