@@ -128,11 +128,11 @@
   },
   "SunAmbientColor": {
     "type": "dword",
-    "value": 12632256
+    "value": 3947580
   },
   "SunDiffuseColor": {
     "type": "dword",
-    "value": 255
+    "value": 3292300
   },
   "SunFogAmount": {
     "type": "byte",
