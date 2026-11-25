@@ -155,12 +155,12 @@
   "Description": {
     "type": "cexolocstring",
     "value": {
-      "0": "Sith warriors are legendary combatants, using the Dark Side of the Force to enhance their physical attributes well beyond what is considered natural. At the same time, it has corrupted them to their very core. As time goes on, they become less human and more and embodiment of the same primal emotions that grant them their strength.\r\n\r\nThis imposing figure moves with a refine, deadly grace despite his stature. His body is rippling muscle, a prime specimen of a honed killer. Should his flesh be seen uncovered it is a pale ashen color. Eyes of crimson red sit beneath midnight black hair, his expression more often than not something between indifference and disdain.,"
+      "0": "This imposing figure moves with a refine, deadly grace despite his stature. His body is rippling muscle, a prime specimen of a honed killer. Should his flesh be seen uncovered it is a pale ashen color. Eyes of crimson red sit beneath midnight black hair, his expression more often than not something between indifference and disdain.,"
     }
   },
   "Dex": {
     "type": "byte",
-    "value": 36
+    "value": 45
   },
   "Disarmable": {
     "type": "byte",
@@ -393,7 +393,7 @@
   },
   "Int": {
     "type": "byte",
-    "value": 36
+    "value": 45
   },
   "Interruptable": {
     "type": "byte",
@@ -728,7 +728,7 @@
   },
   "Str": {
     "type": "byte",
-    "value": 30
+    "value": 35
   },
   "Subrace": {
     "type": "cexostring",
@@ -844,7 +844,7 @@
   },
   "Wis": {
     "type": "byte",
-    "value": 44
+    "value": 60
   },
   "xAppearance_Head": {
     "type": "word",

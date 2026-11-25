@@ -17677,23 +17677,23 @@
         },
         "XOrientation": {
           "type": "float",
-          "value": -0.4667568206787109
+          "value": -0.8706421852111816
         },
         "XPosition": {
           "type": "float",
-          "value": 12.30000019073486
+          "value": 5.877963542938232
         },
         "YOrientation": {
           "type": "float",
-          "value": 0.8843857049942017
+          "value": -0.491916835308075
         },
         "YPosition": {
           "type": "float",
-          "value": 14.10000038146973
+          "value": 23.8475399017334
         },
         "ZPosition": {
           "type": "float",
-          "value": 0.0
+          "value": -9.5367431640625e-007
         }
       },
       {

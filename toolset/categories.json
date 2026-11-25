@@ -1785,7 +1785,9 @@
                 "malerepublicserv",
                 "republictechnici",
                 "republictrooper",
-                "republictrooperf"
+                "republictrooperf",
+                "republicdeskw004",
+                "republicdeskw005"
               ],
               "placeholder": false
             },
@@ -2712,7 +2714,10 @@
               "members": [
                 "_mdrn_dt_jumpto",
                 "marsh_office_01",
-                "tat_can_back"
+                "tat_can_back",
+                "tat_can_back_01",
+                "tat_can_back_02",
+                "pub_base_entry"
               ],
               "placeholder": false
             },
@@ -3505,7 +3510,9 @@
                 "sithrobe76",
                 "sithrobe_female",
                 "sith_officer_uni",
-                "sith_war_armor"
+                "sith_war_armor",
+                "republictroop002",
+                "tolson_armor"
               ],
               "placeholder": false
             },
@@ -3656,7 +3663,8 @@
                 "yshrobes001",
                 "yshrobes003",
                 "yshrobes002",
-                "vorn_outfit"
+                "vorn_outfit",
+                "republicoffic001"
               ],
               "placeholder": false
             },
@@ -9701,7 +9709,8 @@
                 "hlslang_015",
                 "item035",
                 "item030",
-                "item032"
+                "item032",
+                "dm_holocall"
               ],
               "placeholder": false
             }
@@ -10739,7 +10748,8 @@
                     "tit_rifle",
                     "t_rifle",
                     "varo_skeld_wp",
-                    "vet_rifle"
+                    "vet_rifle",
+                    "vorn_rifle_01"
                   ],
                   "placeholder": false
                 }
@@ -15992,7 +16002,8 @@
                 "_mdrn_pl_rustedc",
                 "_mdrn_pl_armoir8",
                 "_mdrn_pl_wardrbp",
-                "_mdrn_pl_wardrbw"
+                "_mdrn_pl_wardrbw",
+                "_mdrn_pl_chrp001"
               ],
               "placeholder": false
             },
@@ -19347,7 +19358,8 @@
                 "swlor_0638",
                 "swlor_0639",
                 "swlor_1440",
-                "imp_info_1"
+                "imp_info_1",
+                "vel_col_law"
               ],
               "placeholder": false
             },
