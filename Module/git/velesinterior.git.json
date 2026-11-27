@@ -139333,7 +139333,7 @@
         "Description": {
           "type": "cexolocstring",
           "value": {
-            "0": "1. No visitor or citizen shall bear arms within the bounds of the colony settlement without the express permission of the Ranger Marshal.\r\n\r\n2. All visitors and citizens will submit to inspection by Rangers when requested to do so.\r\n\r\n3. Criminal acts reported to or witnessed by the Rangers will be investigated and policed at their discretion. Punishment ranges from a fine, to imprisonment, to banishment, to the posting of a bounty.\r\n\r\n4. Acts of violence committed outside the colony's walls are policed at the discretion of the Ranger Marshal.\r\n\r\n5. The smuggling of contraband, within or without the colony settlement, is prohibited.\r\n\r\n6. Theft of destruction of Czerka Corporation assets is immediately punishable by imprisonment."
+            "0": "1. No visitor or citizen shall bear arms within the bounds of the colony settlement without the express permission of the Ranger Marshal.\n\n2. All visitors and citizens will submit to inspection by Rangers when requested to do so.\n\n3. Criminal acts reported to or witnessed by the Rangers will be investigated and policed at their discretion. Punishment ranges from a fine, to imprisonment, to banishment, to the posting of a bounty.\n\n4. Acts of violence committed outside the colony's walls are policed at the discretion of the Ranger Marshal.\n\n5. The smuggling of contraband, within or without the colony settlement, is prohibited.\n\n6. Theft of destruction of Czerka Corporation assets is immediately punishable by imprisonment."
           }
         },
         "DisarmDC": {
@@ -139464,7 +139464,7 @@
         },
         "Static": {
           "type": "byte",
-          "value": 1
+          "value": 0
         },
         "Tag": {
           "type": "cexostring",
