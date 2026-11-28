@@ -25,7 +25,8 @@ namespace SWLOR.Game.Server.Feature
                 var dm = OBJECT_SELF;
                 if (GetIsDMPossessed(dm))
                     dm = GetMaster(dm);
-                MarkDMSpawnedNPC(dm, obj);
+                
+                MarkDMSpawnedObject(dm, obj);
             }
 
             // Track DM-spawned placeables so the DM tools NUI can list non-native objects.
@@ -35,7 +36,7 @@ namespace SWLOR.Game.Server.Feature
                 if (GetIsDMPossessed(dm))
                     dm = GetMaster(dm);
 
-                MarkDMSpawnedPlaceable(dm, obj);
+                MarkDMSpawnedObject(dm, obj);
             }
         }
 
@@ -52,27 +53,25 @@ namespace SWLOR.Game.Server.Feature
         }
 
         /// <summary>
-        /// Records which DM spawned an NPC so the DM tools window can list it.
+        /// Records which DM spawned a object so the DM tools window can list it.
         /// </summary>
-        /// <param name="dm">The DM who spawned the placeable.</param>
-        /// <param name="creature">The spawned creature npc.</param>
-        public static void MarkDMSpawnedNPC(uint dm, uint creature)
+        /// <param name="dm">The DM who spawned the object.</param>
+        /// <param name="obj">The spawned object.</param>
+        public static void MarkDMSpawnedObject(uint dm, uint obj)
         {
-            SetLocalInt(creature, "DM_SPAWNED_NPC", 1);
-            SetLocalString(creature, "DM_SPAWNED_BY", GetObjectUUID(dm));
-            SetLocalString(creature, "DM_SPAWNED_BY_NAME", GetName(dm));
+            SetLocalInt(obj, "DM_SPAWNED_OBJECT", 1);
+            SetLocalString(obj, "DM_SPAWNED_BY", GetObjectUUID(dm));
+            SetLocalString(obj, "DM_SPAWNED_BY_NAME", GetName(dm));
         }
 
-        /// <summary>
-        /// Records which DM spawned a placeable so the DM tools window can list it.
-        /// </summary>
-        /// <param name="dm">The DM who spawned the placeable.</param>
-        /// <param name="placeable">The spawned placeable.</param>
-        public static void MarkDMSpawnedPlaceable(uint dm, uint placeable)
+        public static bool IsDMSpawnedObject(uint obj)
         {
-            SetLocalInt(placeable, "DM_SPAWNED_PLACEABLE", 1);
-            SetLocalString(placeable, "DM_SPAWNED_BY", GetObjectUUID(dm));
-            SetLocalString(placeable, "DM_SPAWNED_BY_NAME", GetName(dm));
+            return GetLocalInt(obj, "DM_SPAWNED_OBJECT") == 1;
+        }
+
+        public static string GetDMSpawnedObjectBy(uint obj)
+        {
+            return GetLocalString(obj, "DM_SPAWNED_BY_NAME");
         }
 
         [NWNEventHandler(ScriptName.OnDMGiveXPBefore)]

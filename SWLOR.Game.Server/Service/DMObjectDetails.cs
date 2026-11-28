@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using SWLOR.Game.Server.Core.NWNX.Enum;
+using SWLOR.Game.Server.Feature;
 using SWLOR.Game.Server.Service.CombatService;
 using SWLOR.Game.Server.Service.DMToolService;
 using SWLOR.Game.Server.Service.StatService;
@@ -332,8 +333,8 @@ namespace SWLOR.Game.Server.Service
                 (GetPlotFlag(placeable), "Plot"));
             lines.Add($"HP {GetCurrentHitPoints(placeable)} / {GetMaxHitPoints(placeable)}");
 
-            if (GetLocalInt(placeable, "DM_SPAWNED_PLACEABLE") != 0)
-                lines.Add($"Spawned by DM {GetLocalString(placeable, "DM_SPAWNED_BY_NAME")}");
+            if (DMActions.IsDMSpawnedObject(placeable))
+                lines.Add($"Spawned by DM {DMActions.GetDMSpawnedObjectBy(placeable)}");
 
             var lootTables = ReadLocalVariables(placeable, LootTablePrefix);
             if (lootTables.Count > 0)

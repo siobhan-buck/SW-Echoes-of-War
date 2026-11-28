@@ -16,7 +16,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 {
     public class DMLayoutsViewModel: GuiViewModelBase<DMLayoutsViewModel, GuiPayloadBase>
     {
-        private const int PlaceablesPerPage = 20;
+        private const int EntriesPerPage = 20;
         private const int MaxLayoutsPerArea = 30;
         private const int MaxSpawnAttemptsPerEntry = 200;
         private const int LayoutLoadCooldownSeconds = 5;
@@ -28,14 +28,14 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         private const string EditingLastTouchTimestampVariable = "DMTOOLS_EDITING_LAST_TS";
         private const int EditingClaimStaleSeconds = 120;
         private bool _skipPaginationSearch;
-        private int SelectedPlaceableIndex { get; set; }
-        private readonly List<uint> _allPlaceables = new();
-        private readonly List<string> _allPlaceableDisplayNames = new();
-        private readonly List<uint> _placeables = new();
-        private readonly List<string> _placeableDisplayNames = new();
+        private int SelectedEntryIndex { get; set; }
+        private readonly List<uint> _allEntries = new();
+        private readonly List<string> _allEntryDisplayNames = new();
+        private readonly List<uint> _entries = new();
+        private readonly List<string> _entryDisplayNames = new();
         private readonly List<string> _layoutIds = new();
         private int _selectedLayoutIndex;
-        private uint _highlightedPlaceable;
+        private uint _highlightedEntry;
 
         public string Instructions
         {
@@ -55,12 +55,12 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             set 
             { 
                 Set(value);
-                RebuildPlaceables();
+                RebuildEntries();
                 Search();
             }
         }
 
-        public GuiBindingList<string> PlaceableNames
+        public GuiBindingList<string> EntryNames
         {
             get => Get<GuiBindingList<string>>();
             set => Set(value);
@@ -131,21 +131,21 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _skipPaginationSearch = true;
             Instructions = string.Empty;
             InstructionColor = GuiColor.Green;
-            SelectedType = (int)DMBlueprintCategory.Placeables;
-            _highlightedPlaceable = OBJECT_INVALID;
-            SelectedPlaceableIndex = -1;
+            SelectedType = (int)ObjectType.Placeable;
+            _highlightedEntry = OBJECT_INVALID;
+            SelectedEntryIndex = -1;
             SelectedPageIndex = 0;
             IsPlaceableSelected = false;
             SearchText = string.Empty;
             LayoutName = string.Empty;
             IsLayoutSelected = false;
-            PlaceableNames = new GuiBindingList<string>();
+            EntryNames = new GuiBindingList<string>();
             PlaceableToggles = new GuiBindingList<bool>();
             PageNumbers = new GuiBindingList<GuiComboEntry>();
             LayoutNames = new GuiBindingList<string>();
             LayoutToggles = new GuiBindingList<bool>();
 
-            RebuildPlaceables();
+            RebuildEntries();
             Search();
             LoadLayouts();
 
@@ -190,7 +190,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _skipPaginationSearch = true;
             var pagination = GuiPaginationState.Create(
                 totalRecordCount,
-                PlaceablesPerPage,
+                EntriesPerPage,
                 SelectedPageIndex);
             PageNumbers = pagination.PageNumbers;
             SelectedPageIndex = pagination.SelectedPageIndex;
@@ -198,26 +198,27 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _skipPaginationSearch = false;
         }
 
-        private void RebuildPlaceables()
+        private void RebuildEntries()
         {
-            _allPlaceables.Clear();
-            _allPlaceableDisplayNames.Clear();
+            _allEntries.Clear();
+            _allEntryDisplayNames.Clear();
 
             var area = GetArea(Player);
             for (var obj = GetFirstObjectInArea(area); GetIsObjectValid(obj); obj = GetNextObjectInArea(area))
             {
-                if (GetObjectType(obj) != ObjectType.Placeable)
+
+                if (GetObjectType(obj) != (ObjectType)SelectedType)
                     continue;
 
-                if (GetLocalInt(obj, "DM_SPAWNED_PLACEABLE") != 1)
+                if (!DMActions.IsDMSpawnedObject(obj))
                     continue;
 
                 var objectName = GetName(obj);
                 if (string.IsNullOrWhiteSpace(objectName))
                     objectName = GetResRef(obj);
 
-                _allPlaceables.Add(obj);
-                _allPlaceableDisplayNames.Add($"{objectName} [{GetTag(obj)}]");
+                _allEntries.Add(obj);
+                _allEntryDisplayNames.Add($"{objectName} [{GetTag(obj)}]");
             }
         }
 
@@ -227,41 +228,41 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             var placeableToggles = new GuiBindingList<bool>();
 
             ClearHighlight();
-            _placeables.Clear();
-            _placeableDisplayNames.Clear();
-            SelectedPlaceableIndex = -1;
+            _entries.Clear();
+            _entryDisplayNames.Clear();
+            SelectedEntryIndex = -1;
             IsPlaceableSelected = false;
 
-            var filteredIndexes = Enumerable.Range(0, _allPlaceables.Count);
+            var filteredIndexes = Enumerable.Range(0, _allEntries.Count);
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 var searchUpper = GetStringUpperCase(SearchText);
                 filteredIndexes = filteredIndexes.Where(x =>
-                    GetStringUpperCase(_allPlaceableDisplayNames[x]).Contains(searchUpper));
+                    GetStringUpperCase(_allEntryDisplayNames[x]).Contains(searchUpper));
             }
 
             var indexList = filteredIndexes.ToList();
             UpdatePagination(indexList.Count);
-            var pageOffset = SelectedPageIndex * PlaceablesPerPage;
-            var pageIndexes = indexList.Skip(pageOffset).Take(PlaceablesPerPage);
+            var pageOffset = SelectedPageIndex * EntriesPerPage;
+            var pageIndexes = indexList.Skip(pageOffset).Take(EntriesPerPage);
 
             foreach (var index in pageIndexes)
             {
-                _placeables.Add(_allPlaceables[index]);
-                _placeableDisplayNames.Add(_allPlaceableDisplayNames[index]);
-                placeableNames.Add(_allPlaceableDisplayNames[index]);
+                _entries.Add(_allEntries[index]);
+                _entryDisplayNames.Add(_allEntryDisplayNames[index]);
+                placeableNames.Add(_allEntryDisplayNames[index]);
                 placeableToggles.Add(false);
             }
 
-            PlaceableNames = placeableNames;
+            EntryNames = placeableNames;
             PlaceableToggles = placeableToggles;
 
-            if (_allPlaceables.Count <= 0)
+            if (_allEntries.Count <= 0)
             {
                 Instructions = "No DM-spawned placeables found in this area.";
                 InstructionColor = GuiColor.Red;
             }
-            else if (_placeables.Count <= 0)
+            else if (_entries.Count <= 0)
             {
                 Instructions = "No placeables match your search.";
                 InstructionColor = GuiColor.Red;
@@ -275,12 +276,12 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         private void ClearHighlight()
         {
-            if (!GetIsObjectValid(_highlightedPlaceable))
+            if (!GetIsObjectValid(_highlightedEntry))
                 return;
 
-            ReleaseEditingClaimIfOwned(_highlightedPlaceable);
-            PlayerPlugin.ApplyLoopingVisualEffectToObject(Player, _highlightedPlaceable, VisualEffect.None);
-            _highlightedPlaceable = OBJECT_INVALID;
+            ReleaseEditingClaimIfOwned(_highlightedEntry);
+            PlayerPlugin.ApplyLoopingVisualEffectToObject(Player, _highlightedEntry, VisualEffect.None);
+            _highlightedEntry = OBJECT_INVALID;
         }
 
         private (uint dm, string dmId, string dmName) GetActiveDungeonMaster()
@@ -368,21 +369,21 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         {
             ClearHighlight();
             PlayerPlugin.ApplyLoopingVisualEffectToObject(Player, placeable, VisualEffect.Vfx_Dur_Aura_Green);
-            _highlightedPlaceable = placeable;
+            _highlightedEntry = placeable;
         }
 
         private uint GetSelectedPlaceable()
         {
-            if (SelectedPlaceableIndex < 0 || SelectedPlaceableIndex >= _placeables.Count)
+            if (SelectedEntryIndex < 0 || SelectedEntryIndex >= _entries.Count)
                 return OBJECT_INVALID;
 
-            var placeable = _placeables[SelectedPlaceableIndex];
+            var placeable = _entries[SelectedEntryIndex];
             if (!GetIsObjectValid(placeable))
             {
                 Instructions = "Selected placeable no longer exists (possibly removed by another DM). List refreshed.";
                 InstructionColor = GuiColor.Red;
                 ClearHighlight();
-                RebuildPlaceables();
+                RebuildEntries();
                 Search();
                 return OBJECT_INVALID;
             }
@@ -402,7 +403,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         public Action OnRefreshPlaceables() => () =>
         {
-            RebuildPlaceables();
+            RebuildEntries();
             Search();
         };
 
@@ -432,18 +433,18 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         public Action OnSelectPlaceable() => () =>
         {
-            var previousIndex = SelectedPlaceableIndex;
-            if (previousIndex > -1 && previousIndex < _placeables.Count)
-                ReleaseEditingClaimIfOwned(_placeables[previousIndex]);
+            var previousIndex = SelectedEntryIndex;
+            if (previousIndex > -1 && previousIndex < _entries.Count)
+                ReleaseEditingClaimIfOwned(_entries[previousIndex]);
 
-            if (SelectedPlaceableIndex > -1 && SelectedPlaceableIndex < PlaceableToggles.Count)
-                PlaceableToggles[SelectedPlaceableIndex] = false;
+            if (SelectedEntryIndex > -1 && SelectedEntryIndex < PlaceableToggles.Count)
+                PlaceableToggles[SelectedEntryIndex] = false;
 
-            SelectedPlaceableIndex = NuiGetEventArrayIndex();
-            if (SelectedPlaceableIndex < 0 || SelectedPlaceableIndex >= PlaceableToggles.Count)
+            SelectedEntryIndex = NuiGetEventArrayIndex();
+            if (SelectedEntryIndex < 0 || SelectedEntryIndex >= PlaceableToggles.Count)
                 return;
 
-            PlaceableToggles[SelectedPlaceableIndex] = true;
+            PlaceableToggles[SelectedEntryIndex] = true;
             IsPlaceableSelected = true;
             var placeable = GetSelectedPlaceable();
             if (!GetIsObjectValid(placeable))
@@ -454,8 +455,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
             if (!TryClaimPlaceable(placeable, out var ownerName))
             {
-                PlaceableToggles[SelectedPlaceableIndex] = false;
-                SelectedPlaceableIndex = -1;
+                PlaceableToggles[SelectedEntryIndex] = false;
+                SelectedEntryIndex = -1;
                 IsPlaceableSelected = false;
                 Instructions = $"That placeable is currently being edited by {ownerName}.";
                 InstructionColor = GuiColor.Red;
@@ -464,7 +465,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             }
 
             ApplyHighlight(placeable);
-            Instructions = $"Editing: {_placeableDisplayNames[SelectedPlaceableIndex]}";
+            Instructions = $"Editing: {_entryDisplayNames[SelectedEntryIndex]}";
             InstructionColor = GuiColor.Green;
         };
 
@@ -497,11 +498,11 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
         private List<DMAreaPlaceableLayoutEntry> BuildCurrentLayoutEntries()
         {
-            RebuildPlaceables();
+            RebuildEntries();
             var entries = new List<DMAreaPlaceableLayoutEntry>();
             var groupedCounts = new Dictionary<string, int>();
 
-            foreach (var placeable in _allPlaceables)
+            foreach (var placeable in _allEntries)
             {
                 var tag = GetTag(placeable);
                 var resref = GetResRef(placeable);
@@ -659,7 +660,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             {
                 if (GetObjectType(obj) != ObjectType.Placeable)
                     continue;
-                if (GetLocalInt(obj, "DM_SPAWNED_PLACEABLE") != 1)
+                if (!DMActions.IsDMSpawnedObject(obj))
                     continue;
 
                 var key = $"{GetTag(obj)}|{GetResRef(obj)}";
@@ -702,9 +703,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                     if (!string.IsNullOrWhiteSpace(entry.Tag))
                         SetTag(spawn, entry.Tag);
 
-                    SetLocalInt(spawn, "DM_SPAWNED_PLACEABLE", 1);
-                    SetLocalString(spawn, "DM_SPAWNED_BY", dmId);
-                    SetLocalString(spawn, "DM_SPAWNED_BY_NAME", dmName);
+                    DMActions.MarkDMSpawnedObject(spawn, dungeonMaster);
 
                     keyedPlaceables.Add(spawn);
                     spawnedCount++;
@@ -729,7 +728,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
                 movedCount++;
             }
 
-            RebuildPlaceables();
+            RebuildEntries();
             Search();
             Instructions = $"Loaded '{layout.Name}': moved {movedCount}, spawned {spawnedCount}, skipped {skippedCount}.";
             InstructionColor = movedCount + spawnedCount > 0 ? GuiColor.Green : GuiColor.Red;
@@ -908,7 +907,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 
             var position = GetPosition(placeable);
             var facing = GetFacing(placeable);
-            var targetName = _placeableDisplayNames[SelectedPlaceableIndex];
+            var targetName = _entryDisplayNames[SelectedEntryIndex];
             Instructions = $"Changes are live for {targetName} ({position.X:0.00}, {position.Y:0.00}, {position.Z:0.00}, {facing:0.0}). Use Save Layout to persist.";
             InstructionColor = GuiColor.Green;
         };
@@ -921,12 +920,12 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             if (!EnsureEditingOwnership(placeable))
                 return;
 
-            var selectedPlaceableName = _placeableDisplayNames[SelectedPlaceableIndex];
+            var selectedPlaceableName = _entryDisplayNames[SelectedEntryIndex];
             ShowModal($"Delete placeable '{selectedPlaceableName}'?", () =>
             {
                 ClearHighlight();
                 DestroyObject(placeable);
-                RebuildPlaceables();
+                RebuildEntries();
                 Search();
                 Instructions = $"Deleted: {selectedPlaceableName}";
                 InstructionColor = GuiColor.Green;
@@ -938,8 +937,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             ShowModal("Delete all DM-spawned placeables in this area?", () =>
             {
                 ClearHighlight();
-                _allPlaceables.ForEach((placeable) => DestroyObject(placeable));
-                RebuildPlaceables();
+                _allEntries.ForEach((placeable) => DestroyObject(placeable));
+                RebuildEntries();
                 Search();
                 Instructions = "Deleted all DM-spawned placeables.";
                 InstructionColor = GuiColor.Green;

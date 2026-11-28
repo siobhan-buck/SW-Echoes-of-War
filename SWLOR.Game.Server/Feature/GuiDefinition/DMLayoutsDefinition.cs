@@ -1,6 +1,7 @@
 using SWLOR.Game.Server.Feature.GuiDefinition.ViewModel;
 using SWLOR.Game.Server.Service.DMToolService;
 using SWLOR.Game.Server.Service.GuiService;
+using SWLOR.NWN.API.NWScript.Enum;
 
 namespace SWLOR.Game.Server.Feature.GuiDefinition
 {
@@ -22,8 +23,8 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                     col.AddRow(row =>
                     {
                         row.AddComboBox()
-                            .AddOption("Creatures", (int)DMBlueprintCategory.Creatures)
-                            .AddOption("Placeables", (int)DMBlueprintCategory.Placeables)
+                            .AddOption("Creatures", (int)ObjectType.Creature)
+                            .AddOption("Placeables", (int)ObjectType.Placeable)
                             .BindSelectedIndex(model => model.SelectedType)
                             .SetWidth(140f)
                             .SetHeight(35f);
@@ -36,12 +37,12 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition
                             template.AddCell(cell =>
                             {
                                 cell.AddToggleButton()
-                                    .BindText(model => model.PlaceableNames)
+                                    .BindText(model => model.EntryNames)
                                     .BindOnClicked(model => model.OnSelectPlaceable())
                                     .BindIsToggled(model => model.PlaceableToggles);
                             });
                         })
-                        .BindRowCount(model => model.PlaceableNames);
+                        .BindRowCount(model => model.EntryNames);
 
                         row.SetHeight(300f);
                     });
