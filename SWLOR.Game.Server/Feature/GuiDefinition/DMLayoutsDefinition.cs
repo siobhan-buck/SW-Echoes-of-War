@@ -1,32 +1,32 @@
-using SWLOR.Game.Server.Core.Beamdog;
 using SWLOR.Game.Server.Feature.GuiDefinition.ViewModel;
+using SWLOR.Game.Server.Service.DMToolService;
 using SWLOR.Game.Server.Service.GuiService;
 
 namespace SWLOR.Game.Server.Feature.GuiDefinition
 {
-    public class DMToolsDefinition: IGuiWindowDefinition
+    public class DMLayoutsDefinition: IGuiWindowDefinition
     {
-        private readonly GuiWindowBuilder<DMToolsViewModel> _builder = new();
+        private readonly GuiWindowBuilder<DMLayoutsViewModel> _builder = new();
 
         public GuiConstructedWindow BuildWindow()
         {
-            _builder.CreateWindow(GuiWindowType.DMTools)
+            _builder.CreateWindow(GuiWindowType.DMLayouts)
                 .SetIsResizable(true)
                 .SetIsCollapsible(true)
-                .SetInitialGeometry(0, 0, 895f, 520f)
-                .SetTitle("DM Tools")
+                .SetInitialGeometry(0, 0, 900f, 525f)
+                .SetTitle("DM Layouts")
                 .BindOnClosed(model => model.OnCloseWindow())
 
                 .AddColumn(col =>
                 {
                     col.AddRow(row =>
                     {
-                        row.AddLabel()
-                            .BindText(model => model.Instructions)
-                            .BindColor(model => model.InstructionColor)
-                            .SetHorizontalAlign(NuiHorizontalAlign.Left)
-                            .SetVerticalAlign(NuiVerticalAlign.Middle)
-                            .SetHeight(20f);
+                        row.AddComboBox()
+                            .AddOption("Creatures", (int)DMBlueprintCategory.Creatures)
+                            .AddOption("Placeables", (int)DMBlueprintCategory.Placeables)
+                            .BindSelectedIndex(model => model.SelectedType)
+                            .SetWidth(140f)
+                            .SetHeight(35f);
                     });
 
                     col.AddRow(row =>

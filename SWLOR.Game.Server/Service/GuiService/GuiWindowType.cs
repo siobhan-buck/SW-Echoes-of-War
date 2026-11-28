@@ -36,7 +36,7 @@ namespace SWLOR.Game.Server.Service.GuiService
         ManageStructures = 31,
         PropertyItemStorage = 32,
         BugReport = 33,
-        DMTools = 34,
+        DMLayouts = 34,
         PlayerStatus = 35,
         TargetStatus = 36,
         ManageBans = 37,

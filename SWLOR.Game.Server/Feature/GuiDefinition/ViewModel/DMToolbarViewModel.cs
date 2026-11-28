@@ -96,9 +96,9 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             DMPresence.ToggleWindow(Player, GuiWindowType.CreatureManager);
         };
 
-        public Action OnClickDMTools() => () =>
+        public Action OnClickDMLayouts() => () =>
         {
-            DMPresence.ToggleWindow(Player, GuiWindowType.DMTools);
+            DMPresence.ToggleWindow(Player, GuiWindowType.DMLayouts);
         };
 
         public Action OnClickAreaNotes() => () =>

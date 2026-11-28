@@ -39,7 +39,7 @@ namespace SWLOR.Game.Server.EngineTests.Definitions
             GuiWindowType.DMPlayerExamine,
             GuiWindowType.DMAdminTools,
             GuiWindowType.CreatureManager,
-            GuiWindowType.DMTools,
+            GuiWindowType.DMLayouts,
             GuiWindowType.AreaNotes,
             GuiWindowType.MusicPicker,
             GuiWindowType.DMBattleGrid
@@ -98,11 +98,11 @@ namespace SWLOR.Game.Server.EngineTests.Definitions
 
                 // The team's existing DM windows open from the toolbar too.
                 await InContext(ctx, player.Creature, toolbar.OnClickCreatureManager());
-                await InContext(ctx, player.Creature, toolbar.OnClickDMTools());
+                await InContext(ctx, player.Creature, toolbar.OnClickDMLayouts());
                 await InContext(ctx, player.Creature, toolbar.OnClickAreaNotes());
                 await InContext(ctx, player.Creature, toolbar.OnClickMusic());
                 ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.CreatureManager), "Creature Manager opens from the toolbar");
-                ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.DMTools), "Placeable Tools open from the toolbar");
+                ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.DMLayouts), "Placeable Tools open from the toolbar");
                 ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.AreaNotes), "Area Notes open from the toolbar");
                 ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.MusicPicker), "Music opens from the toolbar");
 
@@ -151,8 +151,8 @@ namespace SWLOR.Game.Server.EngineTests.Definitions
                     command.DoAction(player.Creature, OBJECT_INVALID, GetLocation(player.Creature)));
                 ctx.Assert(!Gui.IsWindowOpen(player.Creature, GuiWindowType.DMBattleGrid), "/battlegrid again closes it");
 
-                await InContext(ctx, player.Creature, () => Gui.TogglePlayerWindow(player.Creature, GuiWindowType.DMTools));
-                var tools = (DMToolsViewModel)windows.ViewModel(GuiWindowType.DMTools);
+                await InContext(ctx, player.Creature, () => Gui.TogglePlayerWindow(player.Creature, GuiWindowType.DMLayouts));
+                var tools = (DMLayoutsViewModel)windows.ViewModel(GuiWindowType.DMLayouts);
                 await InContext(ctx, player.Creature, tools.OnOpenBattleGrid());
                 ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.DMBattleGrid), "Placeable Tools opens the Battle Grid window");
                 var grid = (DMBattleGridViewModel)windows.ViewModel(GuiWindowType.DMBattleGrid);

@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using SWLOR.Game.Server.Entity;
-using SWLOR.Game.Server.Feature.GuiDefinition.Payload;
 using SWLOR.Game.Server.Service;
 using SWLOR.Game.Server.Service.DBService;
+using SWLOR.Game.Server.Service.DMToolService;
 using SWLOR.Game.Server.Service.GuiService;
 using SWLOR.Game.Server.Service.GuiService.Component;
 using SWLOR.Game.Server.Service.LogService;
@@ -15,7 +14,7 @@ using SWLOR.NWN.API.NWScript.Enum.VisualEffect;
 
 namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
 {
-    public class DMToolsViewModel: GuiViewModelBase<DMToolsViewModel, GuiPayloadBase>
+    public class DMLayoutsViewModel: GuiViewModelBase<DMLayoutsViewModel, GuiPayloadBase>
     {
         private const int PlaceablesPerPage = 20;
         private const int MaxLayoutsPerArea = 30;
@@ -48,6 +47,17 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         {
             get => Get<GuiColor>();
             set => Set(value);
+        }
+
+        public int SelectedType
+        {
+            get => Get<int>();
+            set 
+            { 
+                Set(value);
+                RebuildPlaceables();
+                Search();
+            }
         }
 
         public GuiBindingList<string> PlaceableNames
@@ -121,6 +131,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             _skipPaginationSearch = true;
             Instructions = string.Empty;
             InstructionColor = GuiColor.Green;
+            SelectedType = (int)DMBlueprintCategory.Placeables;
             _highlightedPlaceable = OBJECT_INVALID;
             SelectedPlaceableIndex = -1;
             SelectedPageIndex = 0;
@@ -138,6 +149,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             Search();
             LoadLayouts();
 
+            WatchOnClient(model => model.SelectedType);
             WatchOnClient(model => model.SelectedPageIndex);
             WatchOnClient(model => model.SearchText);
             WatchOnClient(model => model.LayoutName);

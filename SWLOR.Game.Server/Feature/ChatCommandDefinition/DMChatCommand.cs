@@ -1113,7 +1113,7 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
                 .Permissions(AuthorizationLevel.DM, AuthorizationLevel.Admin)
                 .Action((user, target, location, args) =>
                 {
-                    DMPresence.ToggleWindow(user, GuiWindowType.DMTools);
+                    DMPresence.ToggleWindow(user, GuiWindowType.DMLayouts);
                 });
         }
 
