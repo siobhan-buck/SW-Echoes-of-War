@@ -22,6 +22,10 @@ namespace SWLOR.Game.Server.Feature
             if (type == ObjectType.Creature)
             {
                 MakeInventoryUndroppable(obj);
+                var dm = OBJECT_SELF;
+                if (GetIsDMPossessed(dm))
+                    dm = GetMaster(dm);
+                MarkDMSpawnedNPC(dm, obj);
             }
 
             // Track DM-spawned placeables so the DM tools NUI can list non-native objects.
@@ -45,6 +49,18 @@ namespace SWLOR.Game.Server.Feature
             {
                 SetDroppableFlag(item, false);
             }
+        }
+
+        /// <summary>
+        /// Records which DM spawned an NPC so the DM tools window can list it.
+        /// </summary>
+        /// <param name="dm">The DM who spawned the placeable.</param>
+        /// <param name="creature">The spawned creature npc.</param>
+        public static void MarkDMSpawnedNPC(uint dm, uint creature)
+        {
+            SetLocalInt(creature, "DM_SPAWNED_NPC", 1);
+            SetLocalString(creature, "DM_SPAWNED_BY", GetObjectUUID(dm));
+            SetLocalString(creature, "DM_SPAWNED_BY_NAME", GetName(dm));
         }
 
         /// <summary>

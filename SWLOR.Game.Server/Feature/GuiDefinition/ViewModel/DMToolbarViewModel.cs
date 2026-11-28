@@ -22,7 +22,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
         public const float ButtonSlotWidth = ButtonWidth + 4f;
         // Every DM sees these buttons; admins also get the Admin button at the end.
         public const int PublicButtonCount = 10;
-        public const float ToolbarWidth = PublicButtonCount * ButtonSlotWidth + 22f;
+        public const float ToolbarWidth = PublicButtonCount * ButtonSlotWidth + 20f;
         public const float ToolbarHeight = 32f;
 
         public bool IsAdmin
@@ -96,7 +96,7 @@ namespace SWLOR.Game.Server.Feature.GuiDefinition.ViewModel
             DMPresence.ToggleWindow(Player, GuiWindowType.CreatureManager);
         };
 
-        public Action OnClickPlaceableTools() => () =>
+        public Action OnClickDMTools() => () =>
         {
             DMPresence.ToggleWindow(Player, GuiWindowType.DMTools);
         };

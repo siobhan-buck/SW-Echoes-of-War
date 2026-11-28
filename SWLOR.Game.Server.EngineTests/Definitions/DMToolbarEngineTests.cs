@@ -98,7 +98,7 @@ namespace SWLOR.Game.Server.EngineTests.Definitions
 
                 // The team's existing DM windows open from the toolbar too.
                 await InContext(ctx, player.Creature, toolbar.OnClickCreatureManager());
-                await InContext(ctx, player.Creature, toolbar.OnClickPlaceableTools());
+                await InContext(ctx, player.Creature, toolbar.OnClickDMTools());
                 await InContext(ctx, player.Creature, toolbar.OnClickAreaNotes());
                 await InContext(ctx, player.Creature, toolbar.OnClickMusic());
                 ctx.Assert(Gui.IsWindowOpen(player.Creature, GuiWindowType.CreatureManager), "Creature Manager opens from the toolbar");
