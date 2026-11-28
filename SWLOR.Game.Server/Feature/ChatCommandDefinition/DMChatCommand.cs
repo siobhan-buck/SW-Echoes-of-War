@@ -766,6 +766,7 @@ namespace SWLOR.Game.Server.Feature.ChatCommandDefinition
 
                         DB.Set(dbPlayer);
                         SendMessageToPC(target, $"A DM has awarded you with {amount} roleplay XP.");
+                        SendMessageToPC(user, $"You awarded {dbPlayer.Name} with {amount} rp XP.");
                         Gui.PublishRefreshEvent(target, new RPXPRefreshEvent());
                     }
                     else if (BeastMastery.IsPlayerBeast(target))
